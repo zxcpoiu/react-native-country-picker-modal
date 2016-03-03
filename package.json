@@ -1,0 +1,26 @@
+{
+  "name": "react-native-country-picker",
+  "version": "0.0.1",
+  "description": "react-native-country-picker is a custom component that provides a modal allowing a user to select a country from a list. It display a flag next to each country name. Public domain flag images from FAMFAMFAM (http://www.famfamfam.com/lab/icons/flags/) that have been painstaki.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xcarpentier/react-native-country-picker.git"
+  },
+  "keywords": [
+    "react-native",
+    "components",
+    "country-picker",
+    "country",
+    "flag"
+  ],
+  "author": "Xavier Carpentier <contact@xaviercarpentier.com> (http://xaviercarpentier.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xcarpentier/react-native-country-picker/issues"
+  },
+  "homepage": "https://github.com/xcarpentier/react-native-country-picker#readme"
+}
