@@ -22,5 +22,13 @@
   "bugs": {
     "url": "https://github.com/xcarpentier/react-native-country-picker/issues"
   },
-  "homepage": "https://github.com/xcarpentier/react-native-country-picker#readme"
+  "homepage": "https://github.com/xcarpentier/react-native-country-picker#readme",
+  "devDependencies": {
+    "cz-conventional-changelog": "1.1.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
