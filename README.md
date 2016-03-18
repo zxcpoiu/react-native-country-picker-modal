@@ -19,7 +19,7 @@ The best Country Picker for React Native.
 
 ### Examples
 
-![](https://github.com/xcarpentier/react-native-country-picker/raw/master/out.gif)
+![](https://github.com/xcarpentier/react-native-country-picker/raw/master/out.gif) { width: 200px; }
 
 
 ### Development
