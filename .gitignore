@@ -1,8 +1,8 @@
-### Node template
+.DS_Store
+
 # Logs
 logs
 *.log
-npm-debug.log*
 
 # Runtime data
 pids
@@ -25,5 +25,13 @@ coverage
 build/Release
 
 # Dependency directory
-# https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
-node_modules
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+/node_modules
+
+# Xcode
+*.xcuserstate
+examples/ios/swiper.xcodeproj/project.xcworkspace/
+examples/ios/swiper.xcodeproj/xcuserdata
+
+# IntelliJ
+.idea/

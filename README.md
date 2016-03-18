@@ -1,2 +1,36 @@
 # react-native-country-picker
-react-native-country-picker is a custom UIPickerView subclass that provides a modal allowing a user to select a country from a list. It display a flag next to each country name. Public domain flag images from FAMFAMFAM (http://www.famfamfam.com/lab/icons/flags/) that have been painstaki
+
+The best Country Picker for React Native.
+
+## Changelogs
+
+## Getting Started
+- [Installation](#installation)
+- [Basic Usage](#basic-usage)
+- [Properties](#properties)
+- [Examples](#examples)
+- [Development](#development)
+
+### Installation
+
+### Basic Usage
+
+### Properties
+
+### Examples
+
+### Development
+
+```bash
+$ npm start
+```
+
+## Contribution
+
+- [@xcapentier](mailto:contact@xaviercarpentier.com) The main author.
+
+## Questions
+
+Feel free to [contact me](mailto:contact@xaviercarpentier.com) or [create an issue](https://github.com/leecade/react-native-swiper/issues/new)
+
+> made with ♥
