@@ -1,5 +1,7 @@
 # react-native-country-picker
 
+[![npm version](http://img.shields.io/npm/dm/react-native-country-picker-modal.svg?style=flat-square)](https://npmjs.org/package/react-native-country-picker-modal "View this project on npm")
+
 The best Country Picker for React Native.
 
 ![](http://i.imgur.com/WF4sdT7.gif)
