@@ -99,12 +99,6 @@ const styles = StyleSheet.create({
 AppRegistry.registerComponent('example', () => Example);
 ```
 
-### Development
-
-```bash
-$ npm start
-```
-
 ## Contribution
 
 - [@xcapentier](mailto:contact@xaviercarpentier.com) The main author.
