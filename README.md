@@ -2,20 +2,12 @@
 
 The best Country Picker for React Native.
 
-## Changelogs
-
-## Getting Started
-- [Installation](#installation)
-- [Basic Usage](#basic-usage)
-- [Properties](#properties)
-- [Examples](#examples)
-- [Development](#development)
+![](http://i.imgur.com/hUeSlbA.gif =200x)
 
 ### Installation
 ```bash
 $ npm i react-native-country-picker-modal --save
 ```
-
 ### Basic Usage
 - Install `react-native` first
 
@@ -107,14 +99,6 @@ const styles = StyleSheet.create({
 AppRegistry.registerComponent('example', () => Example);
 ```
 
-
-### Properties
-
-### Examples
-
-![](http://i.imgur.com/hUeSlbA.gif =300x)
-
-
 ### Development
 
 ```bash
@@ -127,6 +111,6 @@ $ npm start
 
 ## Questions
 
-Feel free to [contact me](mailto:contact@xaviercarpentier.com) or [create an issue](https://github.com/leecade/react-native-swiper/issues/new)
+Feel free to [contact me](mailto:contact@xaviercarpentier.com) or [create an issue](https://github.com/xcarpentier/react-native-country-picker/issues/new)
 
 > made with ♥
