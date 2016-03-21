@@ -19,7 +19,7 @@ The best Country Picker for React Native.
 
 ### Examples
 
-![](http://i.imgur.com/hUeSlbA.gifv)
+![](http://i.imgur.com/hUeSlbA.gif)
 
 
 ### Development
