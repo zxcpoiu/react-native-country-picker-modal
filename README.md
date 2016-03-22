@@ -1,4 +1,4 @@
-# react-native-country-picker
+# react-native-country-picker-modal
 
 [![npm version](http://img.shields.io/npm/dm/react-native-country-picker-modal.svg?style=flat-square)](https://npmjs.org/package/react-native-country-picker-modal "View this project on npm")
 
