@@ -1,6 +1,6 @@
 'use strict';
 
-var dimension = require('Dimensions').get('window');
+var dimension = require('react-native').Dimensions.get('window');
 
 class Ratio {
   constructor() {}
