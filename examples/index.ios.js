@@ -13,7 +13,7 @@ import React, {
   PixelRatio
 } from 'react-native';
 
-import CountryPicker from './examples/lib/index';
+import CountryPicker from './examples/index';
 
 class Example extends Component {
   constructor(props){

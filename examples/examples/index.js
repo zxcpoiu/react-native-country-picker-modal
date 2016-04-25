@@ -14,6 +14,7 @@ import React, {
   Modal,
   ScrollView,
   Text,
+  ListView
 }
 from 'react-native';
 import countries from 'world-countries';
@@ -25,13 +26,14 @@ class CountryPicker extends React.Component {
 
   constructor(props) {
     super(props);
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       cca2: props.cca2,
       currentCountry: this._getCountry(props.cca2),
       modalVisible: false,
-      countries: this._orderCountryList()
+      countries: ds.cloneWithRows(this._orderCountryList())
     };
-    this.letters = _.map(_.range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1), n => String.fromCharCode(n).substr(0));
+    this.letters = _.range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1).map(n => String.fromCharCode(n).substr(0));
     this.lettersPositions = {};
   }
 
@@ -159,14 +161,20 @@ class CountryPicker extends React.Component {
           </View>
         </TouchableOpacity>
         <Modal visible={this.state.modalVisible}>
-          <ScrollView
+          {/*<ScrollView
             ref={(scrollView) => { this._scrollView = scrollView; }}
             contentContainerStyle={styles.contentContainer}
             showsVerticalScrollIndicator={false}
             bounces={false}
             scrollsToTop={true}>
             {_.map(this.state.countries, (country, index) => this._renderCountry(country, index))}
-          </ScrollView>
+          </ScrollView>*/}
+          <ListView
+            contentContainerStyle={styles.contentContainer}
+            ref={(scrollView) => { this._scrollView = scrollView; }}
+            dataSource={this.state.countries}
+            renderRow={(country) => this._renderCountry(country)}
+          />
           <View style={styles.letters}>
             {_.map(this.letters, (letter, index) => this._renderLetters(letter, index))}
           </View>

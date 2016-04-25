@@ -43,13 +43,16 @@ var CountryPicker = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CountryPicker).call(this, props));
 
+    var ds = new _reactNative.ListView.DataSource({ rowHasChanged: function rowHasChanged(r1, r2) {
+        return r1 !== r2;
+      } });
     _this.state = {
       cca2: props.cca2,
       currentCountry: _this._getCountry(props.cca2),
       modalVisible: false,
-      countries: _this._orderCountryList()
+      countries: ds.cloneWithRows(_this._orderCountryList())
     };
-    _this.letters = _lodash2.default.map(_lodash2.default.range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1), function (n) {
+    _this.letters = _lodash2.default.range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1).map(function (n) {
       return String.fromCharCode(n).substr(0);
     });
     _this.lettersPositions = {};
@@ -223,20 +226,16 @@ var CountryPicker = function (_React$Component) {
         _reactNative2.default.createElement(
           _reactNative.Modal,
           { visible: this.state.modalVisible },
-          _reactNative2.default.createElement(
-            _reactNative.ScrollView,
-            {
-              ref: function ref(scrollView) {
-                _this5._scrollView = scrollView;
-              },
-              contentContainerStyle: styles.contentContainer,
-              showsVerticalScrollIndicator: false,
-              bounces: false,
-              scrollsToTop: true },
-            _lodash2.default.map(this.state.countries, function (country, index) {
-              return _this5._renderCountry(country, index);
-            })
-          ),
+          _reactNative2.default.createElement(_reactNative.ListView, {
+            contentContainerStyle: styles.contentContainer,
+            ref: function ref(scrollView) {
+              _this5._scrollView = scrollView;
+            },
+            dataSource: this.state.countries,
+            renderRow: function renderRow(country) {
+              return _this5._renderCountry(country);
+            }
+          }),
           _reactNative2.default.createElement(
             _reactNative.View,
             { style: styles.letters },
