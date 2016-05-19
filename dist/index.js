@@ -7,9 +7,11 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _reactNative = require('react-native');
+var _react = require('react');
 
-var _reactNative2 = _interopRequireDefault(_reactNative);
+var _react2 = _interopRequireDefault(_react);
+
+var _reactNative = require('react-native');
 
 var _worldCountries = require('world-countries');
 
@@ -35,21 +37,24 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CountryPicker = function (_React$Component) {
-  _inherits(CountryPicker, _React$Component);
+var CountryPicker = function (_Component) {
+  _inherits(CountryPicker, _Component);
 
   function CountryPicker(props) {
     _classCallCheck(this, CountryPicker);
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CountryPicker).call(this, props));
 
+    var ds = new _reactNative.ListView.DataSource({ rowHasChanged: function rowHasChanged(r1, r2) {
+        return r1 !== r2;
+      } });
     _this.state = {
       cca2: props.cca2,
       currentCountry: _this._getCountry(props.cca2),
       modalVisible: false,
-      countries: _this._orderCountryList()
+      countries: ds.cloneWithRows(_this._orderCountryList())
     };
-    _this.letters = _lodash2.default.map(_lodash2.default.range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1), function (n) {
+    _this.letters = _lodash2.default.range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1).map(function (n) {
       return String.fromCharCode(n).substr(0);
     });
     _this.lettersPositions = {};
@@ -106,66 +111,66 @@ var CountryPicker = function (_React$Component) {
   }, {
     key: '_scrollTo',
     value: function _scrollTo(letter) {
-      if (letter === 'A') {
-        this._scrollView.scrollTo({
-          y: 0
-        });
-      } else if (letter > 'U') {
-        this._scrollView.scrollTo({
-          y: this.lettersPositions['Z'] - _Ratio2.default.getHeightPercent(85)
-        });
-      } else {
-        this._scrollView.scrollTo({
-          y: this.lettersPositions[letter]
-        });
-      }
-    }
-  }, {
-    key: '_updateLetterPosition',
-    value: function _updateLetterPosition(countryName, position_y) {
+      var _this3 = this;
 
-      var firstLetter = countryName.substr(0, 1);
+      // dimensions of country list and window
+      var itemHeight = _Ratio2.default.getHeightPercent(7);
+      var listPadding = _Ratio2.default.getPercent(2);
+      var listHeight = _worldCountries2.default.length * itemHeight + 2 * listPadding;
+      var windowHeight = _Ratio2.default.getHeightPercent(100);
 
-      if (!this.lettersPositions[firstLetter] || this.lettersPositions[firstLetter] && this.lettersPositions[firstLetter] > position_y) {
-        this.lettersPositions[firstLetter] = position_y;
+      // find position of first country that starts with letter
+      var index = this._orderCountryList().map(function (country) {
+        return _this3._getCountryName(country)[0];
+      }).indexOf(letter);
+      if (index === -1) {
+        return;
       }
+      var position = index * itemHeight + listPadding;
+
+      // do not scroll past the end of the list
+      if (position + windowHeight > listHeight) {
+        position = listHeight - windowHeight;
+      }
+
+      // scroll
+      this._scrollView.scrollTo({
+        y: position
+      });
     }
   }, {
     key: '_renderCountry',
     value: function _renderCountry(country, index) {
-      var _this3 = this;
+      var _this4 = this;
 
-      return _reactNative2.default.createElement(
+      return _react2.default.createElement(
         _reactNative.TouchableOpacity,
         {
           key: index,
           onPress: function onPress() {
-            return _this3._onSelect(country);
+            return _this4._onSelect(country);
           },
-          activeOpacity: 0.99,
-          onLayout: function onLayout(e) {
-            return _this3._updateLetterPosition(_this3._getCountryName(country), e.nativeEvent.layout.y);
-          } },
+          activeOpacity: 0.99 },
         this._renderCountryDetail(country)
       );
     }
   }, {
     key: '_renderLetters',
     value: function _renderLetters(letter, index) {
-      var _this4 = this;
+      var _this5 = this;
 
-      return _reactNative2.default.createElement(
+      return _react2.default.createElement(
         _reactNative.TouchableOpacity,
         {
           key: index,
           onPress: function onPress() {
-            return _this4._scrollTo(letter);
+            return _this5._scrollTo(letter);
           },
           activeOpacity: 0.6 },
-        _reactNative2.default.createElement(
+        _react2.default.createElement(
           _reactNative.View,
           { style: styles.letter },
-          _reactNative2.default.createElement(
+          _react2.default.createElement(
             _reactNative.Text,
             { style: styles.letterText },
             letter
@@ -176,20 +181,20 @@ var CountryPicker = function (_React$Component) {
   }, {
     key: '_renderCountryDetail',
     value: function _renderCountryDetail(country) {
-      return _reactNative2.default.createElement(
+      return _react2.default.createElement(
         _reactNative.View,
         { style: styles.itemCountry },
-        _reactNative2.default.createElement(
+        _react2.default.createElement(
           _reactNative.View,
           { style: styles.itemCountryFlag },
-          _reactNative2.default.createElement(_reactNative.Image, {
+          _react2.default.createElement(_reactNative.Image, {
             style: styles.imgStyle,
             source: { uri: _CountryFlags2.default[country.cca2] } })
         ),
-        _reactNative2.default.createElement(
+        _react2.default.createElement(
           _reactNative.View,
           { style: styles.itemCountryName },
-          _reactNative2.default.createElement(
+          _react2.default.createElement(
             _reactNative.Text,
             { style: styles.countryName },
             this._getCountryName(country)
@@ -200,48 +205,46 @@ var CountryPicker = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
-      return _reactNative2.default.createElement(
+      return _react2.default.createElement(
         _reactNative.View,
         null,
-        _reactNative2.default.createElement(
+        _react2.default.createElement(
           _reactNative.TouchableOpacity,
           {
             onPress: function onPress() {
-              return _this5.setState({ modalVisible: true });
+              return _this6.setState({ modalVisible: true });
             },
             activeOpacity: 0.7 },
-          _reactNative2.default.createElement(
+          _react2.default.createElement(
             _reactNative.View,
             { style: styles.touchFlag },
-            _reactNative2.default.createElement(_reactNative.Image, {
+            _react2.default.createElement(_reactNative.Image, {
               style: styles.imgStyle,
               source: { uri: _CountryFlags2.default[this.state.cca2] } })
           )
         ),
-        _reactNative2.default.createElement(
+        _react2.default.createElement(
           _reactNative.Modal,
           { visible: this.state.modalVisible },
-          _reactNative2.default.createElement(
-            _reactNative.ScrollView,
-            {
-              ref: function ref(scrollView) {
-                _this5._scrollView = scrollView;
-              },
-              contentContainerStyle: styles.contentContainer,
-              showsVerticalScrollIndicator: false,
-              bounces: false,
-              scrollsToTop: true },
-            _lodash2.default.map(this.state.countries, function (country, index) {
-              return _this5._renderCountry(country, index);
-            })
-          ),
-          _reactNative2.default.createElement(
+          _react2.default.createElement(_reactNative.ListView, {
+            contentContainerStyle: styles.contentContainer,
+            ref: function ref(scrollView) {
+              _this6._scrollView = scrollView;
+            },
+            dataSource: this.state.countries,
+            renderRow: function renderRow(country) {
+              return _this6._renderCountry(country);
+            },
+            initialListSize: 20,
+            pageSize: _worldCountries2.default.length - 20
+          }),
+          _react2.default.createElement(
             _reactNative.View,
             { style: styles.letters },
             _lodash2.default.map(this.letters, function (letter, index) {
-              return _this5._renderLetters(letter, index);
+              return _this6._renderLetters(letter, index);
             })
           )
         )
@@ -250,7 +253,7 @@ var CountryPicker = function (_React$Component) {
   }]);
 
   return CountryPicker;
-}(_reactNative2.default.Component);
+}(_react.Component);
 
 var styles = _reactNative.StyleSheet.create({
   contentContainer: {

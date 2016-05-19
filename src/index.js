@@ -5,7 +5,8 @@
  * @author xcarpentier<contact@xaviercarpentier.com>
  */
 
-import React, {
+import React, { Component } from 'react';
+import {
   StyleSheet,
   View,
   PixelRatio,
@@ -14,24 +15,25 @@ import React, {
   Modal,
   ScrollView,
   Text,
-}
-from 'react-native';
+  ListView
+} from 'react-native';
 import countries from 'world-countries';
 import _ from 'lodash';
 import CountryFlags from './CountryFlags';
 import Ratio from './Ratio';
 
-class CountryPicker extends React.Component {
+class CountryPicker extends Component {
 
   constructor(props) {
     super(props);
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       cca2: props.cca2,
       currentCountry: this._getCountry(props.cca2),
       modalVisible: false,
-      countries: this._orderCountryList()
+      countries: ds.cloneWithRows(this._orderCountryList())
     };
-    this.letters = _.map(_.range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1), n => String.fromCharCode(n).substr(0));
+    this.letters = _.range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1).map(n => String.fromCharCode(n).substr(0));
     this.lettersPositions = {};
   }
 
@@ -77,33 +79,30 @@ class CountryPicker extends React.Component {
   }
 
   _scrollTo(letter) {
-    if (letter === 'A') {
-      this._scrollView.scrollTo({
-        y: 0
-      });
-    } else if (letter > 'U') {
-      this._scrollView.scrollTo({
-        y: this.lettersPositions['Z'] - Ratio.getHeightPercent(85)
-      });
-    } else {
-      this._scrollView.scrollTo({
-        y: this.lettersPositions[letter]
-      });
+    // dimensions of country list and window
+    const itemHeight = Ratio.getHeightPercent(7);
+    const listPadding = Ratio.getPercent(2);
+    const listHeight = countries.length * itemHeight + 2 * listPadding;
+    const windowHeight = Ratio.getHeightPercent(100);
+
+    // find position of first country that starts with letter
+    const index = this._orderCountryList().map((country) => {
+      return this._getCountryName(country)[0];
+    }).indexOf(letter);
+    if (index === -1) {
+      return;
+    }
+    let position = index * itemHeight + listPadding;
+
+    // do not scroll past the end of the list
+    if (position + windowHeight > listHeight) {
+      position = listHeight - windowHeight;
     }
 
-  }
-
-  _updateLetterPosition(countryName, position_y) {
-
-    let firstLetter = countryName.substr(0, 1);
-
-    if (!this.lettersPositions[firstLetter] ||
-      (
-        this.lettersPositions[firstLetter] &&
-        this.lettersPositions[firstLetter] > position_y)
-    ) {
-      this.lettersPositions[firstLetter] = position_y;
-    }
+    // scroll
+    this._scrollView.scrollTo({
+      y: position
+    });
   }
 
   _renderCountry(country, index) {
@@ -111,8 +110,7 @@ class CountryPicker extends React.Component {
       <TouchableOpacity
         key={index}
         onPress={()=> this._onSelect(country)}
-        activeOpacity={0.99}
-        onLayout={ e => this._updateLetterPosition(this._getCountryName(country), e.nativeEvent.layout.y) }>
+        activeOpacity={0.99}>
         {this._renderCountryDetail(country)}
     </TouchableOpacity>);
   }
@@ -159,14 +157,22 @@ class CountryPicker extends React.Component {
           </View>
         </TouchableOpacity>
         <Modal visible={this.state.modalVisible}>
-          <ScrollView
+          {/*<ScrollView
             ref={(scrollView) => { this._scrollView = scrollView; }}
             contentContainerStyle={styles.contentContainer}
             showsVerticalScrollIndicator={false}
             bounces={false}
             scrollsToTop={true}>
             {_.map(this.state.countries, (country, index) => this._renderCountry(country, index))}
-          </ScrollView>
+          </ScrollView>*/}
+          <ListView
+            contentContainerStyle={styles.contentContainer}
+            ref={(scrollView) => { this._scrollView = scrollView; }}
+            dataSource={this.state.countries}
+            renderRow={(country) => this._renderCountry(country)}
+            initialListSize={20}
+            pageSize={countries.length - 20}
+          />
           <View style={styles.letters}>
             {_.map(this.letters, (letter, index) => this._renderLetters(letter, index))}
           </View>
