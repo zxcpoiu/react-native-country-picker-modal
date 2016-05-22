@@ -187,7 +187,7 @@ var styles = StyleSheet.create({
     height: Ratio.getHeightPercent(2.5)
   },
   imgStyle: {
-    resizeMode: 'stretch',
+    resizeMode: 'contain',
     width: 25,
     height: 19,
     borderWidth: 1 / PixelRatio.get(),
