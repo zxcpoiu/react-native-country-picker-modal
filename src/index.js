@@ -46,7 +46,6 @@ class CountryPicker extends Component {
   _getCountryName(country) {
     let translation = this.props.translation || 'eng';
     return (country.translations[translation] && country.translations[translation].common) || country.name.common;
-    xrg
   }
 
   _orderCountryList() {
@@ -157,14 +156,6 @@ class CountryPicker extends Component {
           </View>
         </TouchableOpacity>
         <Modal visible={this.state.modalVisible}>
-          {/*<ScrollView
-            ref={(scrollView) => { this._scrollView = scrollView; }}
-            contentContainerStyle={styles.contentContainer}
-            showsVerticalScrollIndicator={false}
-            bounces={false}
-            scrollsToTop={true}>
-            {_.map(this.state.countries, (country, index) => this._renderCountry(country, index))}
-          </ScrollView>*/}
           <ListView
             contentContainerStyle={styles.contentContainer}
             ref={(scrollView) => { this._scrollView = scrollView; }}
