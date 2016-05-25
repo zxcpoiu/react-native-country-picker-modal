@@ -8,18 +8,11 @@ The best Country Picker for React Native.
 
 ![](http://i.imgur.com/WF4sdT7.gif)
 
-### Is it supported and tested both on android and iOS?
-YES
-
-### Is the data that is populated inside the list saved offline once I install your package? just to be sure that all information in the list will always show up.
-
-YES : It used the world-countries package and image is stored into json and base64.
-
-### Installation
+## Installation
 ```bash
 $ npm i react-native-country-picker-modal --save
 ```
-### Basic Usage
+## Basic Usage
 - Install `react-native` first
 
 ```bash
@@ -109,6 +102,12 @@ const styles = StyleSheet.create({
 
 AppRegistry.registerComponent('example', () => Example);
 ```
+
+## FAQ
+### Is it supported and tested both on android and iOS?
+YES
+### Is the data that is populated inside the list saved offline once I install your package?
+YES : It used the world-countries package and image is stored into json and base64.
 
 ## Contribution
 
