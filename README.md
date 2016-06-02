@@ -103,6 +103,17 @@ const styles = StyleSheet.create({
 AppRegistry.registerComponent('example', () => Example);
 ```
 
+## Props
+
+| Key | Type | Default | Description |
+| --- | --- | --- | --- |
+| cca2 | string | *required | code ISO 3166-1 alpha-2 (ie. FR, US, etc.)|
+| translation | string | 'eng' | The language display for the name of the country  |
+| onChange | function | *required | The handler when a country is selected |
+
+## Dependencies
+- world-countries : https://www.npmjs.com/package/world-countries
+
 ## FAQ
 ### Is it supported and tested both on android and iOS?
 YES
