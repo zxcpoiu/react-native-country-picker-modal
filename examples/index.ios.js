@@ -1,9 +1,12 @@
+'use strict';
 /**
  * Sample React Native Country Picker Example App
  * https://github.com/xcarpentier/react-native-country-picker
  */
-'use strict';
-import React, { Component } from 'react';
+
+
+import React from 'react';
+
 import {
   AppRegistry,
   StyleSheet,
@@ -14,7 +17,7 @@ import {
 } from 'react-native';
 import CountryPicker from 'react-native-country-picker-modal';
 
-class Example extends Component {
+class Example extends React.Component {
   constructor(props){
     StatusBar.setHidden(true);
     super(props);

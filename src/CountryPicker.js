@@ -3,6 +3,7 @@
 /**
  * react-native-country-picker
  * @author xcarpentier<contact@xaviercarpentier.com>
+ * @flow
  */
 
 import React, { Component } from 'react';
@@ -13,55 +14,55 @@ import {
   Image,
   TouchableOpacity,
   Modal,
-  ScrollView,
   Text,
   ListView
 } from 'react-native';
 import countries from 'world-countries';
 import _ from 'lodash';
-import CountryFlags from './CountryFlags';
-import Ratio from './Ratio';
+import CountryFlags from './countryFlags';
+import {getWidthPercent, getHeightPercent, getPercent} from './ratio';
 
 class CountryPicker extends Component {
 
   constructor(props) {
     super(props);
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       cca2: props.cca2,
-      currentCountry: this._getCountry(props.cca2),
+      currentCountry: this.getCountry(props.cca2),
       modalVisible: false,
-      countries: ds.cloneWithRows(this._orderCountryList())
+      countries: ds.cloneWithRows(this.orderCountryList())
     };
-    this.letters = _.range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1).map(n => String.fromCharCode(n).substr(0));
-    this.lettersPositions = {};
+    this.letters = _
+      .range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1)
+      .map(n => String.fromCharCode(n).substr(0));
   }
 
-  _getCountry(cca2) {
+  getCountry({ cca2 }) {
     return _.find(countries, {
-      cca2: cca2
+      cca2
     });
   }
 
-  _getCountryName(country) {
-    let translation = this.props.translation || 'eng';
-    return (country.translations[translation] && country.translations[translation].common) || country.name.common;
+  getCountryName(country) {
+    const translation = this.props.translation || 'eng';
+    return (
+      country.translations[translation] &&
+      country.translations[translation].common
+    ) || country.name.common;
   }
 
-  _orderCountryList() {
+  orderCountryList() {
     return _(countries)
-      .map(n => {
-        return {
-          cca2: n.cca2,
-          callingCode: n.callingCode,
-          translations: n.translations,
-          name: n.name
-        };
-      })
-      .sortBy(n => _.deburr(this._getCountryName(n))).value();
+      .map(country => _.pick(
+        country,
+        ['cca2', 'callingCode', 'translations', 'name', 'currency'])
+      )
+      .sortBy(n => _.deburr(this.getCountryName(n)))
+      .value();
   }
 
-  _onSelect(country) {
+  onSelect(country) {
 
     this.setState({
       modalVisible: false,
@@ -72,21 +73,22 @@ class CountryPicker extends Component {
       this.props.onChange({
         cca2: country.cca2,
         callingCode: country.callingCode[0],
-        name: this._getCountryName(country)
+        name: this.getCountryName(country),
+        currency: country.currency
       });
     }
   }
 
-  _scrollTo(letter) {
+  scrollTo(letter) {
     // dimensions of country list and window
-    const itemHeight = Ratio.getHeightPercent(7);
-    const listPadding = Ratio.getPercent(2);
+    const itemHeight = getHeightPercent(7);
+    const listPadding = getPercent(2);
     const listHeight = countries.length * itemHeight + 2 * listPadding;
-    const windowHeight = Ratio.getHeightPercent(100);
+    const windowHeight = getHeightPercent(100);
 
     // find position of first country that starts with letter
-    const index = this._orderCountryList().map((country) => {
-      return this._getCountryName(country)[0];
+    const index = this.orderCountryList().map((country) => {
+      return this.getCountryName(country)[0];
     }).indexOf(letter);
     if (index === -1) {
       return;
@@ -104,21 +106,22 @@ class CountryPicker extends Component {
     });
   }
 
-  _renderCountry(country, index) {
+  renderCountry(country, index) {
     return (
       <TouchableOpacity
         key={index}
-        onPress={()=> this._onSelect(country)}
+        onPress={()=> this.onSelect(country)}
         activeOpacity={0.99}>
-        {this._renderCountryDetail(country)}
-    </TouchableOpacity>);
+        {this.renderCountryDetail(country)}
+      </TouchableOpacity>
+    );
   }
 
-  _renderLetters(letter, index) {
+  renderLetters(letter, index) {
     return (
       <TouchableOpacity
         key={index}
-        onPress={()=> this._scrollTo(letter)}
+        onPress={()=> this.scrollTo(letter)}
         activeOpacity={0.6}>
         <View style={styles.letter}>
           <Text style={styles.letterText}>{letter}</Text>
@@ -127,7 +130,7 @@ class CountryPicker extends Component {
     );
   }
 
-  _renderCountryDetail(country) {
+  renderCountryDetail(country) {
     return (
       <View style={styles.itemCountry}>
         <View style={styles.itemCountryFlag}>
@@ -137,10 +140,11 @@ class CountryPicker extends Component {
         </View>
         <View style={styles.itemCountryName}>
           <Text style={styles.countryName}>
-            {this._getCountryName(country)}
+            {this.getCountryName(country)}
           </Text>
         </View>
-      </View>);
+      </View>
+    );
   }
 
   render() {
@@ -157,18 +161,17 @@ class CountryPicker extends Component {
         </TouchableOpacity>
         <Modal
           visible={this.state.modalVisible}
-          onRequestClose={() => this.setState({modalVisible: false})}
-        >
+          onRequestClose={() => this.setState({modalVisible: false})}>
           <ListView
             contentContainerStyle={styles.contentContainer}
-            ref={(scrollView) => { this._scrollView = scrollView; }}
+            ref={scrollView => { this._scrollView = scrollView; }}
             dataSource={this.state.countries}
-            renderRow={(country) => this._renderCountry(country)}
+            renderRow={country => this.renderCountry(country)}
             initialListSize={20}
             pageSize={countries.length - 20}
           />
           <View style={styles.letters}>
-            {_.map(this.letters, (letter, index) => this._renderLetters(letter, index))}
+            {this.letters.map((letter, index) => this.renderLetters(letter, index))}
           </View>
         </Modal>
       </View>
@@ -176,18 +179,18 @@ class CountryPicker extends Component {
   }
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   contentContainer: {
-    width: Ratio.getWidthPercent(100),
-    backgroundColor: '#fff',
-    padding: Ratio.getPercent(2)
+    width: getWidthPercent(100),
+    backgroundColor: 'white',
+    padding: getPercent(2)
   },
   touchFlag: {
     alignItems: 'center',
     justifyContent: 'center',
-    margin: Ratio.getPercent(0.5),
-    width: Ratio.getWidthPercent(5.5),
-    height: Ratio.getHeightPercent(2.5)
+    margin: getPercent(0.5),
+    width: getWidthPercent(5.5),
+    height: getHeightPercent(2.5)
   },
   imgStyle: {
     resizeMode: 'contain',
@@ -197,48 +200,31 @@ var styles = StyleSheet.create({
     borderColor: '#eee',
     opacity: 0.8
   },
-  currentCountry: {
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 2 / PixelRatio.get(),
-    borderBottomColor: '#000'
-  },
   itemCountry: {
     flexDirection: 'row',
-    height: Ratio.getHeightPercent(7),
+    height: getHeightPercent(7),
     justifyContent: 'flex-start',
     alignItems: 'center'
-  },
-  itemCountrySelect: {
-    height: Ratio.getHeightPercent(9)
   },
   itemCountryFlag: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: Ratio.getHeightPercent(7),
-    width: Ratio.getWidthPercent(15)
-  },
-  itemCountryFlagSelect: {
-    width: Ratio.getWidthPercent(33)
+    height: getHeightPercent(7),
+    width: getWidthPercent(15)
   },
   itemCountryName: {
     justifyContent: 'center',
-    width: Ratio.getWidthPercent(70),
+    width: getWidthPercent(70),
     borderBottomWidth: 1 / PixelRatio.get(),
     borderBottomColor: '#ccc',
-    height: Ratio.getHeightPercent(7)
-  },
-  itemCountryNameSelect: {
-    width: Ratio.getWidthPercent(35),
-    borderBottomWidth: 0
+    height: getHeightPercent(7)
   },
   countryName: {
-    fontSize: Ratio.getHeightPercent(2.2)
+    fontSize: getHeightPercent(2.2)
   },
   letters: {
     position: 'absolute',
-    height: Ratio.getHeightPercent(100),
+    height: getHeightPercent(100),
     top: 0,
     bottom: 0,
     right: 10,
@@ -247,15 +233,24 @@ var styles = StyleSheet.create({
     alignItems: 'center'
   },
   letter: {
-    height: Ratio.getHeightPercent(3.3),
-    width: Ratio.getWidthPercent(4),
+    height: getHeightPercent(3.3),
+    width: getWidthPercent(4),
     justifyContent: 'center',
     alignItems: 'center'
   },
   letterText: {
     textAlign: 'center',
-    fontSize: Ratio.getHeightPercent(2.2)
+    fontSize: getHeightPercent(2.2)
   }
 });
+
+CountryPicker.propTypes = {
+  cca2: React.PropTypes.string.isRequired,
+  translation: React.PropTypes.string,
+  onChange: React.PropTypes.func.isRequired
+ };
+CountryPicker.defaultProps = {
+  translation: 'eng'
+};
 
 module.exports = CountryPicker;

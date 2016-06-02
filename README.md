@@ -6,7 +6,7 @@
 
 The best Country Picker for React Native.
 
-![](http://i.imgur.com/WF4sdT7.gif)
+![](http://i.giphy.com/3oD3YEArxJ0z8iJ3Da.gif)
 
 ## Installation
 ```bash
