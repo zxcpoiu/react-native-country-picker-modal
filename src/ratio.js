@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react-native';
-const {height, width} = React.Dimensions.get('window');
+let {height, width} = React.Dimensions.get('window');
 
 // remove the status bar height since the modal view does not cover this area
 if (React.Platform.OS === 'android') {
