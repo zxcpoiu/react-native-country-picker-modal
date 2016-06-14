@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     width: 44
   },
   closeButtonImage: {
-    height: 44,
-    width: 44,
+    height: 35,
+    width: 35,
     resizeMode: 'contain'
   }
 });
