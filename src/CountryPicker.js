@@ -21,6 +21,7 @@ import countries from 'world-countries';
 import _ from 'lodash';
 import CountryFlags from './countryFlags';
 import {getWidthPercent, getHeightPercent, getPercent} from './ratio';
+import CloseButton from './CloseButton';
 
 class CountryPicker extends Component {
 
@@ -36,6 +37,10 @@ class CountryPicker extends Component {
     this.letters = _
       .range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1)
       .map(n => String.fromCharCode(n).substr(0));
+
+    // dimensions of country list and window
+    this.itemHeight = getHeightPercent(7);
+    this.listHeight = countries.length * this.itemHeight;
   }
 
   getCountry({ cca2 }) {
@@ -79,13 +84,11 @@ class CountryPicker extends Component {
     }
   }
 
-  scrollTo(letter) {
-    // dimensions of country list and window
-    const itemHeight = getHeightPercent(7);
-    const listPadding = getPercent(2);
-    const listHeight = countries.length * itemHeight + 2 * listPadding;
-    const windowHeight = getHeightPercent(100);
+  setVisibleListHeight(offset) {
+    this.visibleListHeight = getHeightPercent(100) - offset;
+  }
 
+  scrollTo(letter) {
     // find position of first country that starts with letter
     const index = this.orderCountryList().map((country) => {
       return this.getCountryName(country)[0];
@@ -93,11 +96,11 @@ class CountryPicker extends Component {
     if (index === -1) {
       return;
     }
-    let position = index * itemHeight + listPadding;
+    let position = index * this.itemHeight;
 
     // do not scroll past the end of the list
-    if (position + windowHeight > listHeight) {
-      position = listHeight - windowHeight;
+    if (position + this.visibleListHeight > this.listHeight) {
+      position = this.listHeight - this.visibleListHeight;
     }
 
     // scroll
@@ -162,6 +165,10 @@ class CountryPicker extends Component {
         <Modal
           visible={this.state.modalVisible}
           onRequestClose={() => this.setState({modalVisible: false})}>
+          {
+            this.props.closeable &&
+            <CloseButton onPress={() => this.setState({modalVisible: false})} />
+          }
           <ListView
             contentContainerStyle={styles.contentContainer}
             ref={scrollView => { this._scrollView = scrollView; }}
@@ -169,6 +176,7 @@ class CountryPicker extends Component {
             renderRow={country => this.renderCountry(country)}
             initialListSize={20}
             pageSize={countries.length - 20}
+            onLayout={({nativeEvent: { layout: { y: offset} }}) => this.setVisibleListHeight(offset)}
           />
           <View style={styles.letters}>
             {this.letters.map((letter, index) => this.renderLetters(letter, index))}
@@ -182,8 +190,7 @@ class CountryPicker extends Component {
 const styles = StyleSheet.create({
   contentContainer: {
     width: getWidthPercent(100),
-    backgroundColor: 'white',
-    padding: getPercent(2)
+    backgroundColor: 'white'
   },
   touchFlag: {
     alignItems: 'center',
@@ -247,8 +254,9 @@ const styles = StyleSheet.create({
 CountryPicker.propTypes = {
   cca2: React.PropTypes.string.isRequired,
   translation: React.PropTypes.string,
-  onChange: React.PropTypes.func.isRequired
- };
+  onChange: React.PropTypes.func.isRequired,
+  closeable: React.PropTypes.bool
+};
 CountryPicker.defaultProps = {
   translation: 'eng'
 };

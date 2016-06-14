@@ -110,6 +110,7 @@ AppRegistry.registerComponent('example', () => Example);
 | cca2 | string | *required | code ISO 3166-1 alpha-2 (ie. FR, US, etc.)|
 | translation | string | 'eng' | The language display for the name of the country  |
 | onChange | function | *required | The handler when a country is selected |
+| closeable | bool | false | If true, the CountryPicker will have a close button |
 
 ## Dependencies
 - world-countries : https://www.npmjs.com/package/world-countries
