@@ -2,8 +2,6 @@
 
 # react-native-country-picker-modal
 
-[![npm version](http://img.shields.io/npm/dm/react-native-country-picker-modal.svg?style=flat-square)](https://npmjs.org/package/react-native-country-picker-modal "View this project on npm")
-
 The best Country Picker for React Native.
 
 ![](http://i.giphy.com/3oD3YEArxJ0z8iJ3Da.gif)
@@ -27,7 +25,7 @@ $ react-native init myproject
 
 - Then, edit `myproject/index.ios.js`, like this:
 
-```jsx
+```javascript
 'use strict';
 import React, {
   AppRegistry,
