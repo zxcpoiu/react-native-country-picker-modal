@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * react-native-country-picker
  * @author xcarpentier<contact@xaviercarpentier.com>
@@ -7,20 +5,14 @@
  */
 
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  PixelRatio,
-  Image,
-  TouchableOpacity,
-  Modal,
-  Text,
-  ListView
+import { StyleSheet, View, PixelRatio, Image, TouchableOpacity, Modal,
+  Text, ListView,
 } from 'react-native';
 import countries from 'world-countries';
 import _ from 'lodash';
+
 import CountryFlags from './countryFlags';
-import {getWidthPercent, getHeightPercent, getPercent} from './ratio';
+import { getWidthPercent, getHeightPercent, getPercent } from './ratio';
 import CloseButton from './CloseButton';
 
 class CountryPicker extends Component {
@@ -264,10 +256,11 @@ CountryPicker.propTypes = {
   cca2: React.PropTypes.string.isRequired,
   translation: React.PropTypes.string,
   onChange: React.PropTypes.func.isRequired,
-  closeable: React.PropTypes.bool
+  closeable: React.PropTypes.bool,
 };
+
 CountryPicker.defaultProps = {
-  translation: 'eng'
+  translation: 'eng',
 };
 
 module.exports = CountryPicker;

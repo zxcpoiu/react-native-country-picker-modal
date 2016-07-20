@@ -1,6 +1,6 @@
 {
   "name": "react-native-country-picker-modal",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Country picker",
   "main": "src/CountryPicker.js",
   "repository": {
@@ -20,14 +20,6 @@
     "url": "https://github.com/xcarpentier/react-native-country-picker-modal/issues"
   },
   "homepage": "https://github.com/xcarpentier/react-native-country-picker-modal#readme",
-  "devDependencies": {
-    "cz-conventional-changelog": "1.1.6"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
   "dependencies": {
     "lodash": "4.12.0",
     "world-countries": "1.7.8"
