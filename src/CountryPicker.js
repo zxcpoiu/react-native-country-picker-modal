@@ -27,13 +27,6 @@ class CountryPicker extends Component {
 
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      cca2: props.cca2,
-      currentCountry: this.getCountry(props.cca2),
-      modalVisible: false,
-      countries: ds.cloneWithRows(this.orderCountryList())
-    };
     this.letters = _
       .range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1)
       .map(n => String.fromCharCode(n).substr(0));
@@ -41,11 +34,24 @@ class CountryPicker extends Component {
     // dimensions of country list and window
     this.itemHeight = getHeightPercent(7);
     this.listHeight = countries.length * this.itemHeight;
+
+    this.state = {
+      modalVisible: false,
+      cca2: props.cca2,
+      currentCountry: this.getCountry(props.cca2),
+    };
   }
 
   getCountry({ cca2 }) {
     return _.find(countries, {
       cca2
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      cca2: nextProps.cca2,
+      currentCountry: this.getCountry(nextProps.cca2),
     });
   }
 
@@ -151,6 +157,9 @@ class CountryPicker extends Component {
   }
 
   render() {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const dataSource = ds.cloneWithRows(this.orderCountryList());
+
     return (
       <View>
         <TouchableOpacity
@@ -172,7 +181,7 @@ class CountryPicker extends Component {
           <ListView
             contentContainerStyle={styles.contentContainer}
             ref={scrollView => { this._scrollView = scrollView; }}
-            dataSource={this.state.countries}
+            dataSource={dataSource}
             renderRow={country => this.renderCountry(country)}
             initialListSize={20}
             pageSize={countries.length - 20}
