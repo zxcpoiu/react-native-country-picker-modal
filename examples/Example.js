@@ -25,7 +25,7 @@ export default class Example extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to Country Picker !
+          Welcome to Country Picker !!
         </Text>
         <CountryPicker
           onChange={(value)=> this.setState({country: value})}
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 40,
     textAlign: 'center',
     margin: 10
   },
