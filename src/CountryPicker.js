@@ -166,21 +166,23 @@ class CountryPicker extends Component {
         <Modal
           visible={this.state.modalVisible}
           onRequestClose={() => this.setState({modalVisible: false})}>
-          {
-            this.props.closeable &&
-            <CloseButton onPress={() => this.setState({modalVisible: false})} />
-          }
-          <ListView
-            contentContainerStyle={styles.contentContainer}
-            ref={scrollView => { this._scrollView = scrollView; }}
-            dataSource={dataSource}
-            renderRow={country => this.renderCountry(country)}
-            initialListSize={20}
-            pageSize={countries.length - 20}
-            onLayout={({nativeEvent: { layout: { y: offset} }}) => this.setVisibleListHeight(offset)}
-          />
-          <View style={styles.letters}>
-            {this.letters.map((letter, index) => this.renderLetters(letter, index))}
+          <View style={styles.modalContainer}>
+            {
+              this.props.closeable &&
+              <CloseButton onPress={() => this.setState({modalVisible: false})} />
+            }
+            <ListView
+              contentContainerStyle={styles.contentContainer}
+              ref={scrollView => { this._scrollView = scrollView; }}
+              dataSource={dataSource}
+              renderRow={country => this.renderCountry(country)}
+              initialListSize={20}
+              pageSize={countries.length - 20}
+              onLayout={({nativeEvent: { layout: { y: offset} }}) => this.setVisibleListHeight(offset)}
+            />
+            <View style={styles.letters}>
+              {this.letters.map((letter, index) => this.renderLetters(letter, index))}
+            </View>
           </View>
         </Modal>
       </View>
@@ -189,6 +191,9 @@ class CountryPicker extends Component {
 }
 
 const styles = StyleSheet.create({
+  modalContainer: {
+    backgroundColor: 'white',
+  },
   contentContainer: {
     width: getWidthPercent(100),
     backgroundColor: 'white'
