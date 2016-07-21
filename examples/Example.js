@@ -2,7 +2,6 @@
  * Sample React Native Country Picker Example App
  * https://github.com/xcarpentier/react-native-country-picker
  */
-'use strict';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -26,7 +25,7 @@ export default class Example extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to Country Picker !
+          Welcome to Country Picker!
         </Text>
         <CountryPicker
           onChange={(value)=> this.setState({country: value, cca2: value.cca2})}
@@ -54,12 +53,14 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 25,
+    fontWeight: 'bold',
     textAlign: 'center',
-    margin: 10
+    margin: 10,
+    marginBottom: 25,
   },
   instructions: {
-    fontSize: 12,
+    fontSize: 20,
     textAlign: 'center',
     color: '#888',
     marginBottom: 5
