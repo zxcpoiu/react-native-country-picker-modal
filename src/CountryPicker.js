@@ -29,8 +29,7 @@ class CountryPicker extends Component {
 
     this.state = {
       modalVisible: false,
-      cca2: props.cca2,
-      currentCountry: this.getCountry(props.cca2),
+      dataSource: this.getCountryListDataSource()
     };
   }
 
@@ -41,10 +40,12 @@ class CountryPicker extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      cca2: nextProps.cca2,
-      currentCountry: this.getCountry(nextProps.cca2),
-    });
+    if ((this.props.cca2 !== nextProps.cca2) ||
+        (this.props.translation !== nextProps.translation)) {
+      this.setState({
+        dataSource: this.getCountryListDataSource()
+      });
+    }
   }
 
   getCountryName(country) {
@@ -107,6 +108,11 @@ class CountryPicker extends Component {
     });
   }
 
+  getCountryListDataSource() {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    return ds.cloneWithRows(this.orderCountryList());
+  }
+
   renderCountry(country, index) {
     return (
       <TouchableOpacity
@@ -149,9 +155,6 @@ class CountryPicker extends Component {
   }
 
   render() {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const dataSource = ds.cloneWithRows(this.orderCountryList());
-
     return (
       <View>
         <TouchableOpacity
@@ -160,7 +163,7 @@ class CountryPicker extends Component {
           <View style={styles.touchFlag}>
             <Image
               style={styles.imgStyle}
-              source={{uri: CountryFlags[this.state.cca2]}}/>
+              source={{uri: CountryFlags[this.props.cca2]}}/>
           </View>
         </TouchableOpacity>
         <Modal
@@ -173,7 +176,7 @@ class CountryPicker extends Component {
           <ListView
             contentContainerStyle={styles.contentContainer}
             ref={scrollView => { this._scrollView = scrollView; }}
-            dataSource={dataSource}
+            dataSource={this.state.dataSource}
             renderRow={country => this.renderCountry(country)}
             initialListSize={20}
             pageSize={countries.length - 20}
