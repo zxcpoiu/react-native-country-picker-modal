@@ -27,9 +27,11 @@ class CountryPicker extends Component {
     this.itemHeight = getHeightPercent(7);
     this.listHeight = countries.length * this.itemHeight;
 
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
     this.state = {
       modalVisible: false,
-      dataSource: this.getCountryListDataSource()
+      dataSource: ds.cloneWithRows(this.orderCountryList())
     };
   }
 
@@ -40,10 +42,9 @@ class CountryPicker extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if ((this.props.cca2 !== nextProps.cca2) ||
-        (this.props.translation !== nextProps.translation)) {
+    if (this.props.translation !== nextProps.translation) {
       this.setState({
-        dataSource: this.getCountryListDataSource()
+        dataSource: this.state.dataSource.cloneWithRows(this.orderCountryList())
       });
     }
   }
@@ -70,17 +71,14 @@ class CountryPicker extends Component {
 
     this.setState({
       modalVisible: false,
-      cca2: country.cca2
     });
 
-    if (this.props.onChange) {
-      this.props.onChange({
-        cca2: country.cca2,
-        callingCode: country.callingCode[0],
-        name: this.getCountryName(country),
-        currency: country.currency
-      });
-    }
+    this.props.onChange({
+      cca2: country.cca2,
+      callingCode: country.callingCode[0],
+      name: this.getCountryName(country),
+      currency: country.currency
+    });
   }
 
   setVisibleListHeight(offset) {
@@ -106,11 +104,6 @@ class CountryPicker extends Component {
     this._scrollView.scrollTo({
       y: position
     });
-  }
-
-  getCountryListDataSource() {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return ds.cloneWithRows(this.orderCountryList());
   }
 
   renderCountry(country, index) {
