@@ -44,26 +44,26 @@ class CountryPicker extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.translation !== nextProps.translation) {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.orderCountryList())
+        dataSource: this.state.dataSource.cloneWithRows(this.orderCountryList(nextProps.translation))
       });
     }
   }
 
-  getCountryName(country) {
-    const translation = this.props.translation || 'eng';
+  getCountryName(country, optionalTranslation) {
+    const translation = optionalTranslation || this.props.translation || 'eng';
     return (
       country.translations[translation] &&
       country.translations[translation].common
     ) || country.name.common;
   }
 
-  orderCountryList() {
+  orderCountryList(optionalTranslation) {
     return _(countries)
       .map(country => _.pick(
         country,
         ['cca2', 'callingCode', 'translations', 'name', 'currency'])
       )
-      .sortBy(n => _.deburr(this.getCountryName(n)))
+      .sortBy(n => _.deburr(this.getCountryName(n, optionalTranslation)))
       .value();
   }
 
@@ -162,21 +162,23 @@ class CountryPicker extends Component {
         <Modal
           visible={this.state.modalVisible}
           onRequestClose={() => this.setState({modalVisible: false})}>
-          {
-            this.props.closeable &&
-            <CloseButton onPress={() => this.setState({modalVisible: false})} />
-          }
-          <ListView
-            contentContainerStyle={styles.contentContainer}
-            ref={scrollView => { this._scrollView = scrollView; }}
-            dataSource={this.state.dataSource}
-            renderRow={country => this.renderCountry(country)}
-            initialListSize={20}
-            pageSize={countries.length - 20}
-            onLayout={({nativeEvent: { layout: { y: offset} }}) => this.setVisibleListHeight(offset)}
-          />
-          <View style={styles.letters}>
-            {this.letters.map((letter, index) => this.renderLetters(letter, index))}
+          <View style={styles.modalContainer}>
+            {
+              this.props.closeable &&
+              <CloseButton onPress={() => this.setState({modalVisible: false})} />
+            }
+            <ListView
+              contentContainerStyle={styles.contentContainer}
+              ref={scrollView => { this._scrollView = scrollView; }}
+              dataSource={this.state.dataSource}
+              renderRow={country => this.renderCountry(country)}
+              initialListSize={20}
+              pageSize={countries.length - 20}
+              onLayout={({nativeEvent: { layout: { y: offset} }}) => this.setVisibleListHeight(offset)}
+            />
+            <View style={styles.letters}>
+              {this.letters.map((letter, index) => this.renderLetters(letter, index))}
+            </View>
           </View>
         </Modal>
       </View>
@@ -185,6 +187,11 @@ class CountryPicker extends Component {
 }
 
 const styles = StyleSheet.create({
+  modalContainer: {
+    backgroundColor: 'white',
+    width: getWidthPercent(100),
+    height: getHeightPercent(100),
+  },
   contentContainer: {
     width: getWidthPercent(100),
     backgroundColor: 'white'
