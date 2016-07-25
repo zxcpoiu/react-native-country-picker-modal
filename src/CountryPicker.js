@@ -27,10 +27,11 @@ class CountryPicker extends Component {
     this.itemHeight = getHeightPercent(7);
     this.listHeight = countries.length * this.itemHeight;
 
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
     this.state = {
       modalVisible: false,
-      cca2: props.cca2,
-      currentCountry: this.getCountry(props.cca2),
+      dataSource: ds.cloneWithRows(this.orderCountryList())
     };
   }
 
@@ -41,10 +42,11 @@ class CountryPicker extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      cca2: nextProps.cca2,
-      currentCountry: this.getCountry(nextProps.cca2),
-    });
+    if (this.props.translation !== nextProps.translation) {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(this.orderCountryList())
+      });
+    }
   }
 
   getCountryName(country) {
@@ -69,17 +71,14 @@ class CountryPicker extends Component {
 
     this.setState({
       modalVisible: false,
-      cca2: country.cca2
     });
 
-    if (this.props.onChange) {
-      this.props.onChange({
-        cca2: country.cca2,
-        callingCode: country.callingCode[0],
-        name: this.getCountryName(country),
-        currency: country.currency
-      });
-    }
+    this.props.onChange({
+      cca2: country.cca2,
+      callingCode: country.callingCode[0],
+      name: this.getCountryName(country),
+      currency: country.currency
+    });
   }
 
   setVisibleListHeight(offset) {
@@ -149,9 +148,6 @@ class CountryPicker extends Component {
   }
 
   render() {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const dataSource = ds.cloneWithRows(this.orderCountryList());
-
     return (
       <View>
         <TouchableOpacity
@@ -160,7 +156,7 @@ class CountryPicker extends Component {
           <View style={styles.touchFlag}>
             <Image
               style={styles.imgStyle}
-              source={{uri: CountryFlags[this.state.cca2]}}/>
+              source={{uri: CountryFlags[this.props.cca2]}}/>
           </View>
         </TouchableOpacity>
         <Modal
@@ -173,7 +169,7 @@ class CountryPicker extends Component {
           <ListView
             contentContainerStyle={styles.contentContainer}
             ref={scrollView => { this._scrollView = scrollView; }}
-            dataSource={dataSource}
+            dataSource={this.state.dataSource}
             renderRow={country => this.renderCountry(country)}
             initialListSize={20}
             pageSize={countries.length - 20}
