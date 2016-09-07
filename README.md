@@ -26,7 +26,7 @@ $ react-native init myproject
 - Then, edit `myproject/index.ios.js`, like this:
 
 ```javascript
-'use strict';
+
 import React, {
   AppRegistry,
   Component,

@@ -3,8 +3,21 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
+
+const styles = StyleSheet.create({
+  closeButton: {
+    marginTop: 20,
+    height: 44,
+    width: 44,
+  },
+  closeButtonImage: {
+    height: 35,
+    width: 35,
+    resizeMode: 'contain',
+  },
+});
 
 const CloseButton = (props) => (
   <View style={styles.closeButton}>
@@ -19,17 +32,5 @@ const CloseButton = (props) => (
   </View>
 );
 
-const styles = StyleSheet.create({
-  closeButton: {
-    marginTop: 20,
-    height: 44,
-    width: 44
-  },
-  closeButtonImage: {
-    height: 35,
-    width: 35,
-    resizeMode: 'contain'
-  }
-});
 
 export default CloseButton;

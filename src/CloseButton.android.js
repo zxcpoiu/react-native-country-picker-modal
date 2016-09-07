@@ -4,13 +4,31 @@ import {
   StyleSheet,
   TouchableNativeFeedback,
   View,
-  Platform
+  Platform,
 } from 'react-native';
+
+const styles = StyleSheet.create({
+  closeButton: {
+    height: 56,
+    width: 56,
+    padding: 16,
+  },
+  closeButtonImage: {
+    height: 24,
+    width: 24,
+    resizeMode: 'contain',
+  },
+});
 
 const CloseButton = (props) => (
   <View style={styles.closeButton}>
     <TouchableNativeFeedback
-      background={Platform.Version < 21 ? TouchableNativeFeedback.SelectableBackground() : TouchableNativeFeedback.SelectableBackgroundBorderless()}
+      background={
+        Platform.Version < 21 ?
+        TouchableNativeFeedback.SelectableBackground()
+        :
+        TouchableNativeFeedback.SelectableBackgroundBorderless()
+      }
       {...props}
     >
       <View>
@@ -22,18 +40,5 @@ const CloseButton = (props) => (
     </TouchableNativeFeedback>
   </View>
 );
-
-const styles = StyleSheet.create({
-  closeButton: {
-    height: 56,
-    width: 56,
-    padding: 16
-  },
-  closeButtonImage: {
-    height: 24,
-    width: 24,
-    resizeMode: 'contain'
-  }
-});
 
 export default CloseButton;

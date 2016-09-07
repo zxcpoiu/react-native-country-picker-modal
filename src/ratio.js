@@ -1,27 +1,10 @@
-'use strict';
-
 import React from 'react-native';
-let {height, width} = React.Dimensions.get('window');
 
-// remove the status bar height since the modal view does not cover this area
-if (React.Platform.OS === 'android') {
-  height = height - 24;
-}
+const { height, width } = React.Dimensions.get('window');
 
-class Ratio {
-  constructor() {}
-
-  getWidthPercent(percentage) {
-    return (width * percentage) / 100;
-  }
-
-  getHeightPercent(percentage) {
-    return (height * percentage) / 100;
-  }
-
-  getPercent(percentage) {
-    return ((height + width) / 2 * percentage) / 100;
-  }
-}
-
-module.exports = new Ratio();
+// Remove the status bar height since the modal view does not cover this area
+const ANDROID_MINUS_HEIGHT = 24;
+const getHeight = () => (React.Platform.OS === 'android' ? height - ANDROID_MINUS_HEIGHT : height);
+export const getWidthPercent = (percentage) => (width * percentage) / 100;
+export const getHeightPercent = (percentage) => (getHeight() * percentage) / 100;
+export const getPercent = (percentage) => (((getHeight() + width) / 2) * percentage) / 100;

@@ -1,4 +1,4 @@
-'use strict';
+
 /**
  * Sample React Native Country Picker Example App
  * https://github.com/xcarpentier/react-native-country-picker
