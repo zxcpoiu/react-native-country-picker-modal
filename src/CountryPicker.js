@@ -88,6 +88,7 @@ class CountryPicker extends Component {
 
   constructor(props) {
     super(props);
+    this.openModal = this.openModal.bind(this);
     this.letters = _
       .range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1)
       .map(n => String.fromCharCode(n).substr(0));
@@ -95,9 +96,7 @@ class CountryPicker extends Component {
     // dimensions of country list and window
     this.itemHeight = getHeightPercent(7);
     this.listHeight = countries.length * this.itemHeight;
-
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-
     this.state = {
       modalVisible: false,
       dataSource: ds.cloneWithRows(this.orderCountryList()),
@@ -113,7 +112,7 @@ class CountryPicker extends Component {
     }
   }
 
-  onSelect(country) {
+  onSelectCountry(country) {
     this.setState({
       modalVisible: false,
     });
@@ -136,6 +135,10 @@ class CountryPicker extends Component {
 
   setVisibleListHeight(offset) {
     this.visibleListHeight = getHeightPercent(100) - offset;
+  }
+
+  openModal() {
+    this.setState({ modalVisible: true });
   }
 
   orderCountryList(optionalTranslation) {
@@ -172,7 +175,7 @@ class CountryPicker extends Component {
     return (
       <TouchableOpacity
         key={index}
-        onPress={() => this.onSelect(country)}
+        onPress={() => this.onSelectCountry(country)}
         activeOpacity={0.99}
       >
         {this.renderCountryDetail(country)}

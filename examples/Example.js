@@ -8,43 +8,10 @@ import {
   Text,
   View,
   StatusBar,
-  PixelRatio
+  PixelRatio,
+  TouchableOpacity,
 } from 'react-native';
 import CountryPicker from 'react-native-country-picker-modal';
-
-export default class Example extends Component {
-  constructor(props){
-    StatusBar.setHidden(true);
-    super(props);
-    this.state = {
-      cca2: 'US'
-    };
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to Country Picker!
-        </Text>
-        <CountryPicker
-          onChange={(value)=> this.setState({country: value, cca2: value.cca2})}
-          cca2={this.state.cca2}
-          translation='eng'
-          closeable
-        />
-        <Text style={styles.instructions}>
-          press on the flag
-        </Text>
-        {this.state.country &&
-          <Text style={styles.data}>
-            {JSON.stringify(this.state.country, null, 2)}
-          </Text>
-        }
-      </View>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -63,7 +30,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: '#888',
-    marginBottom: 5
+    marginBottom: 7
+  },
+  link: {
+    fontSize: 14,
+    textAlign: 'center',
+    color: '#888',
+    textDecorationLine: 'underline'
   },
   data: {
     padding: 15,
@@ -74,3 +47,43 @@ const styles = StyleSheet.create({
     color: '#777'
   }
 });
+
+export default class Example extends Component {
+  constructor(props){
+    StatusBar.setHidden(true);
+    super(props);
+    this.state = {
+      cca2: 'US'
+    };
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to Country Picker!
+        </Text>
+        <CountryPicker
+          ref={countryPicker => this.countryPicker = countryPicker}
+          onChange={(value)=> this.setState({country: value, cca2: value.cca2})}
+          cca2={this.state.cca2}
+          translation='eng'
+          closeable
+        />
+        <Text style={styles.instructions}>
+          press on the flag
+        </Text>
+        <TouchableOpacity onPress={()=> this.countryPicker.openModal()}>
+          <Text style={styles.link}>
+            or click here
+          </Text>
+        </TouchableOpacity>
+        {this.state.country &&
+          <Text style={styles.data}>
+            {JSON.stringify(this.state.country, null, 2)}
+          </Text>
+        }
+      </View>
+    );
+  }
+}
