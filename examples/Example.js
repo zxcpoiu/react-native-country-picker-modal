@@ -67,7 +67,7 @@ export default class Example extends Component {
           ref={countryPicker => this.countryPicker = countryPicker}
           onChange={(value)=> this.setState({country: value, cca2: value.cca2})}
           cca2={this.state.cca2}
-          translation='eng'
+          translation='zho'
           closeable
         />
         <Text style={styles.instructions}>
