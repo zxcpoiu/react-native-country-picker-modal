@@ -5,86 +5,25 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, PixelRatio, Image, TouchableOpacity, Modal,
-  Text, ListView,
-} from 'react-native';
+import { View, Image, TouchableOpacity, Modal, Text, ListView } from 'react-native';
 import countries from 'world-countries';
 import _ from 'lodash';
 
 import CountryFlags from './countryFlags';
-import { getWidthPercent, getHeightPercent, getPercent } from './ratio';
+import { getHeightPercent } from './ratio';
 import CloseButton from './CloseButton';
+import styles from './CountryPicker.styles';
 
-const styles = StyleSheet.create({
-  modalContainer: {
-    backgroundColor: 'white',
-    width: getWidthPercent(100),
-    height: getHeightPercent(100),
-  },
-  contentContainer: {
-    width: getWidthPercent(100),
-    backgroundColor: 'white',
-  },
-  touchFlag: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: getPercent(0.5),
-    width: getWidthPercent(5.5),
-    height: getHeightPercent(2.5),
-  },
-  imgStyle: {
-    resizeMode: 'contain',
-    width: 25,
-    height: 19,
-    borderWidth: 1 / PixelRatio.get(),
-    borderColor: '#eee',
-    opacity: 0.8,
-  },
-  itemCountry: {
-    flexDirection: 'row',
-    height: getHeightPercent(7),
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  itemCountryFlag: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: getHeightPercent(7),
-    width: getWidthPercent(15),
-  },
-  itemCountryName: {
-    justifyContent: 'center',
-    width: getWidthPercent(70),
-    borderBottomWidth: 1 / PixelRatio.get(),
-    borderBottomColor: '#ccc',
-    height: getHeightPercent(7),
-  },
-  countryName: {
-    fontSize: getHeightPercent(2.2),
-  },
-  letters: {
-    position: 'absolute',
-    height: getHeightPercent(100),
-    top: 0,
-    bottom: 0,
-    right: 10,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  letter: {
-    height: getHeightPercent(3.3),
-    width: getWidthPercent(4),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  letterText: {
-    textAlign: 'center',
-    fontSize: getHeightPercent(2.2),
-  },
-});
-
-class CountryPicker extends Component {
+export default class CountryPicker extends Component {
+  static propTypes = {
+    cca2: React.PropTypes.string.isRequired,
+    translation: React.PropTypes.string,
+    onChange: React.PropTypes.func.isRequired,
+    closeable: React.PropTypes.bool,
+  }
+  static defaultProps = {
+    translation: 'eng',
+  }
 
   constructor(props) {
     super(props);
@@ -261,16 +200,3 @@ class CountryPicker extends Component {
     );
   }
 }
-
-CountryPicker.propTypes = {
-  cca2: React.PropTypes.string.isRequired,
-  translation: React.PropTypes.string,
-  onChange: React.PropTypes.func.isRequired,
-  closeable: React.PropTypes.bool,
-};
-
-CountryPicker.defaultProps = {
-  translation: 'eng',
-};
-
-export default CountryPicker;
