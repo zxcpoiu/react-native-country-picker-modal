@@ -4,8 +4,11 @@
 
 The best Country Picker for React Native.
 
-![](http://i.giphy.com/3oD3YEArxJ0z8iJ3Da.gif)
 
+
+| iOS | Android |
+| --------|---------|
+|![](http://i.giphy.com/l3vRjuyMscm7ALm5a.gif)|![](http://i.giphy.com/26uf89kkaC8zgjFq8.gif)|
 ## Installation
 ```bash
 $ npm i react-native-country-picker-modal --save
