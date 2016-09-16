@@ -16,6 +16,8 @@
     "no-underscore-dangle": 0,
     "generator-star-spacing": 0,
     "babel/generator-star-spacing": 0,
-    "new-cap": 0
+    "new-cap": 0,
+    "no-return-assign": 0
+
   }
 }

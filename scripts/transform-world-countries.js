@@ -17,6 +17,14 @@ const newcountries = countries
       },
     })
   )
+  .sort((a, b) => {
+    if (a[Object.keys(a)[0]].name.common === b[Object.keys(b)[0]].name.common) {
+      return 0;
+    } else if (a[Object.keys(a)[0]].name.common < b[Object.keys(b)[0]].name.common) {
+      return -1;
+    }
+    return 1;
+  })
   .reduce(
     (prev, cur) =>
     ({

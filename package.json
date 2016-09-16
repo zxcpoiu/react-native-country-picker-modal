@@ -29,6 +29,7 @@
     "world-countries": "1.8.0"
   },
   "devDependencies": {
+    "babel-preset-react-native-stage-0": "1.0.1",
     "babel-cli": "6.14.0",
     "babel-eslint": "6.1.2",
     "babel-preset-latest": "6.14.0",

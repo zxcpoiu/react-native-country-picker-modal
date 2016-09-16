@@ -6,13 +6,15 @@
 
 import React, { Component } from 'react';
 import { View, Image, TouchableOpacity, Modal, Text, ListView } from 'react-native';
-import countries from 'world-countries';
 import _ from 'lodash';
 
-import CountryFlags from './countryFlags';
+import countries from '../data/countries';
+
 import { getHeightPercent } from './ratio';
 import CloseButton from './CloseButton';
-import styles from './CountryPicker.styles';
+import styles from './CountryPicker.style';
+
+const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
 export default class CountryPicker extends Component {
   static propTypes = {
@@ -35,41 +37,31 @@ export default class CountryPicker extends Component {
     // dimensions of country list and window
     this.itemHeight = getHeightPercent(7);
     this.listHeight = countries.length * this.itemHeight;
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+    const cca2List = Object.keys(countries);
     this.state = {
       modalVisible: false,
-      dataSource: ds.cloneWithRows(this.orderCountryList()),
+      cca2List,
+      dataSource: ds.cloneWithRows(cca2List),
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.translation !== nextProps.translation) {
-      this.setState({
-        dataSource:
-          this.state.dataSource.cloneWithRows(this.orderCountryList(nextProps.translation)),
-      });
-    }
-  }
-
-  onSelectCountry(country) {
+  onSelectCountry(cca2) {
     this.setState({
       modalVisible: false,
     });
 
     this.props.onChange({
-      cca2: country.cca2,
-      callingCode: country.callingCode[0],
-      name: this.getCountryName(country),
-      currency: country.currency,
+      cca2,
+      ...countries[cca2],
+      flag: undefined,
+      name: this.getCountryName(countries[cca2]),
     });
   }
 
   getCountryName(country, optionalTranslation) {
     const translation = optionalTranslation || this.props.translation || 'eng';
-    return (
-      country.translations[translation] &&
-      country.translations[translation].common
-    ) || country.name.common;
+    return country.name[translation] || country.name.common;
   }
 
   setVisibleListHeight(offset) {
@@ -80,19 +72,9 @@ export default class CountryPicker extends Component {
     this.setState({ modalVisible: true });
   }
 
-  orderCountryList(optionalTranslation) {
-    return _(countries)
-      .map(country => _.pick(
-        country,
-        ['cca2', 'callingCode', 'translations', 'name', 'currency'])
-      )
-      .sortBy(n => _.deburr(this.getCountryName(n, optionalTranslation)))
-      .value();
-  }
-
   scrollTo(letter) {
     // find position of first country that starts with letter
-    const index = this.orderCountryList().map((country) => this.getCountryName(country)[0])
+    const index = this.state.cca2List.map((country) => countries[country].name.common[0])
       .indexOf(letter);
     if (index === -1) {
       return;
@@ -136,13 +118,14 @@ export default class CountryPicker extends Component {
     );
   }
 
-  renderCountryDetail(country) {
+  renderCountryDetail(cca2) {
+    const country = countries[cca2];
     return (
       <View style={styles.itemCountry}>
         <View style={styles.itemCountryFlag}>
           <Image
             style={styles.imgStyle}
-            source={{ uri: CountryFlags[country.cca2] }}
+            source={{ uri: countries[cca2].flag }}
           />
         </View>
         <View style={styles.itemCountryName}>
@@ -164,7 +147,7 @@ export default class CountryPicker extends Component {
           <View style={styles.touchFlag}>
             <Image
               style={styles.imgStyle}
-              source={{ uri: CountryFlags[this.props.cca2] }}
+              source={{ uri: countries[this.props.cca2].flag }}
             />
           </View>
         </TouchableOpacity>
@@ -179,14 +162,11 @@ export default class CountryPicker extends Component {
             }
             <ListView
               contentContainerStyle={styles.contentContainer}
-              ref={listView => {
-                this._listView = listView;
-                return null;
-              }}
+              ref={listView => this._listView = listView}
               dataSource={this.state.dataSource}
               renderRow={country => this.renderCountry(country)}
-              initialListSize={20}
-              pageSize={countries.length - 20}
+              initialListSize={30}
+              pageSize={countries.length - 30}
               onLayout={
                 ({ nativeEvent: { layout: { y: offset } } }) => this.setVisibleListHeight(offset)
               }

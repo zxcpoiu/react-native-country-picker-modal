@@ -41,7 +41,7 @@ export default StyleSheet.create({
   itemCountryName: {
     justifyContent: 'center',
     width: getWidthPercent(70),
-    borderBottomWidth: 1 / PixelRatio.get(),
+    borderBottomWidth: 2 / PixelRatio.get(),
     borderBottomColor: '#ccc',
     height: getHeightPercent(7),
   },
