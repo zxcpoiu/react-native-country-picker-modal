@@ -5,14 +5,31 @@
  */
 
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, Modal, Text, ListView } from 'react-native';
+import { View, Image, TouchableOpacity, Modal, Text, ListView, Platform } from 'react-native';
 import _ from 'lodash';
 
-import countries from '../data/countries';
-
+import cca2List from '../data/cca2';
 import { getHeightPercent } from './ratio';
 import CloseButton from './CloseButton';
 import styles from './CountryPicker.style';
+
+let countries = null;
+let Emoji = null;
+
+// Maybe someday android get all flags emoji
+// but for now just ios
+// const isEmojiable = Platform.OS === 'ios' ||
+// (Platform.OS === 'android' && Platform.Version >= 21);
+const isEmojiable = Platform.OS === 'ios';
+
+if (isEmojiable) {
+  countries = require('../data/countries-emoji');
+  Emoji = require('react-native-emoji').default;
+} else {
+  countries = require('../data/countries');
+
+  Emoji = <View />;
+}
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
@@ -27,24 +44,11 @@ export default class CountryPicker extends Component {
     translation: 'eng',
   }
 
-  constructor(props) {
-    super(props);
-    this.openModal = this.openModal.bind(this);
-    this.letters = _
-      .range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1)
-      .map(n => String.fromCharCode(n).substr(0));
-
-    // dimensions of country list and window
-    this.itemHeight = getHeightPercent(7);
-    this.listHeight = countries.length * this.itemHeight;
-
-    const cca2List = Object.keys(countries);
-    this.state = {
-      modalVisible: false,
-      cca2List,
-      dataSource: ds.cloneWithRows(cca2List),
-    };
-  }
+  state = {
+    modalVisible: false,
+    cca2List,
+    dataSource: ds.cloneWithRows(cca2List),
+  };
 
   onSelectCountry(cca2) {
     this.setState({
@@ -67,6 +71,15 @@ export default class CountryPicker extends Component {
   setVisibleListHeight(offset) {
     this.visibleListHeight = getHeightPercent(100) - offset;
   }
+
+  openModal = this.openModal.bind(this);
+  letters = _
+    .range('A'.charCodeAt(0), 'Z'.charCodeAt(0) + 1)
+    .map(n => String.fromCharCode(n).substr(0));
+
+  // dimensions of country list and window
+  itemHeight = getHeightPercent(7);
+  listHeight = countries.length * this.itemHeight;
 
   openModal() {
     this.setState({ modalVisible: true });
@@ -122,12 +135,7 @@ export default class CountryPicker extends Component {
     const country = countries[cca2];
     return (
       <View style={styles.itemCountry}>
-        <View style={styles.itemCountryFlag}>
-          <Image
-            style={styles.imgStyle}
-            source={{ uri: countries[cca2].flag }}
-          />
-        </View>
+        {this.renderFlag(cca2)}
         <View style={styles.itemCountryName}>
           <Text style={styles.countryName}>
             {this.getCountryName(country)}
@@ -135,6 +143,29 @@ export default class CountryPicker extends Component {
         </View>
       </View>
     );
+  }
+
+  renderEmojiFlag(cca2) {
+    return (
+      <Text style={styles.emojiFlag}>
+        <Emoji name={countries[cca2].flag} />
+      </Text>
+    );
+  }
+
+  renderImageFlag(cca2) {
+    return (
+      <View style={styles.itemCountryFlag}>
+        <Image
+          style={styles.imgStyle}
+          source={{ uri: countries[cca2].flag }}
+        />
+      </View>
+    );
+  }
+
+  renderFlag(cca2) {
+    return isEmojiable ? this.renderEmojiFlag(cca2) : this.renderImageFlag(cca2);
   }
 
   render() {
@@ -145,10 +176,7 @@ export default class CountryPicker extends Component {
           activeOpacity={0.7}
         >
           <View style={styles.touchFlag}>
-            <Image
-              style={styles.imgStyle}
-              source={{ uri: countries[this.props.cca2].flag }}
-            />
+            {this.renderFlag(this.props.cca2)}
           </View>
         </TouchableOpacity>
         <Modal

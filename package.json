@@ -9,7 +9,9 @@
   },
   "scripts": {
     "lint": "eslint ./src",
-    "gendata": "babel-node ./scripts/transform-world-countries.js > ./data/countries.json"
+    "gendata": "rm -rf ./data/countries.json && babel-node ./scripts/transform-world-countries.js > ./data/countries.json",
+    "gendata-emoji": "rm -rf ./data/countries-emoji.json && babel-node ./scripts/transform-world-countries.js --emoji > ./data/countries-emoji.json",
+    "gendata-cca2": "rm -rf ./data/cca2.json && babel-node ./scripts/transform-world-countries.js --cca2 > ./data/cca2.json"
   },
   "keywords": [
     "react-native",
@@ -27,6 +29,7 @@
   "dependencies": {
     "babel-preset-react-native-stage-0": "1.0.1",
     "lodash": "4.12.0",
+    "react-native-emoji": "1.2.0",
     "world-countries": "1.8.0"
   },
   "devDependencies": {
