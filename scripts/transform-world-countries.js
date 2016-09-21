@@ -1,6 +1,9 @@
 import countries from 'world-countries';
 import flags from '../src/countryFlags';
 
+const isEmoji = process.argv.includes('--emoji');
+const isCca2 = process.argv.includes('--cca2');
+
 const getCountryNames = (common, translations) => Object
     .keys(translations)
     .map(key => ({ [key]: translations[key].common }))
@@ -12,7 +15,7 @@ const newcountries = countries
       [cca2]: {
         currency: currency[0],
         callingCode: callingCode[0],
-        flag: flags[cca2],
+        flag: isEmoji ? `flag-${cca2.toLowerCase()}` : flags[cca2],
         name: { common, ...getCountryNames(common, translations) },
       },
     })
@@ -33,4 +36,8 @@ const newcountries = countries
     }),
     {});
 
-console.log(JSON.stringify(newcountries, null, 1)); // eslint-disable-line
+if (!isCca2) {
+  console.log(JSON.stringify(newcountries)); // eslint-disable-line
+} else {
+  console.log(JSON.stringify(Object.keys(newcountries))); // eslint-disable-line
+}

@@ -1,5 +1,5 @@
 import { StyleSheet, PixelRatio } from 'react-native';
-import { getWidthPercent, getHeightPercent, getPercent } from './ratio';
+import { getWidthPercent, getHeightPercent } from './ratio';
 
 export default StyleSheet.create({
   modalContainer: {
@@ -14,9 +14,6 @@ export default StyleSheet.create({
   touchFlag: {
     alignItems: 'center',
     justifyContent: 'center',
-    margin: getPercent(0.5),
-    width: getWidthPercent(5.5),
-    height: getHeightPercent(2.5),
   },
   imgStyle: {
     resizeMode: 'contain',
@@ -25,6 +22,15 @@ export default StyleSheet.create({
     borderWidth: 1 / PixelRatio.get(),
     borderColor: '#eee',
     opacity: 0.8,
+  },
+  emojiFlag: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 30,
+    width: 30,
+    height: 30,
+    borderWidth: 1 / PixelRatio.get(),
+    borderColor: 'transparent',
   },
   itemCountry: {
     flexDirection: 'row',
