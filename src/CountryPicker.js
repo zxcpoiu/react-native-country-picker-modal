@@ -16,7 +16,11 @@ import styles from './CountryPicker.style';
 let countries = null;
 let Emoji = null;
 
-const isEmojiable = Platform.OS === 'ios' || (Platform.OS === 'android' && Platform.Version >= 21);
+// Maybe someday android get all flags emoji
+// but for now just ios
+// const isEmojiable = Platform.OS === 'ios' ||
+// (Platform.OS === 'android' && Platform.Version >= 21);
+const isEmojiable = Platform.OS === 'ios';
 
 if (isEmojiable) {
   countries = require('../data/countries-emoji');
