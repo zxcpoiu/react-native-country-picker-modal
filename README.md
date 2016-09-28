@@ -5,7 +5,6 @@
 The best Country Picker for React Native.
 
 
-
 | iOS | Android |
 | --------|---------|
 |![](http://i.giphy.com/l2SpOUptMAEXW2jqU.gif)|![](http://i.giphy.com/26ufd30pDhSeEbIwE.gif)|
