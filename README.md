@@ -1,6 +1,6 @@
+[![Downloads](https://img.shields.io/npm/dm/react-native-stripe-api.svg)](https://www.npmjs.com/package/react-native-country-picker)
+
 [**Support me with a Follow**](https://github.com/xcarpentier/followers)
-
-
 
 # react-native-country-picker-modal
 
