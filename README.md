@@ -6,7 +6,7 @@
 
 The best Country Picker for React Native.
 
-[[**Demo on Exponent**]https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png](https://getexponent.com/@xcarpentier/react-native-country-picker-demo)
+[![**Demo on Exponent**](https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png)](https://getexponent.com/@xcarpentier/react-native-country-picker-demo)
 
 | iOS | Android |
 | --------|---------|
