@@ -1,4 +1,4 @@
-[![Downloads](https://img.shields.io/npm/dm/react-native-stripe-api.svg)](https://www.npmjs.com/package/react-native-country-picker)
+[![Downloads](https://img.shields.io/npm/dm/react-native-stripe-api.svg)](https://www.npmjs.com/package/react-native-country-picker-modal)
 
 [**Support me with a Follow**](https://github.com/xcarpentier/followers)
 
