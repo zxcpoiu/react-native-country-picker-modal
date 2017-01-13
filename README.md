@@ -1,3 +1,4 @@
+[![NPM version](https://badge.fury.io/js/react-native-country-picker-modal.svg)](http://badge.fury.io/js/react-native-country-picker-modal)
 [![Downloads](https://img.shields.io/npm/dm/react-native-country-picker-modal.svg)](https://www.npmjs.com/package/react-native-country-picker-modal)
 
 [**Support me with a Follow**](https://github.com/xcarpentier/followers)
