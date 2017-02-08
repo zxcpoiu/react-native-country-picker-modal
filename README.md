@@ -122,6 +122,7 @@ AppRegistry.registerComponent('example', () => Example);
 | onChange | function | \*required | The handler when a country is selected |
 | onClose | function | \*required | The handler when the close button is clicked |
 | closeable | bool | false | If true, the CountryPicker will have a close button |
+| styles | object | {} | Override any style specified in the component (see source code)
 
 ## Dependencies
 - world-countries : https://www.npmjs.com/package/world-countries
