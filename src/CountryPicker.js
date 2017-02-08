@@ -4,7 +4,9 @@
  * @flow
  */
 
+// eslint-disable-next-line
 import React, { Component } from 'react';
+// eslint-disable-next-line
 import {
   StyleSheet,
   View,
@@ -57,6 +59,7 @@ export default class CountryPicker extends Component {
 
   static defaultProps = {
     translation: 'eng',
+    onClose: () => {},
   }
 
   static renderEmojiFlag(cca2, emojiStyle) {
@@ -117,6 +120,13 @@ export default class CountryPicker extends Component {
       flag: undefined,
       name: this.getCountryName(countries[cca2]),
     });
+  }
+
+  onClose() {
+    this.setState({ modalVisible: false });
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
   }
 
   getCountryName(country, optionalTranslation) {
@@ -201,6 +211,8 @@ export default class CountryPicker extends Component {
     );
   }
 
+
+
   render() {
     return (
       <View>
@@ -224,7 +236,9 @@ export default class CountryPicker extends Component {
           <View style={styles.modalContainer}>
             {
               this.props.closeable &&
-                <CloseButton onPress={() => {this.setState({ modalVisible: false });this.props.onClose()}} />
+                <CloseButton
+                  onPress={() => this.onClose()}
+                />
             }
             <ListView
               contentContainerStyle={styles.contentContainer}

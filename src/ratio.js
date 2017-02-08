@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React from 'react-native';
 
 const { height, width } = React.Dimensions.get('window');

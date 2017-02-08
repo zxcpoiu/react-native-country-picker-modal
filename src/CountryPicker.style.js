@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { StyleSheet, PixelRatio } from 'react-native';
 import { getWidthPercent, getHeightPercent } from './ratio';
 
