@@ -43,10 +43,15 @@ if (isEmojiable) {
   Emoji = <View />;
 }
 
+export const getAllCountries = () => {
+  return cca2List.map((cca2) => {
+    return {...countries[cca2], cca2};
+  });
+};
+
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
 export default class CountryPicker extends Component {
-
   static propTypes = {
     cca2: React.PropTypes.string.isRequired,
     translation: React.PropTypes.string,
@@ -54,12 +59,13 @@ export default class CountryPicker extends Component {
     onClose: React.PropTypes.func,
     closeable: React.PropTypes.bool,
     children: React.PropTypes.node,
+    countryList: React.PropTypes.array,
     styles: React.PropTypes.object,
   }
 
   static defaultProps = {
     translation: 'eng',
-    onClose: () => {},
+    countryList: cca2List
   }
 
   static renderEmojiFlag(cca2, emojiStyle) {
@@ -92,7 +98,7 @@ export default class CountryPicker extends Component {
 
     this.state = {
       modalVisible: false,
-      cca2List,
+      cca2List: props.countryList,
       dataSource: ds.cloneWithRows(cca2List),
     };
 
