@@ -161,3 +161,6 @@ YES : It used the world-countries package and image is stored into json and base
 Feel free to [contact me](mailto:contact@xaviercarpentier.com) or [create an issue](https://github.com/xcarpentier/react-native-country-picker/issues/new)
 
 > made with ♥
+
+## Licence
+MIT
