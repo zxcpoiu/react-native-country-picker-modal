@@ -19,9 +19,8 @@ import {
 } from 'react-native'
 
 import Fuse from 'fuse.js'
-
 import cca2List from '../data/cca2'
-import { getHeightPercent } from './ratio'
+import { getHeightPercent, getWidthPercent } from './ratio';
 import CloseButton from './CloseButton'
 import countryPickerStyles from './CountryPicker.style'
 import KeyboardAvoidingView from './KeyboardAvoidingView'
@@ -30,7 +29,8 @@ let countries = null
 let Emoji = null
 let styles = {}
 
-let isEmojiable = Platform.OS === 'ios'
+//let isEmojiable = Platform.OS === 'ios'
+let isEmojiable = false; // --- disable emoji
 
 const FLAG_TYPES = {
   flat: 'flat',
@@ -106,6 +106,14 @@ export default class CountryPicker extends Component {
   }
 
   static renderImageFlag(cca2, imageStyle) {
+    if (cca2 === 'AHOY') {
+      return (
+        <Image
+          style={[countryPickerStyles.imgStyle, imageStyle]}
+          source={require('../../../src/images/ahoy_img_icon.png')}
+        />
+      );
+    }
     return cca2 !== '' ? (
       <Image
         style={[countryPickerStyles.imgStyle, imageStyle]}
@@ -115,6 +123,27 @@ export default class CountryPicker extends Component {
   }
 
   static renderFlag(cca2, itemStyle, emojiStyle, imageStyle) {
+    let ahoyImgStyle = {
+      height: 24,
+      width: 24,
+      borderRadius: 12,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: '#658AF9',
+    };
+    imageStyle = imageStyle ? {...imageStyle, ...ahoyImgStyle} : ahoyImgStyle;
+    if (!itemStyle) {
+      itemStyle = {
+        height: getHeightPercent(7),
+        width: getWidthPercent(7),
+      };
+    }
+    if (cca2 === 'AHOY') {
+      return (
+        <View style={[styles.itemCountryFlag, itemStyle]}>
+          {CountryPicker.renderImageFlag(cca2, imageStyle)}
+        </View>
+      );
+    }
     return (
       <View style={[countryPickerStyles.itemCountryFlag, itemStyle]}>
         {isEmojiable
@@ -325,7 +354,7 @@ export default class CountryPicker extends Component {
     const country = countries[cca2]
     return (
       <View style={styles.itemCountry}>
-        {CountryPicker.renderFlag(cca2)}
+        {CountryPicker.renderFlag(cca2, countryPickerStyles.itemCountryFlag)}
         <View style={styles.itemCountryName}>
           <Text style={styles.countryName} allowFontScaling={false}>
             {this.getCountryName(country)}

@@ -30,7 +30,7 @@ export default StyleSheet.create({
     height: 19
   },
   imgStyle: {
-    resizeMode: 'contain',
+    //resizeMode: 'contain',
     width: 25,
     height: 19,
     borderWidth: 1 / PixelRatio.get(),
