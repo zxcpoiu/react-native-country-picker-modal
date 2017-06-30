@@ -169,4 +169,4 @@ Feel free to [contact me](mailto:contact@xaviercarpentier.com) or [create an iss
 > made with ♥
 
 ## Licence
-[MIT](https://github.com/xcarpentier/react-native-country-picker/LICENCE.md)
+[MIT](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/LICENSE.md)
