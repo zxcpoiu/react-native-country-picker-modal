@@ -155,6 +155,9 @@ YES
 ### Is the data that is populated inside the list saved offline once I install your package?
 YES : It used the world-countries package and image is stored into json and base64.
 
+## Tiers lib using this lib
+https://github.com/joinspontaneous/react-native-phone-verification
+
 ## Contribution
 
 - [@xcapentier](mailto:contact@xaviercarpentier.com) The main author.
@@ -166,4 +169,4 @@ Feel free to [contact me](mailto:contact@xaviercarpentier.com) or [create an iss
 > made with ♥
 
 ## Licence
-MIT
+[MIT](https://github.com/xcarpentier/react-native-country-picker/LICENCE.md)
