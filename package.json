@@ -34,6 +34,7 @@
     "world-countries": "1.8.0"
   },
   "devDependencies": {
+    "jest": "^20.0.4",
     "babel-cli": "6.14.0",
     "babel-eslint": "6.1.2",
     "babel-preset-latest": "6.14.0",
