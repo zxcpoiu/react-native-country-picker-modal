@@ -1,13 +1,11 @@
 {
   "extends": "airbnb",
   "parser": "babel-eslint",
-  "plugins": [
-    "react",
-    "react-native"
-  ],
+  "plugins": ["react", "react-native"],
   "globals": {
     "__DEV__": false,
-    "require": false
+    "it": false,
+    "expect": false
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
@@ -17,7 +15,9 @@
     "generator-star-spacing": 0,
     "babel/generator-star-spacing": 0,
     "new-cap": 0,
-    "no-return-assign": 0
-
+    "no-return-assign": 0,
+    "semi": 0,
+    "import/no-extraneous-dependencies": 0,
+    "comma-dangle": 0
   }
 }

@@ -1,38 +1,35 @@
 // eslint-disable-next-line
-import React from 'react';
+import React from 'react'
 // eslint-disable-next-line
 import {
   Image,
   StyleSheet,
   TouchableNativeFeedback,
   View,
-  Platform,
-} from 'react-native';
-
-import { getWidthPercent } from './ratio';
+  Platform
+} from 'react-native'
 
 const styles = StyleSheet.create({
   closeButton: {
     height: 48,
-    width: getWidthPercent(15),
+    width: '15%',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   closeButtonImage: {
     height: 24,
     width: 24,
-    resizeMode: 'contain',
-  },
-});
+    resizeMode: 'contain'
+  }
+})
 
-const CloseButton = (props) => (
+const CloseButton = props => (
   <View style={styles.closeButton}>
     <TouchableNativeFeedback
       background={
-        Platform.Version < 21 ?
-        TouchableNativeFeedback.SelectableBackground()
-        :
-        TouchableNativeFeedback.SelectableBackgroundBorderless()
+        Platform.Version < 21
+          ? TouchableNativeFeedback.SelectableBackground()
+          : TouchableNativeFeedback.SelectableBackgroundBorderless()
       }
       {...props}
     >
@@ -44,6 +41,6 @@ const CloseButton = (props) => (
       </View>
     </TouchableNativeFeedback>
   </View>
-);
+)
 
-export default CloseButton;
+export default CloseButton

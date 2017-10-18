@@ -35,3 +35,7 @@ examples/ios/swiper.xcodeproj/xcuserdata
 
 # IntelliJ
 .idea/
+
+# VSCode
+.vscode
+jsconfig.json
