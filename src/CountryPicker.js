@@ -315,7 +315,7 @@ export default class CountryPicker extends Component {
           {this.props.children ? (
             this.props.children
           ) : (
-            <View style={styles.touchFlag}>
+            <View style={[styles.touchFlag, { marginTop: isEmojiable ? 0 : 5 }]}>
               {CountryPicker.renderFlag(this.props.cca2)}
             </View>
           )}
