@@ -320,7 +320,9 @@ export default class CountryPicker extends Component {
           {this.props.children ? (
             this.props.children
           ) : (
-            <View style={[styles.touchFlag, { marginTop: isEmojiable ? 0 : 5 }]}>
+            <View
+              style={[styles.touchFlag, { marginTop: isEmojiable ? 0 : 5 }]}
+            >
               {CountryPicker.renderFlag(this.props.cca2)}
             </View>
           )}
@@ -334,10 +336,10 @@ export default class CountryPicker extends Component {
           <View style={styles.modalContainer}>
             <View style={styles.header}>
               {this.props.closeable && (
-                <CloseButton 
+                <CloseButton
                   image={this.props.closeButtonImage}
                   styles={[styles.closeButton, styles.closeButtonImage]}
-                  onPress={() => this.onClose()} 
+                  onPress={() => this.onClose()}
                 />
               )}
               {this.props.filterable && (
@@ -366,7 +368,8 @@ export default class CountryPicker extends Component {
                   initialListSize={30}
                   pageSize={15}
                   onLayout={({ nativeEvent: { layout: { y: offset } } }) =>
-                    this.setVisibleListHeight(offset)}
+                    this.setVisibleListHeight(offset)
+                  }
                 />
                 <ScrollView
                   contentContainerStyle={styles.letters}
