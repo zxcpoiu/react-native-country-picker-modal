@@ -2933,8 +2933,9 @@ react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
 
-react-native-country-picker-modal@../:
-  version "0.3.0"
+react-native-country-picker-modal@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-0.4.0.tgz#6d70ff3c195c854744b87ba4b812bbbfb6bd1782"
   dependencies:
     fuse.js "2.6.2"
     lodash "4.12.0"
