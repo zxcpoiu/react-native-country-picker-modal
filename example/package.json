@@ -7,10 +7,11 @@
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
-    "expo": "^21.0.0",
-    "react": "16.0.0-alpha.12",
+    "expo": "^23.0.0",
+    "react": "16.0.0",
     "react-native":
-      "https://github.com/expo/react-native/archive/sdk-21.0.2.tar.gz",
-    "react-native-country-picker-modal": "^0.4.0"
+      "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
+    "react-native-country-picker-modal":
+      "https://github.com/xcarpentier/react-native-country-picker-modal.git"
   }
 }
