@@ -60,7 +60,10 @@ export default class CountryPicker extends Component {
     autoFocusFilter: PropTypes.bool,
     // to provide a functionality to disable/enable the onPress of Country Picker.
     disabled: PropTypes.bool,
-    filterPlaceholderTextColor: PropTypes.string
+    filterPlaceholderTextColor: PropTypes.string,
+    closeButtonImage: Image.propTypes.source,
+    transparent: PropTypes.bool,
+    animationType: PropTypes.string
   }
 
   static defaultProps = {
@@ -68,7 +71,9 @@ export default class CountryPicker extends Component {
     countryList: cca2List,
     excludeCountries: [],
     filterPlaceholder: 'Filter',
-    autoFocusFilter: true
+    autoFocusFilter: true,
+    transparent: false,
+    animationType: 'none'
   }
 
   static renderEmojiFlag(cca2, emojiStyle) {
@@ -315,19 +320,25 @@ export default class CountryPicker extends Component {
           {this.props.children ? (
             this.props.children
           ) : (
-            <View style={styles.touchFlag}>
+            <View style={[styles.touchFlag, { marginTop: isEmojiable ? 0 : 5 }]}>
               {CountryPicker.renderFlag(this.props.cca2)}
             </View>
           )}
         </TouchableOpacity>
         <Modal
+          transparent={this.props.transparent}
+          animationType={this.props.animationType}
           visible={this.state.modalVisible}
           onRequestClose={() => this.setState({ modalVisible: false })}
         >
           <View style={styles.modalContainer}>
             <View style={styles.header}>
               {this.props.closeable && (
-                <CloseButton onPress={() => this.onClose()} />
+                <CloseButton 
+                  image={this.props.closeButtonImage}
+                  styles={[styles.closeButton, styles.closeButtonImage]}
+                  onPress={() => this.onClose()} 
+                />
               )}
               {this.props.filterable && (
                 <TextInput
