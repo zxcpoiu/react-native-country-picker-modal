@@ -14,8 +14,8 @@ The best Country Picker for React Native.
 | --------|---------|
 |![](http://i.giphy.com/l2SpOUptMAEXW2jqU.gif)|![](http://i.giphy.com/26ufd30pDhSeEbIwE.gif)|
 
-## DEMO
-[**Demo on Exponent**](https://exp.host/@xcarpentier/react-native-country-picker-modal)
+## [**Demo on Expo**](https://exp.host/@xcarpentier/react-native-country-picker-modal)
+
 ![](https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://exp.host/@xcarpentier/react-native-country-picker-modal)
 
 ## Installation
