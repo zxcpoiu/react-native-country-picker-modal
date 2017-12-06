@@ -107,6 +107,7 @@ export default class CountryPicker extends Component {
 
   constructor(props) {
     super(props)
+    this.openModal = this.openModal.bind(this)
 
     let countryList = [...props.countryList]
     const excludeCountries = [...props.excludeCountries]
