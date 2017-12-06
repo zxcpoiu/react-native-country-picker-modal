@@ -10,7 +10,7 @@
 
 The best Country Picker for React Native.
 
-[**Demo on Exponent**](https://getexponent.com/@xcarpentier/react-native-country-picker-demo)
+[**Demo on Exponent**](https://exp.host/@xcarpentier/react-native-country-picker-modal)
 
 | iOS | Android |
 | --------|---------|
