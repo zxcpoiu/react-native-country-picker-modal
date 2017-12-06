@@ -10,11 +10,14 @@
 
 The best Country Picker for React Native.
 
-[**Demo on Exponent**](https://exp.host/@xcarpentier/react-native-country-picker-modal)
-
 | iOS | Android |
 | --------|---------|
 |![](http://i.giphy.com/l2SpOUptMAEXW2jqU.gif)|![](http://i.giphy.com/26ufd30pDhSeEbIwE.gif)|
+
+## DEMO
+![](https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://exp.host/@xcarpentier/react-native-country-picker-modal)
+[**Demo on Exponent**](https://exp.host/@xcarpentier/react-native-country-picker-modal)
+
 ## Installation
 ```bash
 $ npm i react-native-country-picker-modal --save
