@@ -15,8 +15,7 @@
 
 <p align="center">
   <a href="https://codecov.io/gh/xcarpentier/react-native-country-picker-modal">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://exp.host/@xcarpentier/react-native-country-picker-modal">
-  </a>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://exp.host/@xcarpentier/react-native-country-picker-modal"></a>
   <br>
   <a href="https://exp.host/@xcarpentier/react-native-country-picker-modal">Demo on Expo</a>
 </p>
