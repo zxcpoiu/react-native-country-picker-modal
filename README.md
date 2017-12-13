@@ -14,8 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://codecov.io/gh/xcarpentier/react-native-country-picker-modal">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://exp.host/@xcarpentier/react-native-country-picker-modal"></a>
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://exp.host/@xcarpentier/react-native-country-picker-modal">
   <br>
   <a href="https://exp.host/@xcarpentier/react-native-country-picker-modal">Demo on Expo</a>
 </p>
@@ -23,33 +22,11 @@
 <br />
 
 ## Installation
-
-```bash
-$ npm i react-native-country-picker-modal --save
-```
-
-or
-
 ```bash
 $ yarn add react-native-country-picker-modal
 ```
 
 ## Basic Usage
-
-* Install `react-native` first
-
-```bash
-$ npm i react-native -g
-```
-
-* Initialization of a react-native project
-
-```bash
-$ react-native init myproject
-```
-
-* Then, edit `myproject/index.ios.js`, like this:
-
 ```jsx
 import DeviceInfo from 'react-native-device-info'
 
