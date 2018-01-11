@@ -156,7 +156,13 @@ YES : It used the world-countries package and image is stored into json and base
 
 ## Tiers lib using this lib
 
-https://github.com/joinspontaneous/react-native-phone-verification
+* [react-native-phone-verification](https://github.com/joinspontaneous/react-native-phone-verification)
+
+[> Your project?](https://github.com/xcarpentier/react-native-linkedin/issues/new)
+
+## See also
+
+* [react-native-linkedin](https://github.com/xcarpentier/react-native-linkedin)
 
 ## Contribution
 
