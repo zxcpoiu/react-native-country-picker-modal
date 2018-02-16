@@ -28,21 +28,33 @@ let countries = null
 let Emoji = null
 let styles = {}
 
-const isEmojiable = Platform.OS === 'ios'
+let isEmojiable = Platform.OS === 'ios'
 
-if (isEmojiable) {
-  countries = require('../data/countries-emoji')
-  Emoji = require('./emoji').default
-} else {
-  countries = require('../data/countries')
-
-  Emoji = <View />
+const FLAG_TYPES = {
+  flat: 'flat',
+  emoji: 'emoji'
 }
+
+const setCountries = (flagType) => {
+  if (typeof flagType !== 'undefined') {
+    isEmojiable = flagType === FLAG_TYPES.emoji;
+  }
+
+  if (isEmojiable) {
+    countries = require('../data/countries-emoji')
+    Emoji = require('./emoji').default
+  } else {
+    countries = require('../data/countries')
+    Emoji = <View />
+  }
+};
+
+const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+
+setCountries();
 
 export const getAllCountries = () =>
   cca2List.map(cca2 => ({ ...countries[cca2], cca2 }))
-
-const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
 export default class CountryPicker extends Component {
   static propTypes = {
@@ -64,6 +76,7 @@ export default class CountryPicker extends Component {
     closeButtonImage: PropTypes.element,
     transparent: PropTypes.bool,
     animationType: PropTypes.oneOf(['slide', 'fade', 'none']),
+    flagType: PropTypes.oneOf(Object.values(FLAG_TYPES)),
     hideAlphabetFilter: PropTypes.bool
   }
 
@@ -110,6 +123,7 @@ export default class CountryPicker extends Component {
     super(props)
     this.openModal = this.openModal.bind(this)
 
+    setCountries(props.flagType)
     let countryList = [...props.countryList]
     const excludeCountries = [...props.excludeCountries]
 
