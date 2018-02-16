@@ -26,30 +26,10 @@
 ## Installation
 
 ```bash
-$ npm i react-native-country-picker-modal --save
-```
-
-or
-
-```bash
 $ yarn add react-native-country-picker-modal
 ```
 
 ## Basic Usage
-
-* Install `react-native` first
-
-```bash
-$ npm i react-native -g
-```
-
-* Initialization of a react-native project
-
-```bash
-$ react-native init myproject
-```
-
-* Then, edit `myproject/index.ios.js`, like this:
 
 ```jsx
 import DeviceInfo from 'react-native-device-info'
