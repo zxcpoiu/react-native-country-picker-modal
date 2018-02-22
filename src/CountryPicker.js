@@ -332,24 +332,30 @@ export default class CountryPicker extends Component {
   }
 
   renderFilter = () => {
-    const {renderFilter, autoFocusFilter, filterPlaceholder, filterPlaceholderTextColor } = this.props;
+    const {
+      renderFilter,
+      autoFocusFilter,
+      filterPlaceholder,
+      filterPlaceholderTextColor
+    } = this.props
 
-    const value = this.state.filter;
-    const onChange = this.handleFilterChange;
-    const onClose = this.onClose;
+    const value = this.state.filter
+    const onChange = this.handleFilterChange
+    const onClose = this.onClose
 
-    return (renderFilter ? renderFilter({value, onChange, onClose}) : <TextInput
-      autoFocus={autoFocusFilter}
-      autoCorrect={false}
-      placeholder={filterPlaceholder}
-      placeholderTextColor={filterPlaceholderTextColor}
-      style={[
-        styles.input,
-        !this.props.closeable && styles.inputOnly
-      ]}
-      onChangeText={onChange}
-      value={value}
-    />)
+    return renderFilter ? (
+      renderFilter({ value, onChange, onClose })
+    ) : (
+      <TextInput
+        autoFocus={autoFocusFilter}
+        autoCorrect={false}
+        placeholder={filterPlaceholder}
+        placeholderTextColor={filterPlaceholderTextColor}
+        style={[styles.input, !this.props.closeable && styles.inputOnly]}
+        onChangeText={onChange}
+        value={value}
+      />
+    )
   }
 
   render() {
