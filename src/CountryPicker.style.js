@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, PixelRatio } from 'react-native'
+import { StyleSheet, PixelRatio } from 'react-native'
 import { getHeightPercent } from './ratio'
 
 export default StyleSheet.create({
@@ -13,7 +13,6 @@ export default StyleSheet.create({
     backgroundColor: 'white'
   },
   header: {
-    marginTop: Platform.OS === 'ios' ? 16 : 0,
     flexDirection: 'row',
     alignItems: 'center'
   },
