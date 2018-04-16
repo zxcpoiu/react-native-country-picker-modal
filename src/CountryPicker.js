@@ -80,7 +80,8 @@ export default class CountryPicker extends Component {
     animationType: PropTypes.oneOf(['slide', 'fade', 'none']),
     flagType: PropTypes.oneOf(Object.values(FLAG_TYPES)),
     hideAlphabetFilter: PropTypes.bool,
-    renderFilter: PropTypes.func
+    renderFilter: PropTypes.func,
+    showCallingCode: PropTypes.bool
   }
 
   static defaultProps = {
@@ -326,6 +327,9 @@ export default class CountryPicker extends Component {
         <View style={styles.itemCountryName}>
           <Text style={styles.countryName} allowFontScaling={false}>
             {this.getCountryName(country)}
+            {this.props.showCallingCode &&
+            country.callingCode &&
+            <Text>{` (+${country.callingCode})`}</Text>}
           </Text>
         </View>
       </View>
