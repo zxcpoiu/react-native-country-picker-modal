@@ -1,15 +1,16 @@
-import { StyleProp, ViewStyle, ImageProps } from 'react-native';
-import * as React from 'react';
+import { StyleProp, ViewStyle, ImageProps } from 'react-native'
+import * as React from 'react'
 
 /**
  * Country metadata stored in this library to display and query
  * `<CountryPicker />`
  */
 export interface Country {
-  currency: CurrencyCode;
-  callingCode: CallingCode;
-  flag: string;
-  name: { [key in TranslationLanguageCode]: string };
+  currency: CurrencyCode
+  callingCode: CallingCode
+  flag: string
+  name: { [key in TranslationLanguageCode]: string }
+  cca2: CCA2Code
 }
 
 /**
@@ -263,17 +264,17 @@ export type CCA2Code =
   | 'YE'
   | 'ZM'
   | 'ZW'
-  | 'AX';
+  | 'AX'
 /**
  * Calling code for a given country. For example, the entry for United States is
  * `1` (referring to "+1`")
  */
-export type CallingCode = string;
+export type CallingCode = string
 /**
  * Currency code for a country, as specified in ISO 4217. For example, the entry
  * for United States is `USD` (referring to US Dollars)
  */
-export type CurrencyCode = string;
+export type CurrencyCode = string
 /**
  * Language codes for available translations in this library
  */
@@ -292,7 +293,7 @@ export type TranslationLanguageCode =
   | 'svk'
   | 'fin'
   | 'zho'
-  | 'isr';
+  | 'isr'
 
 export enum FlagType {
   FLAT = 'flat',
@@ -308,93 +309,91 @@ export interface CountryPickerProps {
   /**
    * Country code, as specified in ISO 3166-1 alpha-2 (ie. `FR`, `US`, etc.)
    */
-  cca2: CCA2Code;
+  cca2: CCA2Code
   /**
    * The handler when a country is selected
    */
-  onChange: (value: Country) => void;
+  onChange: (value: Country) => void
   /**
    * Override any style specified in the component (see source code)
    */
-  styles?: StyleProp<ViewStyle>;
+  styles?: StyleProp<ViewStyle>
   /**
    * If set to true, Country Picker List will show calling code after country name. For example: `United States (+1)`
    */
-  showCallingCode?: boolean;
+  showCallingCode?: boolean
   /**
    * The handler when the close button is clicked
    */
-  onClose?: () => void;
+  onClose?: () => void
   /**
    * List of custom CCA2 countries to render in the list. Use getAllCountries to filter what you need if you want to pass in a custom list
    */
-  countryList?: CCA2Code[];
+  countryList?: CCA2Code[]
   /**
    * The language display for the name of the country
    */
-  translation?: TranslationLanguageCode;
+  translation?: TranslationLanguageCode
   /**
    * If true, the CountryPicker will have a close button
    */
-  closeable?: boolean;
+  closeable?: boolean
   /**
    * If true, the CountryPicker will have search bar
    */
-  filterable?: boolean;
+  filterable?: boolean
   /**
    * List of custom CCA2 countries you don't want to render
    */
-  excludeCountries?: CCA2Code[];
+  excludeCountries?: CCA2Code[]
   /**
    * The search bar placeholder
    */
-  filterPlaceholder?: string;
+  filterPlaceholder?: string
   /**
    * Whether or not the search bar should be autofocused
    */
-  autoFocusFilter?: boolean;
+  autoFocusFilter?: boolean
   /**
    * Whether or not the Country Picker onPress is disabled
    */
-  disabled?: boolean;
+  disabled?: boolean
   /**
    * The search bar placeholder text color
    */
-  filterPlaceholderTextColor?: string;
+  filterPlaceholderTextColor?: string
   /**
    * Custom close button Image
    */
-  closeButtonImage?: ImageProps['source'];
+  closeButtonImage?: ImageProps['source']
   /**
    * If true, the CountryPicker will render the modal over a transparent background
    */
-  transparent?: boolean;
+  transparent?: boolean
   /**
    * The handler that controls how the modal animates
    */
-  animationType?: AnimationType;
+  animationType?: AnimationType
   /**
    * If set, overwrites the default OS based flag type.
    */
-  flagType?: FlagType;
+  flagType?: FlagType
   /**
    * If set to true, prevents the alphabet filter rendering
    */
-  hideAlphabetFilter?: boolean;
+  hideAlphabetFilter?: boolean
   /**
    * If 'filterable={true}' and renderFilter function is provided, render custom filter component.*
    */
-  renderFilter?: (
-    args: {
-      value: string;
-      onChange: CountryPickerProps['onChange'];
-      onClose: CountryPickerProps['onClose'];
-    }
-  ) => React.ReactNode;
+  renderFilter?: (args: {
+    value: string
+    onChange: CountryPickerProps['onChange']
+    onClose: CountryPickerProps['onClose']
+  }) => React.ReactNode
 }
 
 export default class CountryPicker extends React.Component<CountryPickerProps> {
-  openModal: () => void;
+  openModal: () => void
 }
 
-export function getAllCountries(): Country[];
+export function getAllCountries(): Country[]
