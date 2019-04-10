@@ -14,6 +14,7 @@ import {
   Text,
   TextInput,
   ListView,
+  FlatList,
   ScrollView,
   Platform
 } from 'react-native'
@@ -80,6 +81,7 @@ export default class CountryPicker extends Component {
     animationType: PropTypes.oneOf(['slide', 'fade', 'none']),
     flagType: PropTypes.oneOf(Object.values(FLAG_TYPES)),
     hideAlphabetFilter: PropTypes.bool,
+    hideCountryFlag: PropTypes.bool,
     renderFilter: PropTypes.func,
     showCallingCode: PropTypes.bool,
     filterOptions: PropTypes.object
@@ -88,6 +90,7 @@ export default class CountryPicker extends Component {
   static defaultProps = {
     translation: 'eng',
     countryList: cca2List,
+    hideCountryFlag: false,
     excludeCountries: [],
     filterPlaceholder: 'Filter',
     autoFocusFilter: true,
@@ -153,6 +156,7 @@ export default class CountryPicker extends Component {
     this.state = {
       modalVisible: false,
       cca2List: countryList,
+      flatListMap: countryList.map(n => ({ key: n })),
       dataSource: ds.cloneWithRows(countryList),
       filter: '',
       letters: this.getLetters(countryList)
@@ -275,21 +279,18 @@ export default class CountryPicker extends Component {
       position = this.listHeight - this.visibleListHeight
     }
 
-    // scroll
-    this._listView.scrollTo({
-      y: position
-    })
+    this._flatList.scrollToIndex({ index });
   }
 
   handleFilterChange = value => {
     const filteredCountries =
       value === '' ? this.state.cca2List : this.fuse.search(value)
-
-    this._listView.scrollTo({ y: 0 })
+    this._flatList.scrollToIndex({ index: 0 });
 
     this.setState({
       filter: value,
-      dataSource: ds.cloneWithRows(filteredCountries)
+      dataSource: ds.cloneWithRows(filteredCountries),
+      flatListMap: filteredCountries.map(n => ({ key: n }))
     })
   }
 
@@ -325,14 +326,14 @@ export default class CountryPicker extends Component {
     const country = countries[cca2]
     return (
       <View style={styles.itemCountry}>
-        {CountryPicker.renderFlag(cca2)}
+        {!this.props.hideCountryFlag && CountryPicker.renderFlag(cca2)}
         <View style={styles.itemCountryName}>
-          <Text style={styles.countryName} allowFontScaling={false}>
+          <Text style={styles.countryName} allowFontScaling>
             {this.getCountryName(country)}
-            {this.props.showCallingCode &&
-            country.callingCode &&
-            <Text>{` (+${country.callingCode})`}</Text>}
           </Text>
+          {this.props.showCallingCode &&
+          country.callingCode &&
+          <Text style={styles.countryCode}>{`+${country.callingCode}`}</Text>}
         </View>
       </View>
     )
@@ -405,17 +406,12 @@ export default class CountryPicker extends Component {
             </View>
             <KeyboardAvoidingView behavior="padding">
               <View style={styles.contentContainer}>
-                <ListView
-                  keyboardShouldPersistTaps="always"
-                  enableEmptySections
-                  ref={listView => (this._listView = listView)}
-                  dataSource={this.state.dataSource}
-                  renderRow={country => this.renderCountry(country)}
-                  initialListSize={30}
-                  pageSize={15}
-                  onLayout={({ nativeEvent: { layout: { y: offset } } }) =>
-                    this.setVisibleListHeight(offset)
-                  }
+                <FlatList
+                  data={this.state.flatListMap}
+                  ref={flatList => (this._flatList = flatList)}
+                  initialNumToRender={30}
+                  renderItem={country => this.renderCountry(country.item.key)}
+                  keyExtractor={(item) => item.key}
                 />
                 {!this.props.hideAlphabetFilter && (
                   <ScrollView
