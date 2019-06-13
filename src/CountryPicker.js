@@ -13,7 +13,6 @@ import {
   Modal,
   Text,
   TextInput,
-  ListView,
   FlatList,
   ScrollView,
   Platform
@@ -51,8 +50,6 @@ const setCountries = flagType => {
     Emoji = <View />
   }
 }
-
-const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
 setCountries()
 
