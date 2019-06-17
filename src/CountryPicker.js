@@ -169,7 +169,7 @@ export default class CountryPicker extends Component {
       modalVisible: false,
       cca2List: countryList,
       flatListMap: countryList.map(n => ({ key: n })),
-      dataSource: ds.cloneWithRows(countryList),
+      dataSource: countryList,
       filter: '',
       letters: this.getLetters(countryList)
     }
@@ -212,7 +212,7 @@ export default class CountryPicker extends Component {
     if (nextProps.countryList !== this.props.countryList) {
       this.setState({
         cca2List: nextProps.countryList,
-        dataSource: ds.cloneWithRows(nextProps.countryList)
+        dataSource: nextProps.countryList
       })
     }
   }
@@ -221,7 +221,7 @@ export default class CountryPicker extends Component {
     this.setState({
       modalVisible: false,
       filter: '',
-      dataSource: ds.cloneWithRows(this.state.cca2List)
+      dataSource: this.state.cca2List
     })
 
     this.props.onChange({
@@ -236,7 +236,7 @@ export default class CountryPicker extends Component {
     this.setState({
       modalVisible: false,
       filter: '',
-      dataSource: ds.cloneWithRows(this.state.cca2List)
+      dataSource: this.state.cca2List
     })
     if (this.props.onClose) {
       this.props.onClose()
@@ -301,7 +301,7 @@ export default class CountryPicker extends Component {
 
     this.setState({
       filter: value,
-      dataSource: ds.cloneWithRows(filteredCountries),
+      dataSource: filteredCountries,
       flatListMap: filteredCountries.map(n => ({ key: n }))
     })
   }
