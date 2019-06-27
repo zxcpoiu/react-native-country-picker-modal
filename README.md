@@ -250,3 +250,6 @@ Feel free to [contact me](mailto:contact@xaviercarpentier.com) or [create an iss
 ## Licence
 
 [MIT](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/LICENSE.md)
+
+## Hire an expert!
+Looking for a ReactNative freelance expert with more than 12 years experience? Contact me from my [website](https://xaviercarpentier.com)!
