@@ -134,7 +134,7 @@ export default class CountryPicker extends Component {
             : CountryPicker.renderImageFlag(cca2, imageStyle)}
 
         </View>
-        <Text style={{marginLeft:15,fontSize:16}}>{countryName}</Text>
+        <Text style={{marginLeft:10,fontSize:16}}>{countryName}</Text>
       </View>
     )
   }
@@ -221,7 +221,8 @@ export default class CountryPicker extends Component {
     this.setState({
       modalVisible: false,
       filter: '',
-      dataSource: this.state.cca2List
+      dataSource: this.state.cca2List,
+      flatListMap: this.state.cca2List.map(n => ({ key: n }))
     })
 
     this.props.onChange({
@@ -438,6 +439,9 @@ export default class CountryPicker extends Component {
                   initialNumToRender={30}
                   renderItem={country => this.renderCountry(country.item.key)}
                   keyExtractor={(item) => item.key}
+                  onScrollToIndexFailed={()=> {
+                    console.log('onScrollToIndexFailed')
+                  }}
                 />
                 {!this.props.hideAlphabetFilter && (
                   <ScrollView
