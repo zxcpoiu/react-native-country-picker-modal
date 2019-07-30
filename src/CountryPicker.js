@@ -134,7 +134,7 @@ export default class CountryPicker extends Component {
             : CountryPicker.renderImageFlag(cca2, imageStyle)}
 
         </View>
-        <Text style={{marginLeft:10,fontSize:16}}>{countryName}</Text>
+        <Text style={{fontSize:16}}>{countryName}</Text>
       </View>
     )
   }
@@ -208,8 +208,8 @@ export default class CountryPicker extends Component {
     )
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.countryList !== this.props.countryList) {
+componentDidUpdate (prevProps) {
+    if (prevProps.countryList !== this.props.countryList) {
       this.setState({
         cca2List: nextProps.countryList,
         dataSource: nextProps.countryList
