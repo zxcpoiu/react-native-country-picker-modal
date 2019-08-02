@@ -434,14 +434,15 @@ componentDidUpdate (prevProps) {
               <View style={styles.contentContainer}>
                 <FlatList
                   testID="list-countries"
+                  keyboardShouldPersistTaps="handled"
                   data={this.state.flatListMap}
                   ref={flatList => (this._flatList = flatList)}
                   initialNumToRender={30}
                   renderItem={country => this.renderCountry(country.item.key)}
                   keyExtractor={(item) => item.key}
-                  onScrollToIndexFailed={()=> {
-                    console.log('onScrollToIndexFailed')
-                  }}
+                  getItemLayout={(data, index) => (
+                    { length: this.itemHeight, offset: this.itemHeight * index, index }
+                  )}
                 />
                 {!this.props.hideAlphabetFilter && (
                   <ScrollView
