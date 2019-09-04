@@ -12,6 +12,7 @@
   <a href="https://www.npmjs.com/package/react-native-country-picker-modal"><img src="https://img.shields.io/npm/dm/react-native-country-picker-modal.svg?style=flat-square"></a>
   <a href="https://codecov.io/gh/xcarpentier/react-native-country-picker-modal"><img src="https://codecov.io/gh/xcarpentier/react-native-country-picker-modal/coverage.svg"></a>
   <a href="https://circleci.com/gh/xcarpentier/react-native-country-picker-modal"><img src="https://circleci.com/gh/xcarpentier/react-native-country-picker-modal.svg?style=svg"></a>
+  <a href="#hire-an-expert"><img src="https://img.shields.io/badge/%F0%9F%92%AA-hire%20an%20expert-brightgreen"/></a>
 </p>
 
 <p align="center">
