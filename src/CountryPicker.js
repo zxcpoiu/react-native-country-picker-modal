@@ -109,6 +109,7 @@ export default class CountryPicker extends Component {
   static renderImageFlag(cca2, imageStyle) {
     return cca2 !== '' ? (
       <Image
+        resizeMode={'contain'}
         style={[countryPickerStyles.imgStyle, imageStyle]}
         source={{ uri: countries[cca2].flag }}
       />
@@ -193,14 +194,14 @@ export default class CountryPicker extends Component {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: ['name'],
+      keys: ['name', 'callingCode'],
       id: 'id'
     }, this.props.filterOptions);
     this.fuse = new Fuse(
       countryList.reduce(
         (acc, item) => [
           ...acc,
-          { id: item, name: this.getCountryName(countries[item]) }
+          { id: item, name: this.getCountryName(countries[item]), callingCode: this.getCallingCode(countries[item]) }
         ],
         []
       ),
@@ -250,6 +251,10 @@ componentDidUpdate (prevProps) {
     }
     const translation = optionalTranslation || this.props.translation || 'eng'
     return country.name[translation] || country.name.common
+  }
+  
+  getCallingCode(country) {
+    return country.callingCode
   }
 
   setVisibleListHeight(offset) {
@@ -352,12 +357,12 @@ componentDidUpdate (prevProps) {
                 styles.emojiFlag,
                 styles.imgStyle)}
         <View style={styles.itemCountryName}>
-          <Text style={styles.countryName} allowFontScaling>
+          <Text style={styles.countryName} allowFontScaling={false}>
             {this.getCountryName(country)}
+            {this.props.showCallingCode &&
+              country.callingCode &&
+              ` (+${country.callingCode})`}
           </Text>
-          {this.props.showCallingCode &&
-          country.callingCode &&
-          <Text style={styles.countryCode}>{`+${country.callingCode}`}</Text>}
         </View>
       </View>
     )
@@ -442,7 +447,7 @@ componentDidUpdate (prevProps) {
                   data={this.state.flatListMap}
                   ref={flatList => (this._flatList = flatList)}
                   initialNumToRender={30}
-onScrollToIndexFailed={()=>{}}
+                  onScrollToIndexFailed={()=>{}}
                   renderItem={country => this.renderCountry(country.item.key)}
                   keyExtractor={(item) => item.key}
                   getItemLayout={(data, index) => (
