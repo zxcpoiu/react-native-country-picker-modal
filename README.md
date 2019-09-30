@@ -7,20 +7,13 @@
 </h3>
 
 <p align="center">
-  <a href="https://reactnative.gallery"><img src="https://img.shields.io/badge/reactnative.gallery-%E2%99%A5-red.svg"></a>
+   <a href="https://reactnative.gallery/FaridSafi/gifted-chat"><img src="https://img.shields.io/badge/reactnative.gallery-%F0%9F%8E%AC-green.svg"/></a>
   <a href="https://www.npmjs.com/package/react-native-country-picker-modal"><img src="https://img.shields.io/npm/v/react-native-country-picker-modal.svg?style=flat-square"></a>
   <a href="https://www.npmjs.com/package/react-native-country-picker-modal"><img src="https://img.shields.io/npm/dm/react-native-country-picker-modal.svg?style=flat-square"></a>
-  <a href="https://codecov.io/gh/xcarpentier/react-native-country-picker-modal"><img src="https://codecov.io/gh/xcarpentier/react-native-country-picker-modal/coverage.svg"></a>
   <a href="https://circleci.com/gh/xcarpentier/react-native-country-picker-modal"><img src="https://circleci.com/gh/xcarpentier/react-native-country-picker-modal.svg?style=svg"></a>
   <a href="#hire-an-expert"><img src="https://img.shields.io/badge/%F0%9F%92%AA-hire%20an%20expert-brightgreen"/></a>
 </p>
-
-<p align="center">
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://exp.host/@xcarpentier/react-native-country-picker-modal">
-  <br>
-  <a href="https://exp.host/@xcarpentier/react-native-country-picker-modal">Demo on Expo</a>
-</p>
-
+ 
 <br />
 
 ## Installation
