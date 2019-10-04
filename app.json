@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "country-picker-example",
+    "description": "Expo Country Picker Example",
+    "slug": "country-picker-example",
+    "privacy": "public",
+    "sdkVersion": "35.0.0",
+    "platforms": ["ios", "android", "web"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc",
+    "splash": {
+      "image": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#000000"
+    }
+  }
+}

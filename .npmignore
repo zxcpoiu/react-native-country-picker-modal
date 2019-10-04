@@ -14,5 +14,6 @@ examples
 example
 exp-example
 scripts
-.babelrc
+babel.config.js
+metro.config.js
 scripts
