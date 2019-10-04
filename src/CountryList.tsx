@@ -1,4 +1,4 @@
-import React, { useRef, memo } from 'react'
+import React, { useRef, memo, useState } from 'react'
 import {
   StyleSheet,
   View,
@@ -14,6 +14,8 @@ import { Country, Omit } from './types'
 import { Flag } from './Flag'
 import { useContext } from './CountryContext'
 
+const borderBottomWidth = 2 / PixelRatio.get()
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   letter: {
-    height: 25,
+    height: 23,
     width: 20,
     justifyContent: 'center',
     alignItems: 'center'
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   sep: {
-    borderBottomWidth: 2 / PixelRatio.get(),
+    borderBottomWidth,
     width: '100%'
   }
 })
@@ -71,7 +73,7 @@ const Letter = ({ letter, scrollTo }: LetterProps) => {
     >
       <View style={styles.letter}>
         <Text
-          style={[styles.letterText, { fontFamily, fontSize }]}
+          style={[styles.letterText, { fontFamily, fontSize: fontSize! * 0.8 }]}
           allowFontScaling={false}
         >
           {letter}
@@ -91,6 +93,7 @@ interface CountryItemProps {
 const CountryItem = (props: CountryItemProps) => {
   const { activeOpacity, fontSize, fontFamily, itemHeight } = useTheme()
   const { country, onSelect, withFlag, withEmoji, withCallingCode } = props
+
   return (
     <TouchableOpacity
       key={country.cca2}
@@ -125,7 +128,6 @@ const renderItem = (props: Omit<CountryItemProps, 'country'>) => ({
 )
 
 interface CountryListProps {
-  letters: string[]
   data: Country[]
   filter?: string
   withFlag?: boolean
@@ -137,8 +139,6 @@ interface CountryListProps {
 
 const keyExtractor = (item: Country) => item.cca2
 
-const onScrollToIndexFailed = () => {}
-
 const ItemSeparatorComponent = () => {
   const { primaryColor } = useTheme()
   return <View style={[styles.sep, { borderBottomColor: primaryColor }]} />
@@ -148,7 +148,6 @@ export const CountryList = (props: CountryListProps) => {
   const {
     data,
     withAlphaFilter,
-    letters,
     withEmoji,
     withFlag,
     withCallingCode,
@@ -156,17 +155,44 @@ export const CountryList = (props: CountryListProps) => {
     filter
   } = props
   const flatListRef = useRef<FlatList<Country>>(null)
-  const scrollTo = (letter: string) => console.log(`scrollTo(${letter})`)
-  const { search } = useContext()
+  const [letter, setLetter] = useState<string>('')
+  const { itemHeight } = useTheme()
+  const scrollTo = (letter: string) => {
+    const index = data
+      .map((country: Country) => (country.name as string).substr(0, 1))
+      .join()
+      .indexOf(letter)
+    setLetter(letter)
+    if (flatListRef.current) {
+      flatListRef.current!.scrollToIndex({ animated: true, index })
+    }
+  }
+  const onScrollToIndexFailed = (_info: {
+    index: number
+    highestMeasuredFrameIndex: number
+    averageItemLength: number
+  }) => {
+    if (flatListRef.current) {
+      flatListRef.current!.scrollToEnd()
+      scrollTo(letter)
+    }
+  }
+  const { search, getLetters } = useContext()
   return (
     <View style={styles.container}>
       <FlatList
+        onScrollToIndexFailed
         ref={flatListRef}
         testID="list-countries"
         keyboardShouldPersistTaps="handled"
         initialNumToRender={12}
         automaticallyAdjustContentInsets={false}
         scrollEventThrottle={1}
+        getItemLayout={(_data: any, index) => ({
+          length: itemHeight! + borderBottomWidth,
+          offset: (itemHeight! + borderBottomWidth) * index,
+          index
+        })}
         renderItem={renderItem({
           withEmoji,
           withFlag,
@@ -185,8 +211,8 @@ export const CountryList = (props: CountryListProps) => {
           contentContainerStyle={styles.letters}
           keyboardShouldPersistTaps="always"
         >
-          {letters.map(letter => (
-            <Letter {...{ letter, scrollTo }} />
+          {getLetters().map(letter => (
+            <Letter key={letter} {...{ letter, scrollTo }} />
           ))}
         </ScrollView>
       )}

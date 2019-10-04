@@ -66,10 +66,10 @@ export const CountryPicker = (props: CountryPickerProps) => {
     countries: [],
     filter: ''
   })
-  const { translation, getCountriesAsync } = useContext()
+  const { translation, getCountries } = useContext()
   const { visible, filter, countries } = state
   const onOpen = () => setState({ ...state, visible: true })
-  const onClose = () => setState({ ...state, visible: false })
+  const onClose = () => setState({ ...state, filter: '', visible: false })
   const setFilter = (filter: string) => setState({ ...state, filter })
   const setCountries = (countries: Country[]) =>
     setState({ ...state, countries })
@@ -85,7 +85,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     onOpen
   }
   useEffect(() => {
-    const countries = getCountriesAsync(
+    const countries = getCountries(
       withEmoji ? FlagType.EMOJI : FlagType.FLAT,
       translation
     )
@@ -112,7 +112,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
             onSelect: onSelectClose,
             data: countries,
             letters: [],
-            withAlphaFilter: withAlphaFilter && filter !== '',
+            withAlphaFilter: withAlphaFilter && filter === '',
             withCallingCode,
             withFlag,
             withEmoji,
@@ -125,6 +125,6 @@ export const CountryPicker = (props: CountryPickerProps) => {
 }
 
 CountryPicker.defaultProps = {
-  withAlphaFilter: true,
+  withAlphaFilter: false,
   withCallingCode: false
 }

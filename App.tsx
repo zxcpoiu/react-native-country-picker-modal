@@ -96,7 +96,6 @@ export default function App() {
           withEmoji,
           onSelect
         }}
-        visible
       />
       <Text style={styles.instructions}>Press on the flag to open modal</Text>
       {country !== null && (

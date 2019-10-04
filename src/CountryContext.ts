@@ -4,7 +4,8 @@ import {
   getEmojiFlag,
   getImageFlag,
   getCountryName,
-  getCountriesAsync,
+  getCountries,
+  getLetters,
   search
 } from './CountryService'
 
@@ -13,16 +14,18 @@ export interface CountryContextParam {
   getCountryName: typeof getCountryName
   getImageFlag: typeof getImageFlag
   getEmojiFlag: typeof getEmojiFlag
-  getCountriesAsync: typeof getCountriesAsync
+  getCountries: typeof getCountries
   search: typeof search
+  getLetters: typeof getLetters
 }
 export const DEFAULT_COUNTRY_CONTEXT = {
   translation: 'common' as TranslationLanguageCode,
   getCountryName,
   getImageFlag,
   getEmojiFlag,
-  getCountriesAsync,
-  search
+  getCountries,
+  search,
+  getLetters
 }
 export const CountryContext = React.createContext<CountryContextParam>(
   DEFAULT_COUNTRY_CONTEXT

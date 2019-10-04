@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="react-native-country-picker-modal" src="https://thumbs.gfycat.com/HandsomeInnocentAnura-size_restricted.gif" width=150>
+    <img alt="react-native-country-picker-modal" src="https://media.giphy.com/media/fAEXRiqyOC6PPqArHc/giphy.gif" width=200>
 </p>
 
 <h3 align="center">
@@ -23,68 +23,12 @@ $ yarn add react-native-country-picker-modal
 
 ## Basic Usage
 
-```jsx
-import DeviceInfo from 'react-native-device-info'
-
-import React, {
-  AppRegistry,
-  Component,
-  StyleSheet,
-  Text,
-  View,
-  StatusBarIOS,
-  PixelRatio
-} from 'react-native'
-import CountryPicker, {
-  getAllCountries
-} from 'react-native-country-picker-modal'
-
-const NORTH_AMERICA = ['CA', 'MX', 'US']
-
-class Example extends Component {
-  constructor(props) {
-    StatusBarIOS.setHidden(true)
-    super(props)
-    let userLocaleCountryCode = DeviceInfo.getDeviceCountry()
-    const userCountryData = getAllCountries()
-      .filter(country => NORTH_AMERICA.includes(country.cca2))
-      .filter(country => country.cca2 === userLocaleCountryCode)
-      .pop()
-    let callingCode = null
-    let cca2 = userLocaleCountryCode
-    if (!cca2 || !userCountryData) {
-      cca2 = 'US'
-      callingCode = '1'
-    } else {
-      callingCode = userCountryData.callingCode
-    }
-    this.state = {
-      cca2,
-      callingCode
-    }
-  }
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to Country Picker !</Text>
-        <CountryPicker
-          countryList={NORTH_AMERICA}
-          onChange={value => {
-            this.setState({ cca2: value.cca2, callingCode: value.callingCode })
-          }}
-          cca2={this.state.cca2}
-          translation="eng"
-        />
-        <Text style={styles.instructions}>press on the flag</Text>
-        {this.state.country && (
-          <Text style={styles.data}>
-            {JSON.stringify(this.state.country, null, 2)}
-          </Text>
-        )}
-      </View>
-    )
-  }
-}
+```tsx
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, PixelRatio, Switch } from 'react-native'
+import CountryPicker from './src/'
+import { CountryCode, Country } from './src/types'
+import { Row } from './src/Row'
 
 const styles = StyleSheet.create({
   container: {
@@ -113,7 +57,80 @@ const styles = StyleSheet.create({
   }
 })
 
-AppRegistry.registerComponent('example', () => Example)
+interface OptionProps {
+  title: string
+  value: boolean
+  onValueChange(value: boolean): void
+}
+const Option = ({ value, onValueChange, title }: OptionProps) => (
+  <Row fullWidth>
+    <Text style={styles.instructions}>{title}</Text>
+    <Switch {...{ value, onValueChange }} />
+  </Row>
+)
+
+export default function App() {
+  const [countryCode, setCountryCode] = useState<CountryCode>('FR')
+  const [country, setCountry] = useState<Country>(null)
+  const [withCountryName, setWithCountryName] = useState<boolean>(false)
+  const [withFlag, setWithFlag] = useState<boolean>(true)
+  const [withEmoji, setWithEmoji] = useState<boolean>(true)
+  const [withFilter, setWithFilter] = useState<boolean>(true)
+  const [withAlphaFilter, setWithAlphaFilter] = useState<boolean>(false)
+  const [withCallingCode, setWithCallingCode] = useState<boolean>(false)
+  const onSelect = (country: Country) => {
+    setCountryCode(country.cca2)
+    setCountry(country)
+  }
+  return (
+    <View style={styles.container}>
+      <Text style={styles.welcome}>Welcome to Country Picker !</Text>
+      <Option
+        title="With country name on button"
+        value={withCountryName}
+        onValueChange={setWithCountryName}
+      />
+      <Option title="With flag" value={withFlag} onValueChange={setWithFlag} />
+      <Option
+        title="With emoji"
+        value={withEmoji}
+        onValueChange={setWithEmoji}
+      />
+      <Option
+        title="With filter"
+        value={withFilter}
+        onValueChange={setWithFilter}
+      />
+      <Option
+        title="With calling code"
+        value={withCallingCode}
+        onValueChange={setWithCallingCode}
+      />
+      <Option
+        title="With alpha filter code"
+        value={withAlphaFilter}
+        onValueChange={setWithAlphaFilter}
+      />
+      <CountryPicker
+        {...{
+          countryCode,
+          withFilter,
+          withFlag,
+          withCountryName,
+          withAlphaFilter,
+          withCallingCode,
+          withEmoji,
+          onSelect
+        }}
+        visible
+      />
+      <Text style={styles.instructions}>Press on the flag to open modal</Text>
+      {country !== null && (
+        <Text style={styles.data}>{JSON.stringify(country, null, 2)}</Text>
+      )}
+    </View>
+  )
+}
 ```
 
 ## Dark theme example
@@ -124,84 +141,23 @@ AppRegistry.registerComponent('example', () => Example)
 
 A simple example to display a `CountryPicker` component with a dark theme. You need to download a light colored image for the close button, for example [this one](https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/VisualEditor_-_Icon_-_Close_-_white.svg/240px-VisualEditor_-_Icon_-_Close_-_white.svg.png).
 
-```jsx
-import CountryPicker from 'react-native-country-picker-modal'
-
-// change the import path according to your project structure
-import closeImgLight from '/asset/iconWhite.png'
-
-const DARK_COLOR = '#18171C'
-const PLACEHOLDER_COLOR = 'rgba(255,255,255,0.2)'
-const LIGHT_COLOR = '#FFF'
-
-export default props => (
-  <CountryPicker
-    filterPlaceholderTextColor={PLACEHOLDER_COLOR}
-    closeButtonImage={closeImgLight}
-    styles={darkTheme}
-    {...props}
-  />
-)
-
-const darkTheme = StyleSheet.create({
-  modalContainer: {
-    backgroundColor: DARK_COLOR
-  },
-  contentContainer: {
-    backgroundColor: DARK_COLOR
-  },
-  header: {
-    backgroundColor: DARK_COLOR
-  },
-  itemCountryName: {
-    borderBottomWidth: 0
-  },
-  countryName: {
-    color: LIGHT_COLOR
-  },
-  letterText: {
-    color: LIGHT_COLOR
-  },
-  input: {
-    color: LIGHT_COLOR,
-    borderBottomWidth: 1,
-    borderColor: LIGHT_COLOR
-  }
-})
-```
-
 ## Props
 
-| Key                        | Type          | Default                                                                                                      | Description                                                                                                                           |
-| -------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| cca2                       | string        | \*required                                                                                                   | code ISO 3166-1 alpha-2 (ie. FR, US, etc.)                                                                                            |
-| translation                | string        | 'eng'                                                                                                        | The language display for the name of the country (deu, fra, hrv, ita, jpn, nld, por, rus, spa, svk, fin, zho, cym)                    |
-| onChange                   | function      | \*required                                                                                                   | The handler when a country is selected                                                                                                |
-| onClose                    | function      | \*required                                                                                                   | The handler when the close button is clicked                                                                                          |
-| countryList                | array         | See [cca2.json](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/data/cca2.json) | List of custom CCA2 countries to render in the list. Use getAllCountries to filter what you need if you want to pass in a custom list |
-| excludeCountries           | array         | []                                                                                                           | List of custom CCA2 countries you don't want to render                                                                                |
-| closeable                  | bool          | false                                                                                                        | If true, the CountryPicker will have a close button                                                                                   |
-| filterable                 | bool          | false                                                                                                        | If true, the CountryPicker will have search bar                                                                                       |
-| filterPlaceholder          | string        | 'Filter'                                                                                                     | The search bar placeholder                                                                                                            |
-| filterPlaceholderTextColor | string        | undefined                                                                                                    | The search bar placeholder text color                                                                                                 |
-| autoFocusFilter            | bool          | true                                                                                                         | Whether or not the search bar should be autofocused                                                                                   |
-| styles                     | object        | {}                                                                                                           | Override any style specified in the component (see source code)                                                                       |
-| disabled                   | bool          | false                                                                                                        | Whether or not the Country Picker onPress is disabled                                                                                 |
-| transparent                | bool          | false                                                                                                        | If true, the CountryPicker will render the modal over a transparent background                                                        |
-| animationType              | string        | 'none'                                                                                                       | The handler that controls how the modal animates                                                                                      |
-| closeButtonImage           | React.element | default close button Image                                                                                   | Custom close button Image                                                                                                             |
-| flagType                   | string        | 'emoji' on iOS, 'flat' on Android                                                                            | If set, overwrites the default OS based flag type.                                                                                    |
-| hideAlphabetFilter         | bool          | false                                                                                                        | If set to true, prevents the alphabet filter rendering                                                                                |
-| showCountryNameWithFlag    | bool          | false                                                                                                        | If set, then country name will appear next to flag in the view                                                                        |
-| showCallingCode            | bool          | false                                                                                                        | If set to true, Country Picker List will show calling code after country name `United States (+1)`                                    |
-| renderFilter               | Function      | undefined                                                                                                    | If 'filterable={true}' and renderFilter function is provided, render custom filter component.\*                                       |
-
-\*
-
-```js
-renderFilter = ({ value, onChange, onClose }) => (
-  <CustomFilterComponent value={value} onChange={onChange} onClose={onClose} />
-)
+```tsx
+interface CountryPickerProps {
+  countryCode: CountryCode
+  modalProps?: ModalProps
+  withEmoji?: boolean
+  withCountryName?: boolean
+  withFilter?: boolean
+  withAlphaFilter?: boolean
+  withCallingCode?: boolean
+  withFlag?: boolean
+  visible?: boolean
+  renderFlagButton?(props: FlagButton['props']): ReactNode
+  renderCountryFilter?(props: CountryFilter['props']): ReactNode
+  onSelect(country: Country): void
+}
 ```
 
 ## Dependencies

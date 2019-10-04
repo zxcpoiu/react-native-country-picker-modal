@@ -63,7 +63,7 @@ export const getCountryName = (
   ]
 }
 
-export const getCountriesAsync = (
+export const getCountries = (
   flagType: FlagType,
   translation: TranslationLanguageCode = 'common'
 ): Country[] => {
@@ -89,8 +89,7 @@ const DEFAULT_FUSE_OPTION = {
   distance: 100,
   maxPatternLength: 32,
   minMatchCharLength: 1,
-  keys: ['name', 'callingCode'],
-  id: 'cca2'
+  keys: ['name', 'callingCode']
 }
 let fuse: Fuse<Country>
 export const search = (
@@ -98,12 +97,26 @@ export const search = (
   data: Country[] = [],
   options: Fuse.FuseOptions<any> = DEFAULT_FUSE_OPTION
 ) => {
+  if (data.length === 0) {
+    return []
+  }
   if (!fuse) {
     fuse = new Fuse<Country>(data, options)
   }
   if (filter && filter !== '') {
-    return fuse.search(filter)
+    const result = fuse.search(filter)
+    return result
   } else {
     return data
   }
 }
+const uniq = (arr: any[]) => Array.from(new Set(arr))
+
+export const getLetters = () =>
+  uniq(
+    CountryCodeList.map((countryCode: CountryCode) =>
+      getCountryName(countryCode)
+        .substr(0, 1)
+        .toLocaleUpperCase()
+    ).sort()
+  )
