@@ -16,4 +16,8 @@ exp-example
 scripts
 babel.config.js
 metro.config.js
-scripts
+scripts/
+data/
+App.tsx
+tsconfig.json
+tslint.json
