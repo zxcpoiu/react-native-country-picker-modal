@@ -100,9 +100,9 @@ export default function App() {
 - `countryCode`: [CountryCode](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/types.ts#L252)
 - `theme?`: [Theme](https://github.com/xcarpentier/react-native-country-picker-modal/blob/7611d34fa35744dbec3fbcdd9b4401494b1ba8c4/src/CountryTheme.ts#L5)
 - `translation?`: [TranslationLanguageCode](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/types.ts#L269)
-- `modalProps?`: (ModalProps)[https://facebook.github.io/react-native/docs/modal#props]
-- `filterProps?`: (CountryFilterProps)[https://facebook.github.io/react-native/docs/textinput#props]
-- `flatListProps?`: (FlatListProps<Country>)[https://facebook.github.io/react-native/docs/flatlist#props]
+- `modalProps?`: [ModalProps](https://facebook.github.io/react-native/docs/modal#props)
+- `filterProps?`: [CountryFilterProps](https://facebook.github.io/react-native/docs/textinput#props)
+- `flatListProps?`: [FlatListProps<Country>](https://facebook.github.io/react-native/docs/flatlist#props)
 - `withAlphaFilter?`: boolean
 - `withCallingCode?`: boolean
 - `withEmoji?`: boolean
