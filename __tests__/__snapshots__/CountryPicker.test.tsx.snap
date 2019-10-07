@@ -62,127 +62,119 @@ Array [
       </View>
     </View>
   </View>,
-  <Modal
-    animated={true}
-    animationType="slide"
-    hardwareAccelerated={false}
-    onRequestClose={[Function]}
-    visible={false}
+  <RCTSafeAreaView
+    emulateUnlessSupported={true}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "backgroundColor": "#ffffff",
+        },
+      ]
+    }
   >
-    <RCTSafeAreaView
-      emulateUnlessSupported={true}
+    <View
       style={
-        Array [
-          Object {
-            "flex": 1,
-          },
-          Object {
-            "backgroundColor": "#ffffff",
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
       }
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "height": 48,
+              "justifyContent": "center",
+              "width": "15%",
+            },
+            undefined,
+          ]
         }
       >
         <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "height": 48,
-                "justifyContent": "center",
-                "width": "15%",
-              },
-              undefined,
-            ]
+            Object {
+              "opacity": 1,
+            }
           }
         >
-          <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
+          <Image
+            source={
               Object {
-                "opacity": 1,
+                "testUri": "../../../src/assets/images/close.ios.png",
               }
             }
-          >
-            <Image
-              source={
+            style={
+              Array [
                 Object {
-                  "testUri": "../../../src/assets/images/close.ios.png",
-                }
-              }
-              style={
-                Array [
-                  Object {
-                    "height": 25,
-                    "resizeMode": "contain",
-                    "width": 25,
-                  },
-                  undefined,
-                ]
-              }
-            />
-          </View>
+                  "height": 25,
+                  "resizeMode": "contain",
+                  "width": 25,
+                },
+                undefined,
+              ]
+            }
+          />
         </View>
       </View>
-      <View
-        style={
-          Object {
-            "backgroundColor": "white",
-            "flex": 1,
-            "flexDirection": "row",
-            "justifyContent": "space-between",
-          }
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "white",
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "space-between",
         }
+      }
+    >
+      <RCTScrollView
+        ItemSeparatorComponent={[Function]}
+        automaticallyAdjustContentInsets={false}
+        data={Array []}
+        disableVirtualization={false}
+        getItem={[Function]}
+        getItemCount={[Function]}
+        getItemLayout={[Function]}
+        horizontal={false}
+        initialNumToRender={12}
+        keyExtractor={[Function]}
+        keyboardShouldPersistTaps="handled"
+        maxToRenderPerBatch={10}
+        numColumns={1}
+        onContentSizeChange={[Function]}
+        onEndReachedThreshold={2}
+        onLayout={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        onScrollToIndexFailed={[Function]}
+        removeClippedSubviews={false}
+        renderItem={[Function]}
+        scrollEventThrottle={1}
+        stickyHeaderIndices={Array []}
+        testID="list-countries"
+        updateCellsBatchingPeriod={50}
+        viewabilityConfigCallbackPairs={Array []}
+        windowSize={21}
       >
-        <RCTScrollView
-          ItemSeparatorComponent={[Function]}
-          automaticallyAdjustContentInsets={false}
-          data={Array []}
-          disableVirtualization={false}
-          getItem={[Function]}
-          getItemCount={[Function]}
-          getItemLayout={[Function]}
-          horizontal={false}
-          initialNumToRender={12}
-          keyExtractor={[Function]}
-          keyboardShouldPersistTaps="handled"
-          maxToRenderPerBatch={10}
-          numColumns={1}
-          onContentSizeChange={[Function]}
-          onEndReachedThreshold={2}
-          onLayout={[Function]}
-          onMomentumScrollEnd={[Function]}
-          onScroll={[Function]}
-          onScrollBeginDrag={[Function]}
-          onScrollEndDrag={[Function]}
-          onScrollToIndexFailed={[Function]}
-          removeClippedSubviews={false}
-          renderItem={[Function]}
-          scrollEventThrottle={1}
-          stickyHeaderIndices={Array []}
-          testID="list-countries"
-          updateCellsBatchingPeriod={50}
-          viewabilityConfigCallbackPairs={Array []}
-          windowSize={21}
-        >
-          <View />
-        </RCTScrollView>
-      </View>
-    </RCTSafeAreaView>
-  </Modal>,
+        <View />
+      </RCTScrollView>
+    </View>
+  </RCTSafeAreaView>,
 ]
 `;

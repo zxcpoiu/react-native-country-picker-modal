@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Text,
   ListRenderItemInfo,
-  PixelRatio
+  PixelRatio,
+  FlatListProps
 } from 'react-native'
 import { useTheme } from './CountryTheme'
 import { Country, Omit } from './types'
@@ -134,6 +135,7 @@ interface CountryListProps {
   withEmoji?: boolean
   withAlphaFilter?: boolean
   withCallingCode?: boolean
+  flatListProps?: FlatListProps<Country>
   onSelect(country: Country): void
 }
 
@@ -152,7 +154,8 @@ export const CountryList = (props: CountryListProps) => {
     withFlag,
     withCallingCode,
     onSelect,
-    filter
+    filter,
+    flatListProps
   } = props
   const flatListRef = useRef<FlatList<Country>>(null)
   const [letter, setLetter] = useState<string>('')
@@ -205,6 +208,7 @@ export const CountryList = (props: CountryListProps) => {
           onScrollToIndexFailed,
           ItemSeparatorComponent
         }}
+        {...flatListProps}
       />
       {withAlphaFilter && (
         <ScrollView

@@ -3,8 +3,8 @@ import { FlagButton } from './FlagButton'
 import { TranslationLanguageCode, CountryCode, Country } from './types'
 import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from './CountryContext'
 import { ThemeProvider, DEFAULT_THEME, Theme } from './CountryTheme'
-import { CountryFilter } from './CountryFilter'
-import { ModalProps } from 'react-native'
+import { CountryFilter, CountryFilterProps } from './CountryFilter'
+import { ModalProps, FlatListProps } from 'react-native'
 import { CountryPicker } from './CountryPicker'
 
 interface Props {
@@ -12,12 +12,15 @@ interface Props {
   theme?: Theme
   translation?: TranslationLanguageCode
   modalProps?: ModalProps
+  filterProps?: CountryFilterProps
+  flatListProps?: FlatListProps<Country>
   withAlphaFilter?: boolean
   withCallingCode?: boolean
   withEmoji?: boolean
   withCountryName?: boolean
   withFilter?: boolean
   withFlag?: boolean
+  withModal?: boolean
   visible?: boolean
   renderFlagButton?(props: FlagButton['props']): ReactNode
   renderCountryFilter?(props: CountryFilter['props']): ReactNode
@@ -37,3 +40,9 @@ export default function main({ theme, translation, ...props }: Props) {
 main.defaultProps = {
   onSelect: () => {}
 }
+
+export { CountryModal } from './CountryModal'
+export { CountryFilter } from './CountryFilter'
+export { CountryList } from './CountryList'
+export { FlagButton } from './FlagButton'
+export { HeaderModal } from './HeaderModal'

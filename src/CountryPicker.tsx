@@ -1,9 +1,9 @@
 import React, { ReactNode, useState, useEffect } from 'react'
-import { ModalProps } from 'react-native'
+import { ModalProps, FlatListProps } from 'react-native'
 import { CountryModal } from './CountryModal'
 import { HeaderModal } from './HeaderModal'
 import { Country, CountryCode, FlagType } from './types'
-import { CountryFilter } from './CountryFilter'
+import { CountryFilter, CountryFilterProps } from './CountryFilter'
 import { FlagButton } from './FlagButton'
 import { useContext } from './CountryContext'
 import { CountryList } from './CountryList'
@@ -35,12 +35,15 @@ const renderFilter = (
 interface CountryPickerProps {
   countryCode: CountryCode
   modalProps?: ModalProps
+  filterProps?: CountryFilterProps
+  flatListProps?: FlatListProps<Country>
   withEmoji?: boolean
   withCountryName?: boolean
   withFilter?: boolean
   withAlphaFilter?: boolean
   withCallingCode?: boolean
   withFlag?: boolean
+  withModal?: boolean
   visible?: boolean
   renderFlagButton?(props: FlagButton['props']): ReactNode
   renderCountryFilter?(props: CountryFilter['props']): ReactNode
@@ -52,14 +55,17 @@ export const CountryPicker = (props: CountryPickerProps) => {
     countryCode,
     renderFlagButton: renderButton,
     renderCountryFilter,
+    filterProps,
     modalProps,
+    flatListProps,
     onSelect,
     withEmoji,
     withFilter,
     withCountryName,
     withAlphaFilter,
     withCallingCode,
-    withFlag
+    withFlag,
+    withModal
   } = props
   const [state, setState] = useState<State>({
     visible: props.visible || false,
@@ -77,7 +83,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     onSelect(country)
     onClose()
   }
-  const flapProp = {
+  const flagProp = {
     withEmoji,
     withCountryName,
     countryCode,
@@ -94,8 +100,11 @@ export const CountryPicker = (props: CountryPickerProps) => {
 
   return (
     <>
-      {renderFlagButton(flapProp)}
-      <CountryModal {...{ ...modalProps, visible }} onRequestClose={onClose}>
+      {renderFlagButton(flagProp)}
+      <CountryModal
+        {...{ ...modalProps, visible, withModal }}
+        onRequestClose={onClose}
+      >
         <HeaderModal
           {...{ withFilter, onClose }}
           renderFilter={(props: CountryFilter['props']) =>
@@ -103,7 +112,8 @@ export const CountryPicker = (props: CountryPickerProps) => {
               ...props,
               renderCountryFilter,
               onChangeText: setFilter,
-              value: filter
+              value: filter,
+              ...filterProps
             })
           }
         />
@@ -116,7 +126,8 @@ export const CountryPicker = (props: CountryPickerProps) => {
             withCallingCode,
             withFlag,
             withEmoji,
-            filter
+            filter,
+            flatListProps
           }}
         />
       </CountryModal>

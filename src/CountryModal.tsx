@@ -1,21 +1,7 @@
 import * as React from 'react'
-import {
-  ModalProps,
-  Modal as DefaultModal,
-  SafeAreaView,
-  StyleSheet,
-  Platform
-} from 'react-native'
-
-// @ts-ignore
-import WebModal from 'modal-react-native-web'
-
+import { ModalProps, SafeAreaView, StyleSheet } from 'react-native'
+import { Modal } from './Modal'
 import { useTheme } from './CountryTheme'
-
-const Modal = Platform.select<typeof DefaultModal>({
-  web: WebModal,
-  default: DefaultModal
-})
 
 const styles = StyleSheet.create({
   container: {
@@ -25,17 +11,23 @@ const styles = StyleSheet.create({
 
 export const CountryModal = ({
   children,
+  withModal,
   ...props
-}: ModalProps & { children: React.ReactNode }) => {
+}: ModalProps & { children: React.ReactNode; withModal?: boolean }) => {
   const { backgroundColor } = useTheme()
-
-  return (
-    <Modal {...props}>
-      <SafeAreaView style={[styles.container, { backgroundColor }]}>
-        {children}
-      </SafeAreaView>
-    </Modal>
+  const content = (
+    <SafeAreaView style={[styles.container, { backgroundColor }]}>
+      {children}
+    </SafeAreaView>
   )
+  if (withModal) {
+    return <Modal {...props}>{content}</Modal>
+  }
+  return content
+}
+
+CountryModal.defaultProps = {
+  withModal: true
 }
 
 CountryModal.defaultProps = {
