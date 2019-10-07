@@ -3,7 +3,14 @@ import { Emoji } from './Emoji'
 import { CountryCode } from './types'
 import { useTheme } from './CountryTheme'
 import { useContext } from './CountryContext'
-import { Image, StyleSheet, PixelRatio, Text, View } from 'react-native'
+import {
+  Image,
+  StyleSheet,
+  PixelRatio,
+  Text,
+  View,
+  Platform
+} from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +22,7 @@ const styles = StyleSheet.create({
   emojiFlag: {
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 30,
+    fontSize: Platform.select({ android: 20, default: 30 }),
     borderWidth: 1 / PixelRatio.get(),
     borderColor: 'transparent',
     backgroundColor: 'transparent'

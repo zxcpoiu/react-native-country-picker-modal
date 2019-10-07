@@ -1,19 +1,17 @@
-<p align="center">
-    <img alt="react-native-country-picker-modal" src="https://media.giphy.com/media/fAEXRiqyOC6PPqArHc/giphy.gif" width=200>
-</p>
-
-<h3 align="center">
+<h3>
   Country Picker for React Native.
 </h3>
 
-<p align="center">
+<p>
    <a href="https://reactnative.gallery/xcarpentier/country-picker"><img src="https://img.shields.io/badge/reactnative.gallery-%F0%9F%8E%AC-green.svg"/></a>
   <a href="https://www.npmjs.com/package/react-native-country-picker-modal"><img src="https://img.shields.io/npm/v/react-native-country-picker-modal.svg?style=flat-square"></a>
   <a href="https://www.npmjs.com/package/react-native-country-picker-modal"><img src="https://img.shields.io/npm/dm/react-native-country-picker-modal.svg?style=flat-square"></a>
   <a href="#hire-an-expert"><img src="https://img.shields.io/badge/%F0%9F%92%AA-hire%20an%20expert-brightgreen"/></a>
 </p>
 
-<br />
+| iOS                                                                                               | Android                                                                                           | Web                                                                                               |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| <img  src="https://media.giphy.com/media/cKmlP4Ue5pUrH0DQLi/giphy.gif" width="200" height="400"/> | <img  src="https://media.giphy.com/media/Q7SDti4eARGx2CQIGE/giphy.gif" width="200" height="400"/> | <img  src="https://media.giphy.com/media/gKl3z3c7sVVL7KSSh8/giphy.gif" width="250" height="400"/> |
 
 ## Installation
 
