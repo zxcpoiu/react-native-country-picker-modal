@@ -63,6 +63,10 @@ export const getCountryName = (
   ]
 }
 
+const isCountryPresent = (countries: { [key in CountryCode]: Country }) => (
+  countryCode: CountryCode
+) => !!countries[countryCode]
+
 export const getCountries = (
   flagType: FlagType,
   translation: TranslationLanguageCode = 'common'
@@ -71,13 +75,17 @@ export const getCountries = (
   if (!countriesRaw) {
     return []
   }
-  const countries = CountryCodeList.map((cca2: CountryCode) => ({
-    cca2,
-    ...{
-      ...countriesRaw[cca2],
-      name: (countriesRaw[cca2].name as TranslationLanguageCodeMap)[translation]
-    }
-  }))
+  const countries = CountryCodeList.filter(isCountryPresent(countriesRaw)).map(
+    (cca2: CountryCode) => ({
+      cca2,
+      ...{
+        ...countriesRaw[cca2],
+        name: (countriesRaw[cca2].name as TranslationLanguageCodeMap)[
+          translation
+        ]
+      }
+    })
+  )
 
   return countries
 }
@@ -112,11 +120,18 @@ export const search = (
 }
 const uniq = (arr: any[]) => Array.from(new Set(arr))
 
-export const getLetters = () =>
-  uniq(
-    CountryCodeList.map((countryCode: CountryCode) =>
-      getCountryName(countryCode)
-        .substr(0, 1)
-        .toLocaleUpperCase()
-    ).sort()
+export const getLetters = () => {
+  const countriesRaw = loadData()
+  if (!countriesRaw) {
+    return []
+  }
+  return uniq(
+    CountryCodeList.filter(isCountryPresent(countriesRaw))
+      .map((countryCode: CountryCode) =>
+        getCountryName(countryCode)
+          .substr(0, 1)
+          .toLocaleUpperCase()
+      )
+      .sort()
   )
+}

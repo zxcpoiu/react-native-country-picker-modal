@@ -20,9 +20,9 @@
     "config:npm": "json -I -f package.json -e 'this.main=\"lib/index.js\"'",
     "lint": "tslint --project .",
     "test": "TZ=Europe/Paris jest --no-watchman",
-    "gendata": "rm -rf ./data/countries.json && babel-node ./scripts/transform-world-countries.js > ./data/countries.json",
-    "gendata-emoji": "rm -rf ./data/countries-emoji.json && babel-node ./scripts/transform-world-countries.js --emoji > ./data/countries-emoji.json",
-    "gendata-cca2": "rm -rf ./data/cca2.json && babel-node ./scripts/transform-world-countries.js --cca2 > ./data/cca2.json",
+    "data:image": "rm -rf ./data/countries.json && ./scripts/transform-world-countries.js > ./data/countries.json",
+    "data:emoji": "rm -rf ./data/countries-emoji.json && ./scripts/transform-world-countries.js --emoji > ./data/countries-emoji.json",
+    "data:cca2": "rm -rf ./data/cca2.json && ./scripts/transform-world-countries.js --cca2 > ./data/cca2.json",
     "cleaning": "rm -rf node_modules && rm -f yarn.lock && yarn cache clean && yarn install && watchman watch-del-all && rm -fr $TMPDIR/react-*",
     "prepublishOnly": "yarn lint && yarn build && yarn test && yarn config:npm",
     "postpublish": "yarn config:dev"

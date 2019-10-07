@@ -160,11 +160,12 @@ export const CountryList = (props: CountryListProps) => {
   const flatListRef = useRef<FlatList<Country>>(null)
   const [letter, setLetter] = useState<string>('')
   const { itemHeight } = useTheme()
+  const indexLetter = data
+    .map((country: Country) => (country.name as string).substr(0, 1))
+    .join('')
+
   const scrollTo = (letter: string) => {
-    const index = data
-      .map((country: Country) => (country.name as string).substr(0, 1))
-      .join()
-      .indexOf(letter)
+    const index = indexLetter.indexOf(letter)
     setLetter(letter)
     if (flatListRef.current) {
       flatListRef.current!.scrollToIndex({ animated: true, index })

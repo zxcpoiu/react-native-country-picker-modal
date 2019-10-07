@@ -27,10 +27,7 @@ export const CountryModal = ({
 }
 
 CountryModal.defaultProps = {
-  withModal: true
-}
-
-CountryModal.defaultProps = {
   animationType: 'slide',
-  animated: true
+  animated: true,
+  withModal: true
 }

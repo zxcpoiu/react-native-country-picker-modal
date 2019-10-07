@@ -10,4 +10,4 @@ const DEFAULT_HEIGHT =
   Platform.OS === 'android' ? height - ANDROID_MINUS_HEIGHT : height
 
 export const getHeightPercent = (percentage: number) =>
-  DEFAULT_HEIGHT * (percentage / 100)
+  Math.round(DEFAULT_HEIGHT * (percentage / 100))
