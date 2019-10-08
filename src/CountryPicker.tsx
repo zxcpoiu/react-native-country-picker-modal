@@ -49,6 +49,8 @@ interface CountryPickerProps {
   renderFlagButton?(props: FlagButton['props']): ReactNode
   renderCountryFilter?(props: CountryFilter['props']): ReactNode
   onSelect(country: Country): void
+  onOpen?(): void
+  onClose?(): void
 }
 
 export const CountryPicker = (props: CountryPickerProps) => {
@@ -67,7 +69,9 @@ export const CountryPicker = (props: CountryPickerProps) => {
     withCallingCode,
     withCurrency,
     withFlag,
-    withModal
+    withModal,
+    onClose: handleClose,
+    onOpen: handleOpen
   } = props
   const [state, setState] = useState<State>({
     visible: props.visible || false,
@@ -76,8 +80,18 @@ export const CountryPicker = (props: CountryPickerProps) => {
   })
   const { translation, getCountries } = useContext()
   const { visible, filter, countries } = state
-  const onOpen = () => setState({ ...state, visible: true })
-  const onClose = () => setState({ ...state, filter: '', visible: false })
+  const onOpen = () => {
+    setState({ ...state, visible: true })
+    if (handleOpen) {
+      handleOpen()
+    }
+  }
+  const onClose = () => {
+    setState({ ...state, filter: '', visible: false })
+    if (handleClose) {
+      handleClose()
+    }
+  }
   const setFilter = (filter: string) => setState({ ...state, filter })
   const setCountries = (countries: Country[]) =>
     setState({ ...state, countries })
@@ -104,7 +118,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     <>
       {renderFlagButton(flagProp)}
       <CountryModal
-        {...{ ...modalProps, visible, withModal }}
+        {...{ visible, withModal, ...modalProps }}
         onRequestClose={onClose}
       >
         <HeaderModal

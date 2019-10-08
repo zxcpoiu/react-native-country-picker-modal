@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, PixelRatio, Switch } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  PixelRatio,
+  Switch,
+  Button
+} from 'react-native'
 import CountryPicker from './src/'
 import { CountryCode, Country } from './src/types'
 import { Row } from './src/Row'
@@ -22,8 +29,8 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   data: {
-    padding: 15,
-    marginTop: 10,
+    padding: 10,
+    marginTop: 7,
     backgroundColor: '#ddd',
     borderColor: '#888',
     borderWidth: 1 / PixelRatio.get(),
@@ -53,10 +60,12 @@ export default function App() {
   const [withAlphaFilter, setWithAlphaFilter] = useState<boolean>(false)
   const [withCallingCode, setWithCallingCode] = useState<boolean>(false)
   const [withCurrency, setWithCurrency] = useState<boolean>(false)
+  const [visible, setVisible] = useState<boolean>(false)
   const onSelect = (country: Country) => {
     setCountryCode(country.cca2)
     setCountry(country)
   }
+  const switchVisible = () => setVisible(!visible)
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>Welcome to Country Picker !</Text>
@@ -101,12 +110,21 @@ export default function App() {
           withCallingCode,
           withCurrency,
           withEmoji,
-          onSelect
+          onSelect,
+          modalProps: {
+            visible
+          },
+          onClose: () => setVisible(false),
+          onOpen: () => setVisible(true)
         }}
       />
       <Text style={styles.instructions}>Press on the flag to open modal</Text>
+      <Button
+        title={'Open modal from outside using visible props'}
+        onPress={() => switchVisible()}
+      />
       {country !== null && (
-        <Text style={styles.data}>{JSON.stringify(country, null, 2)}</Text>
+        <Text style={styles.data}>{JSON.stringify(country, null, 0)}</Text>
       )}
     </View>
   )

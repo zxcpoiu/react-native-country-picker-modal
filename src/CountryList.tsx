@@ -104,10 +104,10 @@ const CountryItem = (props: CountryItemProps) => {
   } = props
   const extraContent: string[] = []
   if (withCallingCode && country.callingCode) {
-    extraContent.push(`+${country.callingCode}`)
+    extraContent.push(`+${country.callingCode.join('|')}`)
   }
   if (withCurrency && country.currency) {
-    extraContent.push(country.currency)
+    extraContent.push(country.currency.join('|'))
   }
   return (
     <TouchableOpacity

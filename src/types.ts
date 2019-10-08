@@ -261,8 +261,8 @@ export type TranslationLanguageCodeMap = {
   [key in TranslationLanguageCode]: string
 }
 export interface Country {
-  currency: CurrencyCode
-  callingCode: CallingCode
+  currency: CurrencyCode[]
+  callingCode: CallingCode[]
   flag: string
   name: TranslationLanguageCodeMap | string
   cca2: CountryCode
