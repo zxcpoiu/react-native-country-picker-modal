@@ -52,6 +52,7 @@ export default function App() {
   const [withFilter, setWithFilter] = useState<boolean>(true)
   const [withAlphaFilter, setWithAlphaFilter] = useState<boolean>(false)
   const [withCallingCode, setWithCallingCode] = useState<boolean>(false)
+  const [withCurrency, setWithCurrency] = useState<boolean>(false)
   const onSelect = (country: Country) => {
     setCountryCode(country.cca2)
     setCountry(country)
@@ -81,6 +82,11 @@ export default function App() {
         onValueChange={setWithCallingCode}
       />
       <Option
+        title="With currency"
+        value={withCurrency}
+        onValueChange={setWithCurrency}
+      />
+      <Option
         title="With alpha filter code"
         value={withAlphaFilter}
         onValueChange={setWithAlphaFilter}
@@ -93,6 +99,7 @@ export default function App() {
           withCountryName,
           withAlphaFilter,
           withCallingCode,
+          withCurrency,
           withEmoji,
           onSelect
         }}

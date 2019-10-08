@@ -16,6 +16,7 @@ interface Props {
   flatListProps?: FlatListProps<Country>
   withAlphaFilter?: boolean
   withCallingCode?: boolean
+  withCurrency?: boolean
   withEmoji?: boolean
   withCountryName?: boolean
   withFilter?: boolean

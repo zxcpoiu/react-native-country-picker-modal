@@ -42,6 +42,7 @@ interface CountryPickerProps {
   withFilter?: boolean
   withAlphaFilter?: boolean
   withCallingCode?: boolean
+  withCurrency?: boolean
   withFlag?: boolean
   withModal?: boolean
   visible?: boolean
@@ -64,6 +65,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     withCountryName,
     withAlphaFilter,
     withCallingCode,
+    withCurrency,
     withFlag,
     withModal
   } = props
@@ -124,6 +126,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
             letters: [],
             withAlphaFilter: withAlphaFilter && filter === '',
             withCallingCode,
+            withCurrency,
             withFlag,
             withEmoji,
             filter,

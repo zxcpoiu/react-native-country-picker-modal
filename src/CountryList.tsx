@@ -89,12 +89,26 @@ interface CountryItemProps {
   withFlag?: boolean
   withEmoji?: boolean
   withCallingCode?: boolean
+  withCurrency?: boolean
   onSelect(country: Country): void
 }
 const CountryItem = (props: CountryItemProps) => {
   const { activeOpacity, fontSize, fontFamily, itemHeight } = useTheme()
-  const { country, onSelect, withFlag, withEmoji, withCallingCode } = props
-
+  const {
+    country,
+    onSelect,
+    withFlag,
+    withEmoji,
+    withCallingCode,
+    withCurrency
+  } = props
+  const extraContent: string[] = []
+  if (withCallingCode && country.callingCode) {
+    extraContent.push(`+${country.callingCode}`)
+  }
+  if (withCurrency && country.currency) {
+    extraContent.push(country.currency)
+  }
   return (
     <TouchableOpacity
       key={country.cca2}
@@ -107,9 +121,7 @@ const CountryItem = (props: CountryItemProps) => {
         <View style={styles.itemCountryName}>
           <Text style={{ fontFamily, fontSize }} allowFontScaling={false}>
             {country.name}
-            {withCallingCode &&
-              country.callingCode &&
-              ` (+${country.callingCode})`}
+            {extraContent.length > 0 && ` (${extraContent.join(', ')})`}
           </Text>
         </View>
       </View>
@@ -135,6 +147,7 @@ interface CountryListProps {
   withEmoji?: boolean
   withAlphaFilter?: boolean
   withCallingCode?: boolean
+  withCurrency?: boolean
   flatListProps?: FlatListProps<Country>
   onSelect(country: Country): void
 }
@@ -153,6 +166,7 @@ export const CountryList = (props: CountryListProps) => {
     withEmoji,
     withFlag,
     withCallingCode,
+    withCurrency,
     onSelect,
     filter,
     flatListProps
@@ -201,6 +215,7 @@ export const CountryList = (props: CountryListProps) => {
           withEmoji,
           withFlag,
           withCallingCode,
+          withCurrency,
           onSelect
         })}
         {...{

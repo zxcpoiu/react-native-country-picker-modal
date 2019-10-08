@@ -105,6 +105,7 @@ export default function App() {
 - `flatListProps?`: [FlatListProps<Country>](https://facebook.github.io/react-native/docs/flatlist#props)
 - `withAlphaFilter?`: boolean
 - `withCallingCode?`: boolean
+- `withCurrency?`: boolean
 - `withEmoji?`: boolean
 - `withCountryName?`: boolean
 - `withFilter?`: boolean
