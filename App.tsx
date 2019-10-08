@@ -5,7 +5,8 @@ import {
   StyleSheet,
   PixelRatio,
   Switch,
-  Button
+  Button,
+  ScrollView
 } from 'react-native'
 import CountryPicker from './src/'
 import { CountryCode, Country } from './src/types'
@@ -13,7 +14,7 @@ import { Row } from './src/Row'
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    paddingVertical: 15,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -53,7 +54,14 @@ const Option = ({ value, onValueChange, title }: OptionProps) => (
 export default function App() {
   const [countryCode, setCountryCode] = useState<CountryCode>('FR')
   const [country, setCountry] = useState<Country>(null)
-  const [withCountryName, setWithCountryName] = useState<boolean>(false)
+  const [withCountryNameButton, setWithCountryNameButton] = useState<boolean>(
+    false
+  )
+  const [withCurrencyButton, setWithCurrencyButton] = useState<boolean>(false)
+  const [withCallingCodeButton, setWithCallingCodeButton] = useState<boolean>(
+    false
+  )
+
   const [withFlag, setWithFlag] = useState<boolean>(true)
   const [withEmoji, setWithEmoji] = useState<boolean>(true)
   const [withFilter, setWithFilter] = useState<boolean>(true)
@@ -67,12 +75,22 @@ export default function App() {
   }
   const switchVisible = () => setVisible(!visible)
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.welcome}>Welcome to Country Picker !</Text>
       <Option
         title="With country name on button"
-        value={withCountryName}
-        onValueChange={setWithCountryName}
+        value={withCountryNameButton}
+        onValueChange={setWithCountryNameButton}
+      />
+      <Option
+        title="With currency on button"
+        value={withCurrencyButton}
+        onValueChange={setWithCurrencyButton}
+      />
+      <Option
+        title="With calling code on button"
+        value={withCallingCodeButton}
+        onValueChange={setWithCallingCodeButton}
       />
       <Option title="With flag" value={withFlag} onValueChange={setWithFlag} />
       <Option
@@ -105,7 +123,9 @@ export default function App() {
           countryCode,
           withFilter,
           withFlag,
-          withCountryName,
+          withCurrencyButton,
+          withCallingCodeButton,
+          withCountryNameButton,
           withAlphaFilter,
           withCallingCode,
           withCurrency,
@@ -126,6 +146,6 @@ export default function App() {
       {country !== null && (
         <Text style={styles.data}>{JSON.stringify(country, null, 0)}</Text>
       )}
-    </View>
+    </ScrollView>
   )
 }

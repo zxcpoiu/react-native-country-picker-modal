@@ -6,6 +6,8 @@ import {
   getCountryName,
   getCountries,
   getLetters,
+  getCountryCallingCode,
+  getCountryCurrency,
   search
 } from './CountryService'
 
@@ -15,8 +17,10 @@ export interface CountryContextParam {
   getImageFlag: typeof getImageFlag
   getEmojiFlag: typeof getEmojiFlag
   getCountries: typeof getCountries
-  search: typeof search
   getLetters: typeof getLetters
+  getCountryCallingCode: typeof getCountryCallingCode
+  getCountryCurrency: typeof getCountryCurrency
+  search: typeof search
 }
 export const DEFAULT_COUNTRY_CONTEXT = {
   translation: 'common' as TranslationLanguageCode,
@@ -24,6 +28,8 @@ export const DEFAULT_COUNTRY_CONTEXT = {
   getImageFlag,
   getEmojiFlag,
   getCountries,
+  getCountryCallingCode,
+  getCountryCurrency,
   search,
   getLetters
 }

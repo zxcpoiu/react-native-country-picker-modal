@@ -63,6 +63,30 @@ export const getCountryName = (
   ]
 }
 
+export const getCountryCallingCode = (countryCode: CountryCode) => {
+  const countries = loadData()
+  if (!countries) {
+    throw new Error('Unable to find image because imageCountries is undefined')
+  }
+  return countries[countryCode].callingCode[0]
+}
+
+export const getCountryCurrency = (countryCode: CountryCode) => {
+  const countries = loadData()
+  if (!countries) {
+    throw new Error('Unable to find image because imageCountries is undefined')
+  }
+  return countries[countryCode].currency[0]
+}
+
+export const getCountry = (countryCode: CountryCode) => {
+  const countries = loadData()
+  if (!countries) {
+    throw new Error('Unable to find image because imageCountries is undefined')
+  }
+  return countries[countryCode].callingCode[0]
+}
+
 const isCountryPresent = (countries: { [key in CountryCode]: Country }) => (
   countryCode: CountryCode
 ) => !!countries[countryCode]
@@ -75,8 +99,8 @@ export const getCountries = (
   if (!countriesRaw) {
     return []
   }
-  const countries = CountryCodeList.filter(isCountryPresent(countriesRaw)).map(
-    (cca2: CountryCode) => ({
+  const countries = CountryCodeList.filter(isCountryPresent(countriesRaw))
+    .map((cca2: CountryCode) => ({
       cca2,
       ...{
         ...countriesRaw[cca2],
@@ -84,8 +108,10 @@ export const getCountries = (
           translation
         ]
       }
-    })
-  )
+    }))
+    .sort((country1: Country, country2: Country) =>
+      (country1.name as string).localeCompare(country2.name as string)
+    )
 
   return countries
 }
@@ -132,6 +158,6 @@ export const getLetters = () => {
           .substr(0, 1)
           .toLocaleUpperCase()
       )
-      .sort()
+      .sort((l1: string, l2: string) => l1.localeCompare(l2))
   )
 }

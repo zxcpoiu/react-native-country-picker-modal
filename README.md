@@ -34,7 +34,9 @@ const styles = StyleSheet.create({
 export default function App() {
   const [countryCode, setCountryCode] = useState<CountryCode>('FR')
   const [country, setCountry] = useState<Country>(null)
-  const [withCountryName, setWithCountryName] = useState<boolean>(false)
+  const [withCountryNameButton, setwithCountryNameButton] = useState<boolean>(
+    false
+  )
   const [withFlag, setWithFlag] = useState<boolean>(true)
   const [withEmoji, setWithEmoji] = useState<boolean>(true)
   const [withFilter, setWithFilter] = useState<boolean>(true)
@@ -49,8 +51,8 @@ export default function App() {
       <Text style={styles.welcome}>Welcome to Country Picker !</Text>
       <Option
         title="With country name on button"
-        value={withCountryName}
-        onValueChange={setWithCountryName}
+        value={withCountryNameButton}
+        onValueChange={setwithCountryNameButton}
       />
       <Option title="With flag" value={withFlag} onValueChange={setWithFlag} />
       <Option
@@ -78,7 +80,7 @@ export default function App() {
           countryCode,
           withFilter,
           withFlag,
-          withCountryName,
+          withCountryNameButton,
           withAlphaFilter,
           withCallingCode,
           withEmoji,
@@ -107,7 +109,9 @@ export default function App() {
 - `withCallingCode?`: boolean
 - `withCurrency?`: boolean
 - `withEmoji?`: boolean
-- `withCountryName?`: boolean
+- `withCountryNameButton?`: boolean
+- `withCurrencyButton?`: boolean
+- `withCallingCodeButton?`: boolean
 - `withFilter?`: boolean
 - `withFlag?`: boolean
 - `withModal?`: boolean

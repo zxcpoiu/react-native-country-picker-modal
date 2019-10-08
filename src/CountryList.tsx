@@ -46,9 +46,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5
   },
   itemCountryName: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%'
+    width: '90%'
   },
   list: {
     flex: 1
@@ -123,7 +121,12 @@ const CountryItem = (props: CountryItemProps) => {
       <View style={[styles.itemCountry, { height: itemHeight }]}>
         {withFlag && <Flag {...{ withEmoji, countryCode: country.cca2 }} />}
         <View style={styles.itemCountryName}>
-          <Text style={{ fontFamily, fontSize }} allowFontScaling={false}>
+          <Text
+            style={{ fontFamily, fontSize }}
+            allowFontScaling={false}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
             {country.name}
             {extraContent.length > 0 && ` (${extraContent.join(', ')})`}
           </Text>
