@@ -103,10 +103,14 @@ const CountryItem = (props: CountryItemProps) => {
     withCurrency
   } = props
   const extraContent: string[] = []
-  if (withCallingCode && country.callingCode) {
+  if (
+    withCallingCode &&
+    country.callingCode &&
+    country.callingCode.length > 0
+  ) {
     extraContent.push(`+${country.callingCode.join('|')}`)
   }
-  if (withCurrency && country.currency) {
+  if (withCurrency && country.currency && country.currency.length > 0) {
     extraContent.push(country.currency.join('|'))
   }
   return (
