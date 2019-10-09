@@ -8,9 +8,9 @@
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc",
+    "icon": "./src/assets/images/icon.png",
     "splash": {
-      "image": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc"
+      "image": "./src/assets/images/splash.png"
     },
     "ios": {
       "supportsTablet": true
