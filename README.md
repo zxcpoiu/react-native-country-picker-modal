@@ -120,9 +120,11 @@ export default function App() {
 - `withFlag?`: boolean
 - `withModal?`: boolean
 - `visible?`: boolean
-- `renderFlagButton?` : (props: (FlagButton['props'])): ReactNode
-- `renderCountryFilter?`: (props: CountryFilter['props']): ReactNode
-- `onSelect` (country: Country): void
+- `renderFlagButton?`(props: (FlagButton['props'])): ReactNode ([FlagButton props](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/FlagButton.tsx#L73))
+- `renderCountryFilter?`(props: CountryFilter['props']): ReactNode ([CountryFilter props is TextInputProps](https://facebook.github.io/react-native/docs/textinput#props))
+- `onSelect`(country: Country): void
+- `onOpen`(): void
+- `onClose`(): void
 
 ## Dark theme example
 

@@ -28,6 +28,8 @@ interface Props {
   renderFlagButton?(props: FlagButton['props']): ReactNode
   renderCountryFilter?(props: CountryFilter['props']): ReactNode
   onSelect(country: Country): void
+  onOpen?(): void
+  onClose?(): void
 }
 
 export default function main({ theme, translation, ...props }: Props) {
