@@ -185,11 +185,11 @@ export const CountryList = (props: CountryListProps) => {
     .map((country: Country) => (country.name as string).substr(0, 1))
     .join('')
 
-  const scrollTo = (letter: string) => {
+  const scrollTo = (letter: string, animated: boolean = true) => {
     const index = indexLetter.indexOf(letter)
     setLetter(letter)
     if (flatListRef.current) {
-      flatListRef.current!.scrollToIndex({ animated: true, index })
+      flatListRef.current!.scrollToIndex({ animated, index })
     }
   }
   const onScrollToIndexFailed = (_info: {
@@ -204,7 +204,7 @@ export const CountryList = (props: CountryListProps) => {
   }
   useEffect(() => {
     if (data && data.length > 0) {
-      scrollTo('A')
+      scrollTo('A', false)
     }
   }, [filterFocus])
   const { search, getLetters } = useContext()
