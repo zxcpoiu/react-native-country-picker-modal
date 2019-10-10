@@ -204,7 +204,11 @@ export const CountryList = (props: CountryListProps) => {
       scrollTo(letter)
     }
   }
-  useEffect(() => scrollTo('A'), [filterFocus])
+  useEffect(() => {
+    if (data && data.length > 0) {
+      scrollTo('A')
+    }
+  }, [filterFocus])
   const { search, getLetters } = useContext()
   return (
     <View style={styles.container}>
