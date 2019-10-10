@@ -56,6 +56,7 @@ const ImageFlag = memo(({ countryCode }: FlagType) => {
 
 const EmojiFlag = memo(({ countryCode }: FlagType) => {
   const { getEmojiFlag } = useContext()
+
   return (
     <Text style={styles.emojiFlag} allowFontScaling={false}>
       <Emoji name={getEmojiFlag(countryCode)} />

@@ -5,7 +5,6 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
-  Text,
   ListRenderItemInfo,
   PixelRatio,
   FlatListProps
@@ -14,6 +13,7 @@ import { useTheme } from './CountryTheme'
 import { Country, Omit } from './types'
 import { Flag } from './Flag'
 import { useContext } from './CountryContext'
+import { CountryText } from './CountryText'
 
 const borderBottomWidth = 2 / PixelRatio.get()
 
@@ -21,8 +21,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: 'white'
+    justifyContent: 'space-between'
   },
   letters: {
     marginRight: 10,
@@ -62,7 +61,7 @@ interface LetterProps {
   scrollTo(letter: string): void
 }
 const Letter = ({ letter, scrollTo }: LetterProps) => {
-  const { fontFamily, fontSize, activeOpacity } = useTheme()
+  const { fontSize, activeOpacity } = useTheme()
   return (
     <TouchableOpacity
       testID={`letter-${letter}`}
@@ -71,12 +70,12 @@ const Letter = ({ letter, scrollTo }: LetterProps) => {
       {...{ activeOpacity }}
     >
       <View style={styles.letter}>
-        <Text
-          style={[styles.letterText, { fontFamily, fontSize: fontSize! * 0.8 }]}
+        <CountryText
+          style={[styles.letterText, { fontSize: fontSize! * 0.8 }]}
           allowFontScaling={false}
         >
           {letter}
-        </Text>
+        </CountryText>
       </View>
     </TouchableOpacity>
   )
@@ -91,7 +90,7 @@ interface CountryItemProps {
   onSelect(country: Country): void
 }
 const CountryItem = (props: CountryItemProps) => {
-  const { activeOpacity, fontSize, fontFamily, itemHeight } = useTheme()
+  const { activeOpacity, itemHeight } = useTheme()
   const {
     country,
     onSelect,
@@ -121,15 +120,14 @@ const CountryItem = (props: CountryItemProps) => {
       <View style={[styles.itemCountry, { height: itemHeight }]}>
         {withFlag && <Flag {...{ withEmoji, countryCode: country.cca2 }} />}
         <View style={styles.itemCountryName}>
-          <Text
-            style={{ fontFamily, fontSize }}
+          <CountryText
             allowFontScaling={false}
             numberOfLines={2}
             ellipsizeMode="tail"
           >
             {country.name}
             {extraContent.length > 0 && ` (${extraContent.join(', ')})`}
-          </Text>
+          </CountryText>
         </View>
       </View>
     </TouchableOpacity>
@@ -182,7 +180,7 @@ export const CountryList = (props: CountryListProps) => {
   } = props
   const flatListRef = useRef<FlatList<Country>>(null)
   const [letter, setLetter] = useState<string>('')
-  const { itemHeight } = useTheme()
+  const { itemHeight, backgroundColor } = useTheme()
   const indexLetter = data
     .map((country: Country) => (country.name as string).substr(0, 1))
     .join('')
@@ -211,7 +209,7 @@ export const CountryList = (props: CountryListProps) => {
   }, [filterFocus])
   const { search, getLetters } = useContext()
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <FlatList
         onScrollToIndexFailed
         ref={flatListRef}

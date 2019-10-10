@@ -14,7 +14,7 @@ export const DEFAULT_THEME = {
     web: 'Arial'
   }),
   filterPlaceholderTextColor: '#aaa',
-  activeOpacity: 0.7,
+  activeOpacity: 0.5,
   itemHeight: getHeightPercent(7)
 }
 export type Theme = Partial<typeof DEFAULT_THEME>

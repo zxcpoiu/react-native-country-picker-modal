@@ -140,12 +140,16 @@ Array [
       </View>
       <View
         style={
-          Object {
-            "backgroundColor": "white",
-            "flex": 1,
-            "flexDirection": "row",
-            "justifyContent": "space-between",
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            },
+            Object {
+              "backgroundColor": "#ffffff",
+            },
+          ]
         }
       >
         <RCTScrollView

@@ -1,15 +1,10 @@
 import React, { memo } from 'react'
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  Text,
-  Platform
-} from 'react-native'
+import { TouchableOpacity, StyleSheet, View, Platform } from 'react-native'
 import { CountryCode } from './types'
 import { Flag } from './Flag'
 import { useContext } from './CountryContext'
 import { getCountryCallingCode } from './CountryService'
+import { CountryText } from './CountryText'
 
 const styles = StyleSheet.create({
   container: {
@@ -57,13 +52,17 @@ const FlagWithSomething = memo(
       <View style={styles.flagWithSomethingContainer}>
         <Flag {...{ withEmoji, countryCode }} />
         {countryName ? (
-          <Text style={styles.something}>{countryName + ' '}</Text>
+          <CountryText style={[styles.something]}>
+            {countryName + ' '}
+          </CountryText>
         ) : null}
         {currency ? (
-          <Text style={styles.something}>{`(${currency}) `}</Text>
+          <CountryText style={styles.something}>{`(${currency}) `}</CountryText>
         ) : null}
         {callingCode ? (
-          <Text style={styles.something}>{`+${callingCode}`}</Text>
+          <CountryText
+            style={styles.something}
+          >{`+${callingCode}`}</CountryText>
         ) : null}
       </View>
     )
