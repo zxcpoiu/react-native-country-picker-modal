@@ -34,7 +34,7 @@ export const loadData = ((data: DataCountry) => (
   }
 })(localData)
 
-export const getEmojiFlag = (countryCode: CountryCode) => {
+export const getEmojiFlag = (countryCode: CountryCode = 'FR') => {
   const countries = loadData()
   if (!countries) {
     throw new Error('Unable to find emoji because emojiCountries is undefined')
@@ -42,7 +42,7 @@ export const getEmojiFlag = (countryCode: CountryCode) => {
   return countries[countryCode].flag
 }
 
-export const getImageFlag = (countryCode: CountryCode) => {
+export const getImageFlag = (countryCode: CountryCode = 'FR') => {
   const countries = loadData(FlagType.FLAT)
   if (!countries) {
     throw new Error('Unable to find image because imageCountries is undefined')
@@ -51,7 +51,7 @@ export const getImageFlag = (countryCode: CountryCode) => {
 }
 
 export const getCountryName = (
-  countryCode: CountryCode,
+  countryCode: CountryCode = 'FR',
   translation: TranslationLanguageCode = 'common'
 ) => {
   const countries = loadData()

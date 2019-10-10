@@ -1,4 +1,4 @@
-import React, { useRef, memo, useState } from 'react'
+import React, { useRef, memo, useState, useEffect } from 'react'
 import {
   StyleSheet,
   View,
@@ -150,6 +150,7 @@ const renderItem = (props: Omit<CountryItemProps, 'country'>) => ({
 interface CountryListProps {
   data: Country[]
   filter?: string
+  filterFocus?: boolean
   withFlag?: boolean
   withEmoji?: boolean
   withAlphaFilter?: boolean
@@ -176,7 +177,8 @@ export const CountryList = (props: CountryListProps) => {
     withCurrency,
     onSelect,
     filter,
-    flatListProps
+    flatListProps,
+    filterFocus
   } = props
   const flatListRef = useRef<FlatList<Country>>(null)
   const [letter, setLetter] = useState<string>('')
@@ -202,6 +204,7 @@ export const CountryList = (props: CountryListProps) => {
       scrollTo(letter)
     }
   }
+  useEffect(() => scrollTo('A'), [filterFocus])
   const { search, getLetters } = useContext()
   return (
     <View style={styles.container}>

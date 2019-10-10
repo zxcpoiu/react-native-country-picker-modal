@@ -12,6 +12,7 @@ interface State {
   visible: boolean
   countries: Country[]
   filter?: string
+  filterFocus?: boolean
 }
 
 const renderFlagButton = (
@@ -80,10 +81,11 @@ export const CountryPicker = (props: CountryPickerProps) => {
   const [state, setState] = useState<State>({
     visible: props.visible || false,
     countries: [],
-    filter: ''
+    filter: '',
+    filterFocus: false
   })
   const { translation, getCountries } = useContext()
-  const { visible, filter, countries } = state
+  const { visible, filter, countries, filterFocus } = state
   const onOpen = () => {
     setState({ ...state, visible: true })
     if (handleOpen) {
@@ -103,6 +105,9 @@ export const CountryPicker = (props: CountryPickerProps) => {
     onSelect(country)
     onClose()
   }
+  const onFocus = () => setState({ ...state, filterFocus: true })
+  const onBlur = () => setState({ ...state, filterFocus: false })
+
   const flagProp = {
     withEmoji,
     withCountryNameButton,
@@ -135,6 +140,8 @@ export const CountryPicker = (props: CountryPickerProps) => {
               renderCountryFilter,
               onChangeText: setFilter,
               value: filter,
+              onFocus,
+              onBlur,
               ...filterProps
             })
           }
@@ -150,6 +157,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
             withFlag,
             withEmoji,
             filter,
+            filterFocus,
             flatListProps
           }}
         />
