@@ -58,9 +58,10 @@ export const getCountryName = (
   if (!countries) {
     throw new Error('Unable to find image because imageCountries is undefined')
   }
-  return (countries[countryCode].name as TranslationLanguageCodeMap)[
-    translation
-  ]
+
+  return countries[countryCode].name
+    ? (countries[countryCode].name as TranslationLanguageCodeMap)[translation]
+    : (countries[countryCode].name as TranslationLanguageCodeMap)['common']
 }
 
 export const getCountryCallingCode = (countryCode: CountryCode) => {
@@ -104,9 +105,10 @@ export const getCountries = (
       cca2,
       ...{
         ...countriesRaw[cca2],
-        name: (countriesRaw[cca2].name as TranslationLanguageCodeMap)[
-          translation
-        ]
+        name:
+          (countriesRaw[cca2].name as TranslationLanguageCodeMap)[
+            translation
+          ] || (countriesRaw[cca2].name as TranslationLanguageCodeMap)['common']
       }
     }))
     .sort((country1: Country, country2: Country) =>

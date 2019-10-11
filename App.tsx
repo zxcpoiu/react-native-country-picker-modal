@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import {
-  View,
   Text,
   StyleSheet,
   PixelRatio,
@@ -119,6 +118,7 @@ export default function App() {
         onValueChange={setWithAlphaFilter}
       />
       <CountryPicker
+        translation="ita"
         {...{
           countryCode,
           withFilter,
