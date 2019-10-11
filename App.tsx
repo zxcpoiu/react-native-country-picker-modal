@@ -67,6 +67,7 @@ export default function App() {
   const [withAlphaFilter, setWithAlphaFilter] = useState<boolean>(false)
   const [withCallingCode, setWithCallingCode] = useState<boolean>(false)
   const [withCurrency, setWithCurrency] = useState<boolean>(false)
+  const [withModal, setWithModal] = useState<boolean>(true)
   const [visible, setVisible] = useState<boolean>(false)
   const onSelect = (country: Country) => {
     setCountryCode(country.cca2)
@@ -117,6 +118,11 @@ export default function App() {
         value={withAlphaFilter}
         onValueChange={setWithAlphaFilter}
       />
+      <Option
+        title="With modal"
+        value={withModal}
+        onValueChange={setWithModal}
+      />
       <CountryPicker
         translation="ita"
         {...{
@@ -130,6 +136,7 @@ export default function App() {
           withCallingCode,
           withCurrency,
           withEmoji,
+          withModal,
           onSelect,
           modalProps: {
             visible

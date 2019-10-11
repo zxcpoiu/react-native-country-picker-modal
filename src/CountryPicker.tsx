@@ -127,7 +127,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
 
   return (
     <>
-      {renderFlagButton(flagProp)}
+      {withModal && renderFlagButton(flagProp)}
       <CountryModal
         {...{ visible, withModal, ...modalProps }}
         onRequestClose={onClose}
