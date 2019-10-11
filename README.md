@@ -15,7 +15,8 @@
 
 ## Demo
 
-🎉[ GO TO WEB DEMO ](http://xcarpentier.github.io/react-native-country-picker-modal/) 🎉
+- 🎉[ GO TO WEB DEMO ](http://xcarpentier.github.io/react-native-country-picker-modal/) 🎉
+- [snack example](https://snack.expo.io/@xcarpentier/bossy-marshmallows)
 
 ## Installation
 
