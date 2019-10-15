@@ -10,23 +10,24 @@ import {
 import CountryPicker from './src/'
 import { CountryCode, Country } from './src/types'
 import { Row } from './src/Row'
+import { DARK_THEME } from './src/CountryTheme'
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 15,
+    paddingVertical: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 17,
     textAlign: 'center',
-    margin: 10
+    margin: 5
   },
   instructions: {
-    fontSize: 12,
+    fontSize: 10,
     textAlign: 'center',
     color: '#888',
-    marginBottom: 5
+    marginBottom: 0
   },
   data: {
     padding: 10,
@@ -69,6 +70,7 @@ export default function App() {
   const [withCurrency, setWithCurrency] = useState<boolean>(false)
   const [withModal, setWithModal] = useState<boolean>(true)
   const [visible, setVisible] = useState<boolean>(false)
+  const [dark, setDark] = useState<boolean>(false)
   const onSelect = (country: Country) => {
     setCountryCode(country.cca2)
     setCountry(country)
@@ -123,8 +125,10 @@ export default function App() {
         value={withModal}
         onValueChange={setWithModal}
       />
+      <Option title="With dark theme" value={dark} onValueChange={setDark} />
       <CountryPicker
         translation="ita"
+        theme={dark ? DARK_THEME : undefined}
         {...{
           countryCode,
           withFilter,

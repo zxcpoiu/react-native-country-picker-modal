@@ -17,6 +17,14 @@ export const DEFAULT_THEME = {
   activeOpacity: 0.5,
   itemHeight: getHeightPercent(7)
 }
+export const DARK_THEME = {
+  ...DEFAULT_THEME,
+  primaryColor: '#222',
+  primaryColorVariant: '#444',
+  backgroundColor: '#000',
+  onBackgroundTextColor: '#fff',
+  filterPlaceholderTextColor: '#eee'
+}
 export type Theme = Partial<typeof DEFAULT_THEME>
 
 const { ThemeProvider, useTheme } = createTheming<Theme>(DEFAULT_THEME)

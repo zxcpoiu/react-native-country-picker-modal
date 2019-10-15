@@ -161,8 +161,10 @@ interface CountryListProps {
 const keyExtractor = (item: Country) => item.cca2
 
 const ItemSeparatorComponent = () => {
-  const { primaryColor } = useTheme()
-  return <View style={[styles.sep, { borderBottomColor: primaryColor }]} />
+  const { primaryColorVariant } = useTheme()
+  return (
+    <View style={[styles.sep, { borderBottomColor: primaryColorVariant }]} />
+  )
 }
 
 export const CountryList = (props: CountryListProps) => {
