@@ -58,6 +58,7 @@ export default function App() {
     false
   )
   const [withCurrencyButton, setWithCurrencyButton] = useState<boolean>(false)
+  const [withFlagButton, setWithFlagButton] = useState<boolean>(true)
   const [withCallingCodeButton, setWithCallingCodeButton] = useState<boolean>(
     false
   )
@@ -126,6 +127,11 @@ export default function App() {
         onValueChange={setWithModal}
       />
       <Option title="With dark theme" value={dark} onValueChange={setDark} />
+      <Option
+        title="With flag button"
+        value={withFlagButton}
+        onValueChange={setWithFlagButton}
+      />
       <CountryPicker
         translation="ita"
         theme={dark ? DARK_THEME : undefined}
@@ -141,6 +147,7 @@ export default function App() {
           withCurrency,
           withEmoji,
           withModal,
+          withFlagButton,
           onSelect,
           modalProps: {
             visible

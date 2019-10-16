@@ -42,6 +42,7 @@ interface CountryPickerProps {
   withCountryNameButton?: boolean
   withCurrencyButton?: boolean
   withCallingCodeButton?: boolean
+  withFlagButton?: boolean
   withFilter?: boolean
   withAlphaFilter?: boolean
   withCallingCode?: boolean
@@ -75,6 +76,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     withCurrency,
     withFlag,
     withModal,
+    withFlagButton,
     onClose: handleClose,
     onOpen: handleOpen
   } = props
@@ -113,6 +115,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     withCountryNameButton,
     withCallingCodeButton,
     withCurrencyButton,
+    withFlagButton,
     countryCode,
     renderFlagButton: renderButton,
     onOpen

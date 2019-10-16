@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
 interface FlagType {
   countryCode: CountryCode
   withEmoji?: boolean
+  withFlagButton?: boolean
 }
 
 const ImageFlag = memo(({ countryCode }: FlagType) => {
@@ -64,15 +65,16 @@ const EmojiFlag = memo(({ countryCode }: FlagType) => {
   )
 })
 
-export const Flag = ({ countryCode, withEmoji }: FlagType) => (
-  <View style={styles.container}>
-    {withEmoji ? (
-      <EmojiFlag {...{ countryCode }} />
-    ) : (
-      <ImageFlag {...{ countryCode }} />
-    )}
-  </View>
-)
+export const Flag = ({ countryCode, withEmoji, withFlagButton }: FlagType) =>
+  withFlagButton ? (
+    <View style={styles.container}>
+      {withEmoji ? (
+        <EmojiFlag {...{ countryCode }} />
+      ) : (
+        <ImageFlag {...{ countryCode }} />
+      )}
+    </View>
+  ) : null
 
 Flag.defaultProps = {
   withEmoji: true

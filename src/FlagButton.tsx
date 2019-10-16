@@ -32,6 +32,7 @@ type FlagWithSomethingProp = Pick<
   | 'withCountryNameButton'
   | 'withCurrencyButton'
   | 'withCallingCodeButton'
+  | 'withFlagButton'
 >
 
 const FlagWithSomething = memo(
@@ -40,7 +41,8 @@ const FlagWithSomething = memo(
     withEmoji,
     withCountryNameButton,
     withCurrencyButton,
-    withCallingCodeButton
+    withCallingCodeButton,
+    withFlagButton
   }: FlagWithSomethingProp) => {
     const { translation, getCountryName, getCountryCurrency } = useContext()
     const countryName =
@@ -50,7 +52,7 @@ const FlagWithSomething = memo(
       withCallingCodeButton && getCountryCallingCode(countryCode)
     return (
       <View style={styles.flagWithSomethingContainer}>
-        <Flag {...{ withEmoji, countryCode }} />
+        <Flag {...{ withEmoji, countryCode, withFlagButton }} />
         {countryName ? (
           <CountryText style={[styles.something]}>
             {countryName + ' '}
@@ -74,6 +76,7 @@ interface FlagButtonProps {
   withCountryNameButton?: boolean
   withCurrencyButton?: boolean
   withCallingCodeButton?: boolean
+  withFlagButton?: boolean
   countryCode: CountryCode
   onOpen?(): void
 }
@@ -83,6 +86,7 @@ export const FlagButton = ({
   withCountryNameButton,
   withCallingCodeButton,
   withCurrencyButton,
+  withFlagButton,
   countryCode,
   onOpen
 }: FlagButtonProps) => {
@@ -103,11 +107,12 @@ export const FlagButton = ({
               withEmoji,
               withCountryNameButton,
               withCallingCodeButton,
-              withCurrencyButton
+              withCurrencyButton,
+              withFlagButton
             }}
           />
         ) : (
-          <Flag {...{ countryCode, withEmoji }} />
+          <Flag {...{ countryCode, withEmoji, withFlagButton }} />
         )}
       </View>
     </TouchableOpacity>
@@ -118,5 +123,6 @@ FlagButton.defaultProps = {
   withEmoji: Platform.OS === 'ios',
   withCountryNameButton: false,
   withCallingCodeButton: false,
-  withCurrencyButton: false
+  withCurrencyButton: false,
+  withFlagButton: true
 }
