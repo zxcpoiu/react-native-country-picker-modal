@@ -117,6 +117,7 @@ export default function App() {
 - `withCountryNameButton?`: boolean
 - `withCurrencyButton?`: boolean
 - `withCallingCodeButton?`: boolean
+- `withFlagButton?`: boolean
 - `withFilter?`: boolean
 - `withFlag?`: boolean
 - `withModal?`: boolean
