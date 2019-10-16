@@ -1,5 +1,5 @@
 import React, { ReactNode, useState, useEffect } from 'react'
-import { ModalProps, FlatListProps } from 'react-native'
+import { ModalProps, FlatListProps, StyleProp, ViewStyle } from 'react-native'
 import { CountryModal } from './CountryModal'
 import { HeaderModal } from './HeaderModal'
 import { Country, CountryCode, FlagType } from './types'
@@ -50,6 +50,7 @@ interface CountryPickerProps {
   withFlag?: boolean
   withModal?: boolean
   visible?: boolean
+  containerButtonStyle?: StyleProp<ViewStyle>
   renderFlagButton?(props: FlagButton['props']): ReactNode
   renderCountryFilter?(props: CountryFilter['props']): ReactNode
   onSelect(country: Country): void
@@ -71,6 +72,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     withCountryNameButton,
     withCallingCodeButton,
     withCurrencyButton,
+    containerButtonStyle,
     withAlphaFilter,
     withCallingCode,
     withCurrency,
@@ -118,7 +120,8 @@ export const CountryPicker = (props: CountryPickerProps) => {
     withFlagButton,
     countryCode,
     renderFlagButton: renderButton,
-    onOpen
+    onOpen,
+    containerButtonStyle
   }
   useEffect(() => {
     const countries = getCountries(

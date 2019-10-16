@@ -1,5 +1,12 @@
 import React, { memo } from 'react'
-import { TouchableOpacity, StyleSheet, View, Platform } from 'react-native'
+import {
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Platform,
+  StyleProp,
+  ViewStyle
+} from 'react-native'
 import { CountryCode } from './types'
 import { Flag } from './Flag'
 import { useContext } from './CountryContext'
@@ -77,6 +84,7 @@ interface FlagButtonProps {
   withCurrencyButton?: boolean
   withCallingCodeButton?: boolean
   withFlagButton?: boolean
+  containerButtonStyle?: StyleProp<ViewStyle>
   countryCode: CountryCode
   onOpen?(): void
 }
@@ -88,6 +96,7 @@ export const FlagButton = ({
   withCurrencyButton,
   withFlagButton,
   countryCode,
+  containerButtonStyle,
   onOpen
 }: FlagButtonProps) => {
   const withSomething =
@@ -97,7 +106,8 @@ export const FlagButton = ({
       <View
         style={[
           styles.container,
-          withEmoji ? styles.containerWithEmoji : styles.containerWithoutEmoji
+          withEmoji ? styles.containerWithEmoji : styles.containerWithoutEmoji,
+          containerButtonStyle
         ]}
       >
         {withSomething ? (

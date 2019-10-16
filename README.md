@@ -122,6 +122,7 @@ export default function App() {
 - `withFlag?`: boolean
 - `withModal?`: boolean
 - `visible?`: boolean
+- `containerButtonStyle?`: `StyleProp<ViewStyle>`
 - `renderFlagButton?`(props: (FlagButton['props'])): ReactNode ([FlagButton props](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/FlagButton.tsx#L73))
 - `renderCountryFilter?`(props: CountryFilter['props']): ReactNode ([CountryFilter props is TextInputProps](https://facebook.github.io/react-native/docs/textinput#props))
 - `onSelect`(country: Country): void ([Country](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/types.ts#L263))
