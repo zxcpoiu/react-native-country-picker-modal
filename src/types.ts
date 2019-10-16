@@ -261,12 +261,50 @@ export type TranslationLanguageCodeMap = {
   [key in TranslationLanguageCode]: string
 }
 export interface Country {
+  region: Region
+  subregion: Subregion
   currency: CurrencyCode[]
   callingCode: CallingCode[]
   flag: string
   name: TranslationLanguageCodeMap | string
   cca2: CountryCode
 }
+export const RegionList = [
+  'Africa',
+  'Americas',
+  'Antarctic',
+  'Asia',
+  'Europe',
+  'Oceania'
+] as const
+export type Region = typeof RegionList[number]
+
+export const SubregionList = [
+  'Southern Asia',
+  'Southern Europe',
+  'Northern Africa',
+  'Polynesia',
+  'Middle Africa',
+  'Caribbean',
+  'South America',
+  'Western Asia',
+  'Australia and New Zealand',
+  'Western Europe',
+  'Eastern Europe',
+  'Central America',
+  'Western Africa',
+  'North America',
+  'Southern Africa',
+  'Eastern Africa',
+  'South-Eastern Asia',
+  'Eastern Asia',
+  'Northern Europe',
+  'Melanesia',
+  'Micronesia',
+  'Central Asia',
+  'Central Europe'
+] as const
+export type Subregion = typeof SubregionList[number]
 
 export const TranslationLanguageCodeList = [
   'common',
@@ -290,11 +328,6 @@ export type TranslationLanguageCode = typeof TranslationLanguageCodeList[number]
 export enum FlagType {
   FLAT = 'flat',
   EMOJI = 'emoji'
-}
-export enum AnimationType {
-  SLIDE = 'slide',
-  FADE = 'fade',
-  NONE = 'none'
 }
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>

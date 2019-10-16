@@ -1,6 +1,12 @@
 import React, { ReactNode } from 'react'
 import { FlagButton } from './FlagButton'
-import { TranslationLanguageCode, CountryCode, Country } from './types'
+import {
+  TranslationLanguageCode,
+  CountryCode,
+  Country,
+  Region,
+  Subregion
+} from './types'
 import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from './CountryContext'
 import { ThemeProvider, DEFAULT_THEME, Theme } from './CountryTheme'
 import { CountryFilter, CountryFilterProps } from './CountryFilter'
@@ -9,6 +15,8 @@ import { CountryPicker } from './CountryPicker'
 
 interface Props {
   countryCode: CountryCode
+  region?: Region
+  subregion?: Subregion
   theme?: Theme
   translation?: TranslationLanguageCode
   modalProps?: ModalProps
@@ -56,3 +64,4 @@ export { CountryFilter } from './CountryFilter'
 export { CountryList } from './CountryList'
 export { FlagButton } from './FlagButton'
 export { HeaderModal } from './HeaderModal'
+export * from './types'

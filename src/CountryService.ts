@@ -4,7 +4,9 @@ import {
   TranslationLanguageCode,
   TranslationLanguageCodeMap,
   FlagType,
-  CountryCodeList
+  CountryCodeList,
+  Region,
+  Subregion
 } from './types'
 import Fuse from 'fuse.js'
 
@@ -92,9 +94,17 @@ const isCountryPresent = (countries: { [key in CountryCode]: Country }) => (
   countryCode: CountryCode
 ) => !!countries[countryCode]
 
+const isRegion = (region?: Region) => (country: Country) =>
+  region ? country.region === region : true
+
+const isSubregion = (subregion?: Subregion) => (country: Country) =>
+  subregion ? country.subregion === subregion : true
+
 export const getCountries = (
   flagType: FlagType,
-  translation: TranslationLanguageCode = 'common'
+  translation: TranslationLanguageCode = 'common',
+  region?: Region,
+  subregion?: Subregion
 ): Country[] => {
   const countriesRaw = loadData(flagType)
   if (!countriesRaw) {
@@ -111,6 +121,8 @@ export const getCountries = (
           ] || (countriesRaw[cca2].name as TranslationLanguageCodeMap)['common']
       }
     }))
+    .filter(isRegion(region))
+    .filter(isSubregion(subregion))
     .sort((country1: Country, country2: Country) =>
       (country1.name as string).localeCompare(country2.name as string)
     )
@@ -148,17 +160,11 @@ export const search = (
 }
 const uniq = (arr: any[]) => Array.from(new Set(arr))
 
-export const getLetters = () => {
-  const countriesRaw = loadData()
-  if (!countriesRaw) {
-    return []
-  }
+export const getLetters = (countries: Country[]) => {
   return uniq(
-    CountryCodeList.filter(isCountryPresent(countriesRaw))
-      .map((countryCode: CountryCode) =>
-        getCountryName(countryCode)
-          .substr(0, 1)
-          .toLocaleUpperCase()
+    countries
+      .map((country: Country) =>
+        (country.name as string).substr(0, 1).toLocaleUpperCase()
       )
       .sort((l1: string, l2: string) => l1.localeCompare(l2))
   )

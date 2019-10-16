@@ -2,7 +2,7 @@ import React, { ReactNode, useState, useEffect } from 'react'
 import { ModalProps, FlatListProps, StyleProp, ViewStyle } from 'react-native'
 import { CountryModal } from './CountryModal'
 import { HeaderModal } from './HeaderModal'
-import { Country, CountryCode, FlagType } from './types'
+import { Country, CountryCode, FlagType, Region, Subregion } from './types'
 import { CountryFilter, CountryFilterProps } from './CountryFilter'
 import { FlagButton } from './FlagButton'
 import { useContext } from './CountryContext'
@@ -35,6 +35,8 @@ const renderFilter = (
 
 interface CountryPickerProps {
   countryCode: CountryCode
+  region?: Region
+  subregion?: Subregion
   modalProps?: ModalProps
   filterProps?: CountryFilterProps
   flatListProps?: FlatListProps<Country>
@@ -61,6 +63,8 @@ interface CountryPickerProps {
 export const CountryPicker = (props: CountryPickerProps) => {
   const {
     countryCode,
+    region,
+    subregion,
     renderFlagButton: renderButton,
     renderCountryFilter,
     filterProps,
@@ -126,7 +130,9 @@ export const CountryPicker = (props: CountryPickerProps) => {
   useEffect(() => {
     const countries = getCountries(
       withEmoji ? FlagType.EMOJI : FlagType.FLAT,
-      translation
+      translation,
+      region,
+      subregion
     )
     setCountries(countries)
   }, [translation, withEmoji])

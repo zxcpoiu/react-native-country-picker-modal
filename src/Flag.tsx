@@ -77,5 +77,6 @@ export const Flag = ({ countryCode, withEmoji, withFlagButton }: FlagType) =>
   ) : null
 
 Flag.defaultProps = {
-  withEmoji: true
+  withEmoji: true,
+  withFlagButton: true
 }

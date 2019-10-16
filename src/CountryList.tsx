@@ -180,6 +180,7 @@ export const CountryList = (props: CountryListProps) => {
     flatListProps,
     filterFocus
   } = props
+
   const flatListRef = useRef<FlatList<Country>>(null)
   const [letter, setLetter] = useState<string>('')
   const { itemHeight, backgroundColor } = useTheme()
@@ -204,12 +205,13 @@ export const CountryList = (props: CountryListProps) => {
       scrollTo(letter)
     }
   }
+  const { search, getLetters } = useContext()
+  const letters = getLetters(data)
   useEffect(() => {
-    if (data && data.length > 0) {
-      scrollTo('A', false)
+    if (data && data.length > 0 && filterFocus) {
+      scrollTo(letters[0], false)
     }
   }, [filterFocus])
-  const { search, getLetters } = useContext()
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <FlatList
@@ -245,11 +247,15 @@ export const CountryList = (props: CountryListProps) => {
           contentContainerStyle={styles.letters}
           keyboardShouldPersistTaps="always"
         >
-          {getLetters().map(letter => (
+          {letters.map(letter => (
             <Letter key={letter} {...{ letter, scrollTo }} />
           ))}
         </ScrollView>
       )}
     </View>
   )
+}
+
+CountryList.defaultProps = {
+  filterFocus: undefined
 }
