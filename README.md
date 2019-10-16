@@ -29,7 +29,7 @@ $ yarn add react-native-country-picker-modal
 ```tsx
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, PixelRatio, Switch } from 'react-native'
-import CountryPicker from './src/'
+import CountryPicker from 'react-native-country-picker-modal'
 import { CountryCode, Country } from './src/types'
 
 const styles = StyleSheet.create({
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 export default function App() {
   const [countryCode, setCountryCode] = useState<CountryCode>('FR')
   const [country, setCountry] = useState<Country>(null)
-  const [withCountryNameButton, setwithCountryNameButton] = useState<boolean>(
+  const [withCountryNameButton, setWithCountryNameButton] = useState<boolean>(
     false
   )
   const [withFlag, setWithFlag] = useState<boolean>(true)
@@ -57,7 +57,7 @@ export default function App() {
       <Option
         title="With country name on button"
         value={withCountryNameButton}
-        onValueChange={setwithCountryNameButton}
+        onValueChange={setWithCountryNameButton}
       />
       <Option title="With flag" value={withFlag} onValueChange={setWithFlag} />
       <Option
@@ -133,7 +133,13 @@ export default function App() {
     <img alt="react-native-country-picker-modal-dark" src="https://user-images.githubusercontent.com/2692166/40585272-094f817a-61b0-11e8-9668-abff0aeddb0e.png" width=150>
 </p>
 
-A simple example to display a `CountryPicker` component with a dark theme. You need to download a light colored image for the close button, for example [this one](https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/VisualEditor_-_Icon_-_Close_-_white.svg/240px-VisualEditor_-_Icon_-_Close_-_white.svg.png).
+A simple example to display a `CountryPicker` component with a dark theme.
+
+```tsx
+import CountryPicker, { DARK_THEME } from 'react-native-country-picker-modal'
+
+const MyDarkView = () => <CountryPicker theme={DARK_THEME} />
+```
 
 ## Dependencies
 
