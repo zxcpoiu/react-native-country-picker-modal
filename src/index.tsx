@@ -17,6 +17,7 @@ interface Props {
   countryCode: CountryCode
   region?: Region
   subregion?: Subregion
+  countryCodes?: CountryCode[]
   theme?: Theme
   translation?: TranslationLanguageCode
   modalProps?: ModalProps

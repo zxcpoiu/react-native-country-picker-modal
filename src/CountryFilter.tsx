@@ -19,13 +19,21 @@ const styles = StyleSheet.create({
 export type CountryFilterProps = TextInputProps
 
 export const CountryFilter = (props: CountryFilterProps) => {
-  const { filterPlaceholderTextColor, fontFamily, fontSize } = useTheme()
+  const {
+    filterPlaceholderTextColor,
+    fontFamily,
+    fontSize,
+    onBackgroundTextColor
+  } = useTheme()
   return (
     <TextInput
       testID="text-input-country-filter"
       autoCorrect={false}
       placeholderTextColor={filterPlaceholderTextColor}
-      style={[styles.input, { fontFamily, fontSize }]}
+      style={[
+        styles.input,
+        { fontFamily, fontSize, color: onBackgroundTextColor }
+      ]}
       {...props}
     />
   )

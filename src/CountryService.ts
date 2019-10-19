@@ -100,11 +100,17 @@ const isRegion = (region?: Region) => (country: Country) =>
 const isSubregion = (subregion?: Subregion) => (country: Country) =>
   subregion ? country.subregion === subregion : true
 
+const isIncluded = (countryCodes?: CountryCode[]) => (country: Country) =>
+  countryCodes && countryCodes.length > 0
+    ? countryCodes.includes(country.cca2)
+    : true
+
 export const getCountries = (
   flagType: FlagType,
   translation: TranslationLanguageCode = 'common',
   region?: Region,
-  subregion?: Subregion
+  subregion?: Subregion,
+  countryCodes?: CountryCode[]
 ): Country[] => {
   const countriesRaw = loadData(flagType)
   if (!countriesRaw) {
@@ -123,6 +129,7 @@ export const getCountries = (
     }))
     .filter(isRegion(region))
     .filter(isSubregion(subregion))
+    .filter(isIncluded(countryCodes))
     .sort((country1: Country, country2: Country) =>
       (country1.name as string).localeCompare(country2.name as string)
     )

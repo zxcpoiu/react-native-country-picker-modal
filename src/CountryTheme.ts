@@ -22,8 +22,7 @@ export const DARK_THEME = {
   primaryColor: '#222',
   primaryColorVariant: '#444',
   backgroundColor: '#000',
-  onBackgroundTextColor: '#fff',
-  filterPlaceholderTextColor: '#eee'
+  onBackgroundTextColor: '#fff'
 }
 export type Theme = Partial<typeof DEFAULT_THEME>
 

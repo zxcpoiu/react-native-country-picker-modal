@@ -37,6 +37,7 @@ interface CountryPickerProps {
   countryCode: CountryCode
   region?: Region
   subregion?: Subregion
+  countryCodes?: CountryCode[]
   modalProps?: ModalProps
   filterProps?: CountryFilterProps
   flatListProps?: FlatListProps<Country>
@@ -65,6 +66,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     countryCode,
     region,
     subregion,
+    countryCodes,
     renderFlagButton: renderButton,
     renderCountryFilter,
     filterProps,
@@ -132,7 +134,8 @@ export const CountryPicker = (props: CountryPickerProps) => {
       withEmoji ? FlagType.EMOJI : FlagType.FLAT,
       translation,
       region,
-      subregion
+      subregion,
+      countryCodes
     )
     setCountries(countries)
   }, [translation, withEmoji])
