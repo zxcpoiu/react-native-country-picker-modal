@@ -107,6 +107,7 @@ export default function App() {
 - `countryCode`: [CountryCode](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/types.ts#L252)
 - `region?`:[Region](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/types.ts#L272)
 - `subregion?`: [Subregion](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/types.ts#L282)
+- `countryCodes?`: [Subregion](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/types.ts#L254)
 - `theme?`: [Theme](https://github.com/xcarpentier/react-native-country-picker-modal/blob/7611d34fa35744dbec3fbcdd9b4401494b1ba8c4/src/CountryTheme.ts#L5)
 - `translation?`: [TranslationLanguageCode](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/types.ts#L309)
 - `modalProps?`: [ModalProps](https://facebook.github.io/react-native/docs/modal#props)

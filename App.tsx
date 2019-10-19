@@ -133,7 +133,6 @@ export default function App() {
         onValueChange={setWithFlagButton}
       />
       <CountryPicker
-        countryCodes={['AD', 'EC']}
         theme={dark ? DARK_THEME : undefined}
         {...{
           countryCode,
