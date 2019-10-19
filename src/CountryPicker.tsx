@@ -182,6 +182,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
 }
 
 CountryPicker.defaultProps = {
+  withModal: true,
   withAlphaFilter: false,
   withCallingCode: false
 }

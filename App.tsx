@@ -155,6 +155,8 @@ export default function App() {
           onOpen: () => setVisible(true)
         }}
       />
+      {/* <CountryPicker countryCode="FR" /> */}
+
       <Text style={styles.instructions}>Press on the flag to open modal</Text>
       <Button
         title={'Open modal from outside using visible props'}
