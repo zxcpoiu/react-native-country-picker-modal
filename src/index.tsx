@@ -52,7 +52,8 @@ export default function main({ theme, translation, ...props }: Props) {
 }
 
 main.defaultProps = {
-  onSelect: () => {}
+  onSelect: () => {},
+  withEmoji: true
 }
 
 export {
