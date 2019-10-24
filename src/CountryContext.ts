@@ -1,35 +1,35 @@
 import * as React from 'react'
 import { TranslationLanguageCode } from './types'
 import {
-  getEmojiFlag,
-  getImageFlag,
-  getCountryName,
-  getCountries,
+  getEmojiFlagAsync,
+  getImageFlagAsync,
+  getCountryNameAsync,
+  getCountriesAsync,
   getLetters,
-  getCountryCallingCode,
-  getCountryCurrency,
+  getCountryCallingCodeAsync,
+  getCountryCurrencyAsync,
   search
 } from './CountryService'
 
 export interface CountryContextParam {
   translation?: TranslationLanguageCode
-  getCountryName: typeof getCountryName
-  getImageFlag: typeof getImageFlag
-  getEmojiFlag: typeof getEmojiFlag
-  getCountries: typeof getCountries
+  getCountryNameAsync: typeof getCountryNameAsync
+  getImageFlagAsync: typeof getImageFlagAsync
+  getEmojiFlagAsync: typeof getEmojiFlagAsync
+  getCountriesAsync: typeof getCountriesAsync
   getLetters: typeof getLetters
-  getCountryCallingCode: typeof getCountryCallingCode
-  getCountryCurrency: typeof getCountryCurrency
+  getCountryCallingCodeAsync: typeof getCountryCallingCodeAsync
+  getCountryCurrencyAsync: typeof getCountryCurrencyAsync
   search: typeof search
 }
 export const DEFAULT_COUNTRY_CONTEXT = {
   translation: 'common' as TranslationLanguageCode,
-  getCountryName,
-  getImageFlag,
-  getEmojiFlag,
-  getCountries,
-  getCountryCallingCode,
-  getCountryCurrency,
+  getCountryNameAsync,
+  getImageFlagAsync,
+  getEmojiFlagAsync,
+  getCountriesAsync,
+  getCountryCallingCodeAsync,
+  getCountryCurrencyAsync,
   search,
   getLetters
 }

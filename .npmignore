@@ -31,3 +31,4 @@ __tests__/
 .github/
 .vscode/
 web-build/
+lib/assets/data/countries-image.json

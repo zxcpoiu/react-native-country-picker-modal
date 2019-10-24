@@ -1,5 +1,12 @@
 import React, { ReactNode, useState, useEffect } from 'react'
-import { ModalProps, FlatListProps, StyleProp, ViewStyle } from 'react-native'
+import {
+  ModalProps,
+  FlatListProps,
+  StyleProp,
+  ViewStyle,
+  ImageSourcePropType,
+  ImageStyle
+} from 'react-native'
 import { CountryModal } from './CountryModal'
 import { HeaderModal } from './HeaderModal'
 import { Country, CountryCode, FlagType, Region, Subregion } from './types'
@@ -21,8 +28,8 @@ const renderFlagButton = (
   props.renderFlagButton ? (
     props.renderFlagButton(props)
   ) : (
-      <FlagButton {...props} />
-    )
+    <FlagButton {...props} />
+  )
 
 const renderFilter = (
   props: CountryFilter['props'] & CountryPickerProps['renderCountryFilter']
@@ -30,8 +37,8 @@ const renderFilter = (
   props.renderCountryFilter ? (
     props.renderCountryFilter(props)
   ) : (
-      <CountryFilter {...props} />
-    )
+    <CountryFilter {...props} />
+  )
 
 interface CountryPickerProps {
   countryCode: CountryCode
@@ -55,6 +62,9 @@ interface CountryPickerProps {
   withModal?: boolean
   visible?: boolean
   containerButtonStyle?: StyleProp<ViewStyle>
+  closeButtonImage?: ImageSourcePropType
+  closeButtonStyle?: StyleProp<ViewStyle>
+  closeButtonImageStyle?: StyleProp<ImageStyle>
   renderFlagButton?(props: FlagButton['props']): ReactNode
   renderCountryFilter?(props: CountryFilter['props']): ReactNode
   onSelect(country: Country): void
@@ -88,7 +98,10 @@ export const CountryPicker = (props: CountryPickerProps) => {
     withModal,
     withFlagButton,
     onClose: handleClose,
-    onOpen: handleOpen
+    onOpen: handleOpen,
+    closeButtonImage,
+    closeButtonStyle,
+    closeButtonImageStyle
   } = props
   const [state, setState] = useState<State>({
     visible: props.visible || false,
@@ -96,7 +109,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     filter: '',
     filterFocus: false
   })
-  const { translation, getCountries } = useContext()
+  const { translation, getCountriesAsync } = useContext()
   const { visible, filter, countries, filterFocus } = state
   const onOpen = () => {
     setState({ ...state, visible: true })
@@ -119,7 +132,6 @@ export const CountryPicker = (props: CountryPickerProps) => {
   }
   const onFocus = () => setState({ ...state, filterFocus: true })
   const onBlur = () => setState({ ...state, filterFocus: false })
-
   const flagProp = {
     withEmoji,
     withCountryNameButton,
@@ -132,14 +144,15 @@ export const CountryPicker = (props: CountryPickerProps) => {
     containerButtonStyle
   }
   useEffect(() => {
-    const countries = getCountries(
+    getCountriesAsync(
       withEmoji ? FlagType.EMOJI : FlagType.FLAT,
       translation,
       region,
       subregion,
       countryCodes
     )
-    setCountries(countries)
+      .then(setCountries)
+      .catch(console.error)
   }, [translation, withEmoji])
 
   return (
@@ -150,7 +163,13 @@ export const CountryPicker = (props: CountryPickerProps) => {
         onRequestClose={onClose}
       >
         <HeaderModal
-          {...{ withFilter, withCloseButton, onClose }}
+          {...{
+            withFilter,
+            onClose,
+            closeButtonImage,
+            closeButtonImageStyle,
+            closeButtonStyle
+          }}
           renderFilter={(props: CountryFilter['props']) =>
             renderFilter({
               ...props,

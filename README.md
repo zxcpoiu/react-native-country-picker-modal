@@ -132,6 +132,9 @@ export default function App() {
 - `onSelect`(country: Country): void ([Country](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/types.ts#L263))
 - `onOpen`(): void
 - `onClose`(): void
+- `closeButtonImage?`: [ImageSourcePropType](https://facebook.github.io/react-native/docs/image#props)
+- `closeButtonStyle?`: StyleProp<ViewStyle>
+- `closeButtonImageStyle?`: StyleProp<ImageStyle>
 
 ## Dark theme example
 

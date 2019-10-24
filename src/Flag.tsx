@@ -1,7 +1,6 @@
-import React, { memo } from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import { Emoji } from './Emoji'
 import { CountryCode } from './types'
-import { useTheme } from './CountryTheme'
 import { useContext } from './CountryContext'
 import {
   Image,
@@ -9,7 +8,7 @@ import {
   PixelRatio,
   Text,
   View,
-  Platform
+  ActivityIndicator
 } from 'react-native'
 
 const styles = StyleSheet.create({
@@ -22,7 +21,6 @@ const styles = StyleSheet.create({
   emojiFlag: {
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: Platform.select({ android: 20, default: 30 }),
     borderWidth: 1 / PixelRatio.get(),
     borderColor: 'transparent',
     backgroundColor: 'transparent'
@@ -40,38 +38,66 @@ interface FlagType {
   countryCode: CountryCode
   withEmoji?: boolean
   withFlagButton?: boolean
+  flagSize: number
 }
 
-const ImageFlag = memo(({ countryCode }: FlagType) => {
-  const { primaryColorVariant } = useTheme()
-  const { getImageFlag } = useContext()
+const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
+  const { getImageFlagAsync } = useContext()
+  const [uri, setUri] = useState<string | undefined>(undefined)
 
+  useEffect(() => {
+    getImageFlagAsync(countryCode)
+      .then(setUri)
+      .catch(console.error)
+  }, [countryCode])
+  if (!uri) {
+    return <ActivityIndicator size={'small'} />
+  }
   return (
     <Image
       resizeMode={'contain'}
-      style={[styles.imageFlag, { borderColor: primaryColorVariant }]}
-      source={{ uri: getImageFlag(countryCode) }}
+      style={[
+        styles.imageFlag,
+        { borderColor: 'transparent', height: flagSize }
+      ]}
+      source={{ uri }}
     />
   )
 })
 
-const EmojiFlag = memo(({ countryCode }: FlagType) => {
-  const { getEmojiFlag } = useContext()
-
+const EmojiFlag = memo(({ countryCode, flagSize }: FlagType) => {
+  const { getEmojiFlagAsync } = useContext()
+  const [name, setName] = useState<string>('')
+  useEffect(() => {
+    getEmojiFlagAsync(countryCode)
+      .then(setName)
+      .catch(console.error)
+  }, [countryCode])
+  if (!name) {
+    return <ActivityIndicator size={'small'} />
+  }
   return (
-    <Text style={styles.emojiFlag} allowFontScaling={false}>
-      <Emoji name={getEmojiFlag(countryCode)} />
+    <Text
+      style={[styles.emojiFlag, { fontSize: flagSize }]}
+      allowFontScaling={false}
+    >
+      <Emoji {...{ name }} />
     </Text>
   )
 })
 
-export const Flag = ({ countryCode, withEmoji, withFlagButton }: FlagType) =>
+export const Flag = ({
+  countryCode,
+  withEmoji,
+  withFlagButton,
+  flagSize
+}: FlagType) =>
   withFlagButton ? (
     <View style={styles.container}>
       {withEmoji ? (
-        <EmojiFlag {...{ countryCode }} />
+        <EmojiFlag {...{ countryCode, flagSize }} />
       ) : (
-        <ImageFlag {...{ countryCode }} />
+        <ImageFlag {...{ countryCode, flagSize }} />
       )}
     </View>
   ) : null

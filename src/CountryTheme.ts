@@ -15,7 +15,9 @@ export const DEFAULT_THEME = {
   }),
   filterPlaceholderTextColor: '#aaa',
   activeOpacity: 0.5,
-  itemHeight: getHeightPercent(7)
+  itemHeight: getHeightPercent(7),
+  flagSize: Platform.select({ android: 20, default: 30 }),
+  flagSizeButton: Platform.select({ android: 20, default: 30 })
 }
 export const DARK_THEME = {
   ...DEFAULT_THEME,

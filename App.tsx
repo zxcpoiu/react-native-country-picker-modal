@@ -5,7 +5,8 @@ import {
   PixelRatio,
   Switch,
   Button,
-  ScrollView
+  ScrollView,
+  Platform
 } from 'react-native'
 import CountryPicker from './src/'
 import { CountryCode, Country } from './src/types'
@@ -96,11 +97,13 @@ export default function App() {
         onValueChange={setWithCallingCodeButton}
       />
       <Option title="With flag" value={withFlag} onValueChange={setWithFlag} />
-      <Option
-        title="With emoji"
-        value={withEmoji}
-        onValueChange={setWithEmoji}
-      />
+      {Platform.OS !== 'web' && (
+        <Option
+          title="With emoji"
+          value={withEmoji}
+          onValueChange={setWithEmoji}
+        />
+      )}
       <Option
         title="With filter"
         value={withFilter}
@@ -133,7 +136,7 @@ export default function App() {
         onValueChange={setWithFlagButton}
       />
       <CountryPicker
-        theme={dark ? DARK_THEME : undefined}
+        theme={dark ? DARK_THEME : { flagSizeButton: 30, flagSize: 15 }}
         {...{
           countryCode,
           withFilter,
@@ -155,8 +158,6 @@ export default function App() {
           onOpen: () => setVisible(true)
         }}
       />
-      {/* <CountryPicker countryCode="FR" /> */}
-
       <Text style={styles.instructions}>Press on the flag to open modal</Text>
       <Button
         title={'Open modal from outside using visible props'}

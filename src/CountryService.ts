@@ -10,53 +10,71 @@ import {
 } from './types'
 import Fuse from 'fuse.js'
 
+const imageJsonUrl =
+  'https://www.dropbox.com/s/raw/33tmsr0h3eggjke/countries-image.json'
+
+type CountryMap = { [key in CountryCode]: Country }
+
 interface DataCountry {
-  emojiCountries?: { [key in CountryCode]: Country }
-  imageCountries?: { [key in CountryCode]: Country }
+  emojiCountries?: CountryMap
+  imageCountries?: CountryMap
 }
 const localData: DataCountry = {
   emojiCountries: undefined,
   imageCountries: undefined
 }
 
-export const loadData = ((data: DataCountry) => (
+export const loadDataAsync = ((data: DataCountry) => (
   dataType: FlagType = FlagType.EMOJI
-) => {
-  switch (dataType) {
-    case FlagType.FLAT:
-      if (!data.imageCountries) {
-        data.imageCountries = require('./assets/data/countries-image.json')
-      }
-      return data.imageCountries
-    default:
-      if (!data.emojiCountries) {
-        data.emojiCountries = require('./assets/data/countries-emoji.json')
-      }
-      return data.emojiCountries
-  }
+): Promise<CountryMap> => {
+  return new Promise((resolve, reject) => {
+    switch (dataType) {
+      case FlagType.FLAT:
+        if (!data.imageCountries) {
+          fetch(imageJsonUrl)
+            .then((response: Response) => response.json())
+            .then((remoteData: any) => {
+              data.imageCountries = remoteData
+              resolve(data.imageCountries)
+            })
+            .catch(reject)
+        } else {
+          resolve(data.imageCountries)
+        }
+        break
+      default:
+        if (!data.emojiCountries) {
+          data.emojiCountries = require('./assets/data/countries-emoji.json')
+          resolve(data.emojiCountries)
+        } else {
+          resolve(data.emojiCountries)
+        }
+        break
+    }
+  })
 })(localData)
 
-export const getEmojiFlag = (countryCode: CountryCode = 'FR') => {
-  const countries = loadData()
+export const getEmojiFlagAsync = async (countryCode: CountryCode = 'FR') => {
+  const countries = await loadDataAsync()
   if (!countries) {
     throw new Error('Unable to find emoji because emojiCountries is undefined')
   }
   return countries[countryCode].flag
 }
 
-export const getImageFlag = (countryCode: CountryCode = 'FR') => {
-  const countries = loadData(FlagType.FLAT)
+export const getImageFlagAsync = async (countryCode: CountryCode = 'FR') => {
+  const countries = await loadDataAsync(FlagType.FLAT)
   if (!countries) {
     throw new Error('Unable to find image because imageCountries is undefined')
   }
   return countries[countryCode].flag
 }
 
-export const getCountryName = (
+export const getCountryNameAsync = async (
   countryCode: CountryCode = 'FR',
   translation: TranslationLanguageCode = 'common'
 ) => {
-  const countries = loadData()
+  const countries = await loadDataAsync()
   if (!countries) {
     throw new Error('Unable to find image because imageCountries is undefined')
   }
@@ -66,28 +84,20 @@ export const getCountryName = (
     : (countries[countryCode].name as TranslationLanguageCodeMap)['common']
 }
 
-export const getCountryCallingCode = (countryCode: CountryCode) => {
-  const countries = loadData()
+export const getCountryCallingCodeAsync = async (countryCode: CountryCode) => {
+  const countries = await loadDataAsync()
   if (!countries) {
     throw new Error('Unable to find image because imageCountries is undefined')
   }
   return countries[countryCode].callingCode[0]
 }
 
-export const getCountryCurrency = (countryCode: CountryCode) => {
-  const countries = loadData()
+export const getCountryCurrencyAsync = async (countryCode: CountryCode) => {
+  const countries = await loadDataAsync()
   if (!countries) {
     throw new Error('Unable to find image because imageCountries is undefined')
   }
   return countries[countryCode].currency[0]
-}
-
-export const getCountry = (countryCode: CountryCode) => {
-  const countries = loadData()
-  if (!countries) {
-    throw new Error('Unable to find image because imageCountries is undefined')
-  }
-  return countries[countryCode].callingCode[0]
 }
 
 const isCountryPresent = (countries: { [key in CountryCode]: Country }) => (
@@ -105,14 +115,14 @@ const isIncluded = (countryCodes?: CountryCode[]) => (country: Country) =>
     ? countryCodes.includes(country.cca2)
     : true
 
-export const getCountries = (
+export const getCountriesAsync = async (
   flagType: FlagType,
   translation: TranslationLanguageCode = 'common',
   region?: Region,
   subregion?: Subregion,
   countryCodes?: CountryCode[]
-): Country[] => {
-  const countriesRaw = loadData(flagType)
+): Promise<Country[]> => {
+  const countriesRaw = await loadDataAsync(flagType)
   if (!countriesRaw) {
     return []
   }

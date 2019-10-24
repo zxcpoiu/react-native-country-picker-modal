@@ -8,7 +8,7 @@ const isCca2 = process.argv.includes('--cca2')
 const isRegion = process.argv.includes('--regions')
 const isSubRegion = process.argv.includes('--subregions')
 
-const getCountryNames = (common, translations) =>
+const getCountryNameAsyncs = (common, translations) =>
   Object.keys(translations)
     .filter(k => k !== 'common')
     .map(key => ({ [key]: translations[key].common }))
@@ -37,7 +37,7 @@ const newcountries = countries
         region,
         subregion,
         flag: isEmoji ? `flag-${cca2.toLowerCase()}` : flags[cca2],
-        name: { common, ...getCountryNames(common, translations) }
+        name: { common, ...getCountryNameAsyncs(common, translations) }
       }
     })
   )

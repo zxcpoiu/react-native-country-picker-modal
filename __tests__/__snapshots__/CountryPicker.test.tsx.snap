@@ -41,25 +41,12 @@ Array [
           }
         }
       >
-        <Text
-          allowFontScaling={false}
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderWidth": 0.5,
-              "fontSize": 30,
-              "justifyContent": "center",
-            }
-          }
-        >
-          <Text
-            allowFontScaling={false}
-          >
-            🇺🇸
-          </Text>
-        </Text>
+        <ActivityIndicator
+          animating={true}
+          color="#999999"
+          hidesWhenStopped={true}
+          size="small"
+        />
       </View>
     </View>
   </View>,
@@ -165,7 +152,7 @@ Array [
           getItemCount={[Function]}
           getItemLayout={[Function]}
           horizontal={false}
-          initialNumToRender={12}
+          initialNumToRender={14}
           keyExtractor={[Function]}
           keyboardShouldPersistTaps="handled"
           maxToRenderPerBatch={10}

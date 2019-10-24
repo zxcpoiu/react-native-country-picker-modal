@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   ListRenderItemInfo,
   PixelRatio,
-  FlatListProps
+  FlatListProps,
+  Dimensions
 } from 'react-native'
 import { useTheme } from './CountryTheme'
 import { Country, Omit } from './types'
@@ -90,7 +91,7 @@ interface CountryItemProps {
   onSelect(country: Country): void
 }
 const CountryItem = (props: CountryItemProps) => {
-  const { activeOpacity, itemHeight } = useTheme()
+  const { activeOpacity, itemHeight, flagSize } = useTheme()
   const {
     country,
     onSelect,
@@ -118,7 +119,11 @@ const CountryItem = (props: CountryItemProps) => {
       {...{ activeOpacity }}
     >
       <View style={[styles.itemCountry, { height: itemHeight }]}>
-        {withFlag && <Flag {...{ withEmoji, countryCode: country.cca2 }} />}
+        {withFlag && (
+          <Flag
+            {...{ withEmoji, countryCode: country.cca2, flagSize: flagSize! }}
+          />
+        )}
         <View style={styles.itemCountryName}>
           <CountryText
             allowFontScaling={false}
@@ -167,6 +172,8 @@ const ItemSeparatorComponent = () => {
   )
 }
 
+const { height } = Dimensions.get('window')
+
 export const CountryList = (props: CountryListProps) => {
   const {
     data,
@@ -212,6 +219,8 @@ export const CountryList = (props: CountryListProps) => {
       scrollTo(letters[0], false)
     }
   }, [filterFocus])
+
+  const initialNumToRender = Math.round(height / (itemHeight || 1))
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <FlatList
@@ -219,7 +228,6 @@ export const CountryList = (props: CountryListProps) => {
         ref={flatListRef}
         testID="list-countries"
         keyboardShouldPersistTaps="handled"
-        initialNumToRender={12}
         automaticallyAdjustContentInsets={false}
         scrollEventThrottle={1}
         getItemLayout={(_data: any, index) => ({
@@ -238,7 +246,8 @@ export const CountryList = (props: CountryListProps) => {
           data: search(filter, data),
           keyExtractor,
           onScrollToIndexFailed,
-          ItemSeparatorComponent
+          ItemSeparatorComponent,
+          initialNumToRender
         }}
         {...flatListProps}
       />

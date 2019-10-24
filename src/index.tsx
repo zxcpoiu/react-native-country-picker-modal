@@ -58,8 +58,8 @@ main.defaultProps = {
 }
 
 export {
-  getCountries as getAllCountries,
-  getCountryCallingCode as getCallingCode
+  getCountriesAsync as getAllCountries,
+  getCountryCallingCodeAsync as getCallingCode
 } from './CountryService'
 export { CountryModal } from './CountryModal'
 export { DARK_THEME, DEFAULT_THEME } from './CountryTheme'
