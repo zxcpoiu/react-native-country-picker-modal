@@ -26,6 +26,8 @@ $ yarn add react-native-country-picker-modal
 
 ## Basic Usage
 
+For more complete example open [App.tsx](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/App.tsx)
+
 ```tsx
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, PixelRatio, Switch } from 'react-native'
