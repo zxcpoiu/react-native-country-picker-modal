@@ -168,7 +168,8 @@ export const CountryPicker = (props: CountryPickerProps) => {
             onClose,
             closeButtonImage,
             closeButtonImageStyle,
-            closeButtonStyle
+            closeButtonStyle,
+            withCloseButton
           }}
           renderFilter={(props: CountryFilter['props']) =>
             renderFilter({
