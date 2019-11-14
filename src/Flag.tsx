@@ -8,7 +8,7 @@ import {
   PixelRatio,
   Text,
   View,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native'
 
 const styles = StyleSheet.create({
@@ -16,22 +16,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 30,
-    marginRight: 10
+    marginRight: 10,
   },
   emojiFlag: {
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1 / PixelRatio.get(),
     borderColor: 'transparent',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   imageFlag: {
     resizeMode: 'contain',
     width: 25,
     height: 19,
     borderWidth: 1 / PixelRatio.get(),
-    opacity: 0.8
-  }
+    opacity: 0.8,
+  },
 })
 
 interface FlagType {
@@ -48,7 +48,7 @@ const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
   useEffect(() => {
     getImageFlagAsync(countryCode)
       .then(setUri)
-      .catch(console.error)
+      .catch(console.warn)
   }, [countryCode])
   if (!uri) {
     return <ActivityIndicator size={'small'} />
@@ -58,7 +58,7 @@ const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
       resizeMode={'contain'}
       style={[
         styles.imageFlag,
-        { borderColor: 'transparent', height: flagSize }
+        { borderColor: 'transparent', height: flagSize },
       ]}
       source={{ uri }}
     />
@@ -71,7 +71,7 @@ const EmojiFlag = memo(({ countryCode, flagSize }: FlagType) => {
   useEffect(() => {
     getEmojiFlagAsync(countryCode)
       .then(setName)
-      .catch(console.error)
+      .catch(console.warn)
   }, [countryCode])
   if (!name) {
     return <ActivityIndicator size={'small'} />
@@ -90,7 +90,7 @@ export const Flag = ({
   countryCode,
   withEmoji,
   withFlagButton,
-  flagSize
+  flagSize,
 }: FlagType) =>
   withFlagButton ? (
     <View style={styles.container}>
@@ -104,5 +104,5 @@ export const Flag = ({
 
 Flag.defaultProps = {
   withEmoji: true,
-  withFlagButton: true
+  withFlagButton: true,
 }

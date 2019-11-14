@@ -1,30 +1,23 @@
 import React from 'react'
 
-import renderer, { act } from 'react-test-renderer'
+import { create, act } from 'react-test-renderer'
 
 import CountryPicker from '../src/'
 
+console.disableYellowBox = true
+
 // TODO: fix tests
 it('CountryPicker can be created', () => {
-  // let picker
-  // act(() => {
-  //   picker = renderer.create(
-  //     <CountryPicker countryCode={'US'} onSelect={() => {}} />
-  //   )
-  // })
-  // expect(picker).toBeDefined()
-  expect(true).toBeDefined()
+  const picker = create(
+    <CountryPicker countryCode={'US'} onSelect={() => {}} />,
+  )
+  expect(picker).toBeDefined()
 })
 
-it('<CountryPicker /> toMatchSnapshot', () => {
-  // let picker
-  // act(() => {
-  //   picker = renderer.create(
-  //     <CountryPicker countryCode={'US'} onSelect={() => {}} />
-  //     )
-  //   })
-  //   const tree =
-  //   picker.toJSON()
-  //   expect(tree).toMatchSnapshot()
-  expect(true).toBeDefined()
-})
+// it('<CountryPicker /> toMatchSnapshot', () => {
+//   let root
+//   act(() => {
+//     root = create(<CountryPicker countryCode={'US'} onSelect={() => {}} />)
+//     expect(root.toJSON()).toMatchSnapshot()
+//   })
+// })

@@ -155,7 +155,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
       excludeCountries,
     )
       .then(setCountries)
-      .catch(console.error)
+      .catch(console.warn)
   }, [translation, withEmoji])
 
   return (

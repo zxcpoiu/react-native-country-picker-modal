@@ -6,7 +6,7 @@ import {
   Platform,
   StyleProp,
   ViewStyle,
-  TextProps
+  TextProps,
 } from 'react-native'
 import { CountryCode } from './types'
 import { Flag } from './Flag'
@@ -17,20 +17,20 @@ import { useTheme } from './CountryTheme'
 const styles = StyleSheet.create({
   container: {
     alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   containerWithEmoji: {
-    marginTop: 0
+    marginTop: 0,
   },
   containerWithoutEmoji: {
-    marginTop: 5
+    marginTop: 5,
   },
   flagWithSomethingContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  something: { fontSize: 16 }
+  something: { fontSize: 16 },
 })
 
 type FlagWithSomethingProp = Pick<
@@ -55,37 +55,37 @@ const FlagWithSomething = memo(
     withCurrencyButton,
     withCallingCodeButton,
     withFlagButton,
-    flagSize
+    flagSize,
   }: FlagWithSomethingProp) => {
     const {
       translation,
       getCountryNameAsync,
       getCountryCurrencyAsync,
-      getCountryCallingCodeAsync
+      getCountryCallingCodeAsync,
     } = useContext()
     const [state, setState] = useState({
       countryName: '',
       currency: '',
-      callingCode: ''
+      callingCode: '',
     })
     const { countryName, currency, callingCode } = state
     useEffect(() => {
       if (withCountryNameButton) {
         getCountryNameAsync(countryCode, translation)
           .then((countryName: string) => setState({ ...state, countryName }))
-          .catch(console.error)
+          .catch(console.warn)
       }
 
       if (withCurrencyButton) {
         getCountryCurrencyAsync(countryCode)
           .then((currency: string) => setState({ ...state, currency }))
-          .catch(console.error)
+          .catch(console.warn)
       }
 
       if (withCallingCodeButton) {
         getCountryCallingCodeAsync(countryCode)
           .then((callingCode: string) => setState({ ...state, callingCode }))
-          .catch(console.error)
+          .catch(console.warn)
       }
     }, [withCountryNameButton, withCurrencyButton, withCallingCodeButton])
 
@@ -99,7 +99,7 @@ const FlagWithSomething = memo(
         {callingCode ? <FlagText>{`+${callingCode}`}</FlagText> : null}
       </View>
     )
-  }
+  },
 )
 
 interface FlagButtonProps {
@@ -121,7 +121,7 @@ export const FlagButton = ({
   withFlagButton,
   countryCode,
   containerButtonStyle,
-  onOpen
+  onOpen,
 }: FlagButtonProps) => {
   const withSomething =
     withCountryNameButton || withCallingCodeButton || withCurrencyButton
@@ -132,7 +132,7 @@ export const FlagButton = ({
         style={[
           styles.container,
           withEmoji ? styles.containerWithEmoji : styles.containerWithoutEmoji,
-          containerButtonStyle
+          containerButtonStyle,
         ]}
       >
         {withSomething ? (
@@ -144,7 +144,7 @@ export const FlagButton = ({
               withCallingCodeButton,
               withCurrencyButton,
               withFlagButton,
-              flagSize: flagSize!
+              flagSize: flagSize!,
             }}
           />
         ) : (
@@ -162,5 +162,5 @@ FlagButton.defaultProps = {
   withCountryNameButton: false,
   withCallingCodeButton: false,
   withCurrencyButton: false,
-  withFlagButton: true
+  withFlagButton: true,
 }
