@@ -6,7 +6,7 @@ import {
   FlagType,
   CountryCodeList,
   Region,
-  Subregion
+  Subregion,
 } from './types'
 import Fuse from 'fuse.js'
 
@@ -21,11 +21,11 @@ interface DataCountry {
 }
 const localData: DataCountry = {
   emojiCountries: undefined,
-  imageCountries: undefined
+  imageCountries: undefined,
 }
 
 export const loadDataAsync = ((data: DataCountry) => (
-  dataType: FlagType = FlagType.EMOJI
+  dataType: FlagType = FlagType.EMOJI,
 ): Promise<CountryMap> => {
   return new Promise((resolve, reject) => {
     switch (dataType) {
@@ -72,7 +72,7 @@ export const getImageFlagAsync = async (countryCode: CountryCode = 'FR') => {
 
 export const getCountryNameAsync = async (
   countryCode: CountryCode = 'FR',
-  translation: TranslationLanguageCode = 'common'
+  translation: TranslationLanguageCode = 'common',
 ) => {
   const countries = await loadDataAsync()
   if (!countries) {
@@ -101,7 +101,7 @@ export const getCountryCurrencyAsync = async (countryCode: CountryCode) => {
 }
 
 const isCountryPresent = (countries: { [key in CountryCode]: Country }) => (
-  countryCode: CountryCode
+  countryCode: CountryCode,
 ) => !!countries[countryCode]
 
 const isRegion = (region?: Region) => (country: Country) =>
@@ -115,12 +115,18 @@ const isIncluded = (countryCodes?: CountryCode[]) => (country: Country) =>
     ? countryCodes.includes(country.cca2)
     : true
 
+const isExcluded = (excludeCountries?: CountryCode[]) => (country: Country) =>
+  excludeCountries && excludeCountries.length > 0
+    ? !excludeCountries.includes(country.cca2)
+    : true
+
 export const getCountriesAsync = async (
   flagType: FlagType,
   translation: TranslationLanguageCode = 'common',
   region?: Region,
   subregion?: Subregion,
-  countryCodes?: CountryCode[]
+  countryCodes?: CountryCode[],
+  excludeCountries?: CountryCode[],
 ): Promise<Country[]> => {
   const countriesRaw = await loadDataAsync(flagType)
   if (!countriesRaw) {
@@ -134,14 +140,16 @@ export const getCountriesAsync = async (
         name:
           (countriesRaw[cca2].name as TranslationLanguageCodeMap)[
             translation
-          ] || (countriesRaw[cca2].name as TranslationLanguageCodeMap)['common']
-      }
+          ] ||
+          (countriesRaw[cca2].name as TranslationLanguageCodeMap)['common'],
+      },
     }))
     .filter(isRegion(region))
     .filter(isSubregion(subregion))
     .filter(isIncluded(countryCodes))
+    .filter(isExcluded(excludeCountries))
     .sort((country1: Country, country2: Country) =>
-      (country1.name as string).localeCompare(country2.name as string)
+      (country1.name as string).localeCompare(country2.name as string),
     )
 
   return countries
@@ -154,13 +162,13 @@ const DEFAULT_FUSE_OPTION = {
   distance: 100,
   maxPatternLength: 32,
   minMatchCharLength: 1,
-  keys: ['name', 'callingCode']
+  keys: ['name', 'callingCode'],
 }
 let fuse: Fuse<Country>
 export const search = (
   filter: string = '',
   data: Country[] = [],
-  options: Fuse.FuseOptions<any> = DEFAULT_FUSE_OPTION
+  options: Fuse.FuseOptions<any> = DEFAULT_FUSE_OPTION,
 ) => {
   if (data.length === 0) {
     return []
@@ -181,8 +189,8 @@ export const getLetters = (countries: Country[]) => {
   return uniq(
     countries
       .map((country: Country) =>
-        (country.name as string).substr(0, 1).toLocaleUpperCase()
+        (country.name as string).substr(0, 1).toLocaleUpperCase(),
       )
-      .sort((l1: string, l2: string) => l1.localeCompare(l2))
+      .sort((l1: string, l2: string) => l1.localeCompare(l2)),
   )
 }

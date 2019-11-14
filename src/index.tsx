@@ -5,7 +5,7 @@ import {
   CountryCode,
   Country,
   Region,
-  Subregion
+  Subregion,
 } from './types'
 import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from './CountryContext'
 import { ThemeProvider, DEFAULT_THEME, Theme } from './CountryTheme'
@@ -18,6 +18,7 @@ interface Props {
   region?: Region
   subregion?: Subregion
   countryCodes?: CountryCode[]
+  excludeCountries?: CountryCode[]
   theme?: Theme
   translation?: TranslationLanguageCode
   modalProps?: ModalProps
@@ -53,13 +54,13 @@ export default function main({ theme, translation, ...props }: Props) {
 }
 
 main.defaultProps = {
-  onSelect: () => { },
-  withEmoji: true
+  onSelect: () => {},
+  withEmoji: true,
 }
 
 export {
   getCountriesAsync as getAllCountries,
-  getCountryCallingCodeAsync as getCallingCode
+  getCountryCallingCodeAsync as getCallingCode,
 } from './CountryService'
 export { CountryModal } from './CountryModal'
 export { DARK_THEME, DEFAULT_THEME } from './CountryTheme'

@@ -5,7 +5,7 @@ import {
   StyleProp,
   ViewStyle,
   ImageSourcePropType,
-  ImageStyle
+  ImageStyle,
 } from 'react-native'
 import { CountryModal } from './CountryModal'
 import { HeaderModal } from './HeaderModal'
@@ -23,7 +23,7 @@ interface State {
 }
 
 const renderFlagButton = (
-  props: FlagButton['props'] & CountryPickerProps['renderFlagButton']
+  props: FlagButton['props'] & CountryPickerProps['renderFlagButton'],
 ): ReactNode =>
   props.renderFlagButton ? (
     props.renderFlagButton(props)
@@ -32,7 +32,7 @@ const renderFlagButton = (
   )
 
 const renderFilter = (
-  props: CountryFilter['props'] & CountryPickerProps['renderCountryFilter']
+  props: CountryFilter['props'] & CountryPickerProps['renderCountryFilter'],
 ): ReactNode =>
   props.renderCountryFilter ? (
     props.renderCountryFilter(props)
@@ -45,6 +45,7 @@ interface CountryPickerProps {
   region?: Region
   subregion?: Subregion
   countryCodes?: CountryCode[]
+  excludeCountries?: CountryCode[]
   modalProps?: ModalProps
   filterProps?: CountryFilterProps
   flatListProps?: FlatListProps<Country>
@@ -101,13 +102,14 @@ export const CountryPicker = (props: CountryPickerProps) => {
     onOpen: handleOpen,
     closeButtonImage,
     closeButtonStyle,
-    closeButtonImageStyle
+    closeButtonImageStyle,
+    excludeCountries,
   } = props
   const [state, setState] = useState<State>({
     visible: props.visible || false,
     countries: [],
     filter: '',
-    filterFocus: false
+    filterFocus: false,
   })
   const { translation, getCountriesAsync } = useContext()
   const { visible, filter, countries, filterFocus } = state
@@ -141,7 +143,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     countryCode,
     renderFlagButton: renderButton,
     onOpen,
-    containerButtonStyle
+    containerButtonStyle,
   }
   useEffect(() => {
     getCountriesAsync(
@@ -149,7 +151,8 @@ export const CountryPicker = (props: CountryPickerProps) => {
       translation,
       region,
       subregion,
-      countryCodes
+      countryCodes,
+      excludeCountries,
     )
       .then(setCountries)
       .catch(console.error)
@@ -169,7 +172,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
             closeButtonImage,
             closeButtonImageStyle,
             closeButtonStyle,
-            withCloseButton
+            withCloseButton,
           }}
           renderFilter={(props: CountryFilter['props']) =>
             renderFilter({
@@ -179,7 +182,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
               value: filter,
               onFocus,
               onBlur,
-              ...filterProps
+              ...filterProps,
             })
           }
         />
@@ -195,7 +198,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
             withEmoji,
             filter,
             filterFocus,
-            flatListProps
+            flatListProps,
           }}
         />
       </CountryModal>
@@ -206,5 +209,5 @@ export const CountryPicker = (props: CountryPickerProps) => {
 CountryPicker.defaultProps = {
   withModal: true,
   withAlphaFilter: false,
-  withCallingCode: false
+  withCallingCode: false,
 }
