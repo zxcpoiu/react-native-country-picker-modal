@@ -28,7 +28,7 @@
     "prepublishOnly": "yarn lint && yarn build && yarn test && yarn config:npm",
     "postpublish": "yarn config:dev",
     "deploy": "gh-pages -d web-build",
-    "predeploy": "expo build:web"
+    "predeploy": "expo build:web && cp ./data/countries.json web-build"
   },
   "keywords": [
     "react-native",
