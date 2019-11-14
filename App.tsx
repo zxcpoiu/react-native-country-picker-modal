@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   data: {
+    maxWidth: 250,
     padding: 10,
     marginTop: 7,
     backgroundColor: '#ddd',
@@ -97,13 +98,11 @@ export default function App() {
         onValueChange={setWithCallingCodeButton}
       />
       <Option title='With flag' value={withFlag} onValueChange={setWithFlag} />
-      {Platform.OS !== 'web' && (
-        <Option
-          title='With emoji'
-          value={withEmoji}
-          onValueChange={setWithEmoji}
-        />
-      )}
+      <Option
+        title='With emoji'
+        value={withEmoji}
+        onValueChange={setWithEmoji}
+      />
       <Option
         title='With filter'
         value={withFilter}
