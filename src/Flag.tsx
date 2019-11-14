@@ -1,7 +1,8 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, { memo } from 'react'
 import { Emoji } from './Emoji'
 import { CountryCode } from './types'
 import { useContext } from './CountryContext'
+import { useAsync } from 'react-async-hook'
 import {
   Image,
   StyleSheet,
@@ -43,14 +44,8 @@ interface FlagType {
 
 const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
   const { getImageFlagAsync } = useContext()
-  const [uri, setUri] = useState<string | undefined>(undefined)
-
-  useEffect(() => {
-    getImageFlagAsync(countryCode)
-      .then(setUri)
-      .catch(console.warn)
-  }, [countryCode])
-  if (!uri) {
+  const asyncResult = useAsync(getImageFlagAsync, [countryCode])
+  if (asyncResult.loading) {
     return <ActivityIndicator size={'small'} />
   }
   return (
@@ -60,20 +55,16 @@ const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
         styles.imageFlag,
         { borderColor: 'transparent', height: flagSize },
       ]}
-      source={{ uri }}
+      source={{ uri: asyncResult.result }}
     />
   )
 })
 
 const EmojiFlag = memo(({ countryCode, flagSize }: FlagType) => {
   const { getEmojiFlagAsync } = useContext()
-  const [name, setName] = useState<string>('')
-  useEffect(() => {
-    getEmojiFlagAsync(countryCode)
-      .then(setName)
-      .catch(console.warn)
-  }, [countryCode])
-  if (!name) {
+  const asyncResult = useAsync(getEmojiFlagAsync, [countryCode])
+
+  if (asyncResult.loading) {
     return <ActivityIndicator size={'small'} />
   }
   return (
@@ -81,7 +72,7 @@ const EmojiFlag = memo(({ countryCode, flagSize }: FlagType) => {
       style={[styles.emojiFlag, { fontSize: flagSize }]}
       allowFontScaling={false}
     >
-      <Emoji {...{ name }} />
+      <Emoji {...{ name: asyncResult.result! }} />
     </Text>
   )
 })
