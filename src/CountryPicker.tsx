@@ -145,6 +145,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     onOpen,
     containerButtonStyle,
   }
+
   useEffect(() => {
     getCountriesAsync(
       withEmoji ? FlagType.EMOJI : FlagType.FLAT,

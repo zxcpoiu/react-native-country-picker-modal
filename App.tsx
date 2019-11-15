@@ -135,7 +135,7 @@ export default function App() {
         onValueChange={setWithFlagButton}
       />
       <CountryPicker
-        theme={dark ? DARK_THEME : { flagSizeButton: 30, flagSize: 15 }}
+        theme={dark ? DARK_THEME : {}}
         {...{
           countryCode,
           withFilter,

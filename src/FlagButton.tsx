@@ -94,9 +94,13 @@ const FlagWithSomething = memo(
         <Flag
           {...{ withEmoji, countryCode, withFlagButton, flagSize: flagSize! }}
         />
-        {countryName ? <FlagText>{countryName + ' '}</FlagText> : null}
-        {currency ? <FlagText>{`(${currency}) `}</FlagText> : null}
-        {callingCode ? <FlagText>{`+${callingCode}`}</FlagText> : null}
+        {withCountryNameButton ? (
+          <FlagText>{countryName + ' '}</FlagText>
+        ) : null}
+        {withCurrencyButton ? <FlagText>{`(${currency}) `}</FlagText> : null}
+        {withCallingCodeButton ? (
+          <FlagText>{`+${callingCode}`}</FlagText>
+        ) : null}
       </View>
     )
   },
@@ -123,8 +127,6 @@ export const FlagButton = ({
   containerButtonStyle,
   onOpen,
 }: FlagButtonProps) => {
-  const withSomething =
-    withCountryNameButton || withCallingCodeButton || withCurrencyButton
   const { flagSizeButton: flagSize } = useTheme()
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={onOpen}>
@@ -135,23 +137,17 @@ export const FlagButton = ({
           containerButtonStyle,
         ]}
       >
-        {withSomething ? (
-          <FlagWithSomething
-            {...{
-              countryCode,
-              withEmoji,
-              withCountryNameButton,
-              withCallingCodeButton,
-              withCurrencyButton,
-              withFlagButton,
-              flagSize: flagSize!,
-            }}
-          />
-        ) : (
-          <Flag
-            {...{ countryCode, withEmoji, withFlagButton, flagSize: flagSize! }}
-          />
-        )}
+        <FlagWithSomething
+          {...{
+            countryCode,
+            withEmoji,
+            withCountryNameButton,
+            withCallingCodeButton,
+            withCurrencyButton,
+            withFlagButton,
+            flagSize: flagSize!,
+          }}
+        />
       </View>
     </TouchableOpacity>
   )
