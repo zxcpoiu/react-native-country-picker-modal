@@ -8,7 +8,7 @@ import {
   ListRenderItemInfo,
   PixelRatio,
   FlatListProps,
-  Dimensions
+  Dimensions,
 } from 'react-native'
 import { useTheme } from './CountryTheme'
 import { Country, Omit } from './types'
@@ -22,39 +22,39 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   letters: {
     marginRight: 10,
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   letter: {
     height: 23,
     width: 20,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   letterText: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   itemCountry: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingHorizontal: 5
+    paddingHorizontal: 5,
   },
   itemCountryName: {
-    width: '90%'
+    width: '90%',
   },
   list: {
-    flex: 1
+    flex: 1,
   },
   sep: {
     borderBottomWidth,
-    width: '100%'
-  }
+    width: '100%',
+  },
 })
 
 interface LetterProps {
@@ -98,7 +98,7 @@ const CountryItem = (props: CountryItemProps) => {
     withFlag,
     withEmoji,
     withCallingCode,
-    withCurrency
+    withCurrency,
   } = props
   const extraContent: string[] = []
   if (
@@ -128,7 +128,7 @@ const CountryItem = (props: CountryItemProps) => {
           <CountryText
             allowFontScaling={false}
             numberOfLines={2}
-            ellipsizeMode="tail"
+            ellipsizeMode='tail'
           >
             {country.name}
             {extraContent.length > 0 && ` (${extraContent.join(', ')})`}
@@ -140,12 +140,12 @@ const CountryItem = (props: CountryItemProps) => {
 }
 CountryItem.defaultProps = {
   withFlag: true,
-  withCallingCode: false
+  withCallingCode: false,
 }
 const MemoCountryItem = memo<CountryItemProps>(CountryItem)
 
 const renderItem = (props: Omit<CountryItemProps, 'country'>) => ({
-  item: country
+  item: country,
 }: ListRenderItemInfo<Country>) => (
   <MemoCountryItem {...{ country, ...props }} />
 )
@@ -185,7 +185,7 @@ export const CountryList = (props: CountryListProps) => {
     onSelect,
     filter,
     flatListProps,
-    filterFocus
+    filterFocus,
   } = props
 
   const flatListRef = useRef<FlatList<Country>>(null)
@@ -215,7 +215,7 @@ export const CountryList = (props: CountryListProps) => {
   const { search, getLetters } = useContext()
   const letters = getLetters(data)
   useEffect(() => {
-    if (data && data.length > 0 && filterFocus) {
+    if (data && data.length > 0 && filterFocus && !filter) {
       scrollTo(letters[0], false)
     }
   }, [filterFocus])
@@ -226,35 +226,35 @@ export const CountryList = (props: CountryListProps) => {
       <FlatList
         onScrollToIndexFailed
         ref={flatListRef}
-        testID="list-countries"
-        keyboardShouldPersistTaps="handled"
+        testID='list-countries'
+        keyboardShouldPersistTaps='handled'
         automaticallyAdjustContentInsets={false}
         scrollEventThrottle={1}
         getItemLayout={(_data: any, index) => ({
           length: itemHeight! + borderBottomWidth,
           offset: (itemHeight! + borderBottomWidth) * index,
-          index
+          index,
         })}
         renderItem={renderItem({
           withEmoji,
           withFlag,
           withCallingCode,
           withCurrency,
-          onSelect
+          onSelect,
         })}
         {...{
           data: search(filter, data),
           keyExtractor,
           onScrollToIndexFailed,
           ItemSeparatorComponent,
-          initialNumToRender
+          initialNumToRender,
         }}
         {...flatListProps}
       />
       {withAlphaFilter && (
         <ScrollView
           contentContainerStyle={styles.letters}
-          keyboardShouldPersistTaps="always"
+          keyboardShouldPersistTaps='always'
         >
           {letters.map(letter => (
             <Letter key={letter} {...{ letter, scrollTo }} />
@@ -266,5 +266,5 @@ export const CountryList = (props: CountryListProps) => {
 }
 
 CountryList.defaultProps = {
-  filterFocus: undefined
+  filterFocus: undefined,
 }
