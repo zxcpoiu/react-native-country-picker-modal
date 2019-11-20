@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, ReactNode } from 'react'
+import React, { useState, useEffect, ReactNode, memo } from 'react'
 import {
   TouchableOpacity,
   StyleSheet,
@@ -57,12 +57,7 @@ const FlagWithSomething = memo(
     withFlagButton,
     flagSize,
   }: FlagWithSomethingProp) => {
-    const {
-      translation,
-      getCountryNameAsync,
-      getCountryCurrencyAsync,
-      getCountryCallingCodeAsync,
-    } = useContext()
+    const { translation, getCountryInfoAsync } = useContext()
     const [state, setState] = useState({
       countryName: '',
       currency: '',
@@ -70,35 +65,28 @@ const FlagWithSomething = memo(
     })
     const { countryName, currency, callingCode } = state
     useEffect(() => {
-      if (withCountryNameButton) {
-        getCountryNameAsync(countryCode, translation)
-          .then((countryName: string) => setState({ ...state, countryName }))
-          .catch(console.warn)
-      }
-
-      if (withCurrencyButton) {
-        getCountryCurrencyAsync(countryCode)
-          .then((currency: string) => setState({ ...state, currency }))
-          .catch(console.warn)
-      }
-
-      if (withCallingCodeButton) {
-        getCountryCallingCodeAsync(countryCode)
-          .then((callingCode: string) => setState({ ...state, callingCode }))
-          .catch(console.warn)
-      }
-    }, [withCountryNameButton, withCurrencyButton, withCallingCodeButton])
+      getCountryInfoAsync({ countryCode, translation })
+        .then(setState)
+        .catch(console.warn)
+    }, [
+      countryCode,
+      withCountryNameButton,
+      withCurrencyButton,
+      withCallingCodeButton,
+    ])
 
     return (
       <View style={styles.flagWithSomethingContainer}>
         <Flag
           {...{ withEmoji, countryCode, withFlagButton, flagSize: flagSize! }}
         />
-        {withCountryNameButton ? (
+        {withCountryNameButton && countryName ? (
           <FlagText>{countryName + ' '}</FlagText>
         ) : null}
-        {withCurrencyButton ? <FlagText>{`(${currency}) `}</FlagText> : null}
-        {withCallingCodeButton ? (
+        {withCurrencyButton && currency ? (
+          <FlagText>{`(${currency}) `}</FlagText>
+        ) : null}
+        {withCallingCodeButton && callingCode ? (
           <FlagText>{`+${callingCode}`}</FlagText>
         ) : null}
       </View>

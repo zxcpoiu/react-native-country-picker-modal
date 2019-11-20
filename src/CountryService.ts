@@ -194,3 +194,24 @@ export const getLetters = (countries: Country[]) => {
       .sort((l1: string, l2: string) => l1.localeCompare(l2)),
   )
 }
+
+export interface CountryInfo {
+  countryName: string
+  currency: string
+  callingCode: string
+}
+export const getCountryInfoAsync = async ({
+  countryCode,
+  translation,
+}: {
+  countryCode: CountryCode
+  translation?: TranslationLanguageCode
+}): Promise<CountryInfo> => {
+  const countryName = await getCountryNameAsync(
+    countryCode,
+    translation || 'common',
+  )
+  const currency = await getCountryCurrencyAsync(countryCode)
+  const callingCode = await getCountryCallingCodeAsync(countryCode)
+  return { countryName, currency, callingCode }
+}
