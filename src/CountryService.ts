@@ -11,7 +11,7 @@ import {
 import Fuse from 'fuse.js'
 
 const imageJsonUrl =
-  'http://xcarpentier.github.io/react-native-country-picker-modal/countries/'
+  'https://xcarpentier.github.io/react-native-country-picker-modal/countries/'
 
 type CountryMap = { [key in CountryCode]: Country }
 
