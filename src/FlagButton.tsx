@@ -41,6 +41,7 @@ type FlagWithSomethingProp = Pick<
   | 'withCurrencyButton'
   | 'withCallingCodeButton'
   | 'withFlagButton'
+  | 'placeholder'
 > & { flagSize: number }
 
 const FlagText = (props: TextProps & { children: ReactNode }) => (
@@ -56,6 +57,7 @@ const FlagWithSomething = memo(
     withCallingCodeButton,
     withFlagButton,
     flagSize,
+    placeholder,
   }: FlagWithSomethingProp) => {
     const { translation, getCountryInfoAsync } = useContext()
     const [state, setState] = useState({
@@ -65,9 +67,11 @@ const FlagWithSomething = memo(
     })
     const { countryName, currency, callingCode } = state
     useEffect(() => {
-      getCountryInfoAsync({ countryCode, translation })
-        .then(setState)
-        .catch(console.warn)
+      if (countryCode) {
+        getCountryInfoAsync({ countryCode, translation })
+          .then(setState)
+          .catch(console.warn)
+      }
     }, [
       countryCode,
       withCountryNameButton,
@@ -77,9 +81,14 @@ const FlagWithSomething = memo(
 
     return (
       <View style={styles.flagWithSomethingContainer}>
-        <Flag
-          {...{ withEmoji, countryCode, withFlagButton, flagSize: flagSize! }}
-        />
+        {countryCode ? (
+          <Flag
+            {...{ withEmoji, countryCode, withFlagButton, flagSize: flagSize! }}
+          />
+        ) : (
+          <FlagText>{placeholder}</FlagText>
+        )}
+
         {withCountryNameButton && countryName ? (
           <FlagText>{countryName + ' '}</FlagText>
         ) : null}
@@ -101,7 +110,8 @@ interface FlagButtonProps {
   withCallingCodeButton?: boolean
   withFlagButton?: boolean
   containerButtonStyle?: StyleProp<ViewStyle>
-  countryCode: CountryCode
+  countryCode?: CountryCode
+  placeholder: string
   onOpen?(): void
 }
 
@@ -114,6 +124,7 @@ export const FlagButton = ({
   countryCode,
   containerButtonStyle,
   onOpen,
+  placeholder,
 }: FlagButtonProps) => {
   const { flagSizeButton: flagSize } = useTheme()
   return (
@@ -134,6 +145,7 @@ export const FlagButton = ({
             withCurrencyButton,
             withFlagButton,
             flagSize: flagSize!,
+            placeholder,
           }}
         />
       </View>

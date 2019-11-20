@@ -41,7 +41,7 @@ const renderFilter = (
   )
 
 interface CountryPickerProps {
-  countryCode: CountryCode
+  countryCode?: CountryCode
   region?: Region
   subregion?: Subregion
   countryCodes?: CountryCode[]
@@ -62,6 +62,7 @@ interface CountryPickerProps {
   withFlag?: boolean
   withModal?: boolean
   visible?: boolean
+  placeholder?: string
   containerButtonStyle?: StyleProp<ViewStyle>
   closeButtonImage?: ImageSourcePropType
   closeButtonStyle?: StyleProp<ViewStyle>
@@ -104,6 +105,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     closeButtonStyle,
     closeButtonImageStyle,
     excludeCountries,
+    placeholder,
   } = props
   const [state, setState] = useState<State>({
     visible: props.visible || false,
@@ -135,15 +137,16 @@ export const CountryPicker = (props: CountryPickerProps) => {
   const onFocus = () => setState({ ...state, filterFocus: true })
   const onBlur = () => setState({ ...state, filterFocus: false })
   const flagProp = {
+    countryCode,
     withEmoji,
     withCountryNameButton,
     withCallingCodeButton,
     withCurrencyButton,
     withFlagButton,
-    countryCode,
     renderFlagButton: renderButton,
     onOpen,
     containerButtonStyle,
+    placeholder,
   }
 
   useEffect(() => {
@@ -211,4 +214,5 @@ CountryPicker.defaultProps = {
   withModal: true,
   withAlphaFilter: false,
   withCallingCode: false,
+  placeholder: 'Select Country',
 }

@@ -6,7 +6,6 @@ import {
   Switch,
   Button,
   ScrollView,
-  Platform,
 } from 'react-native'
 import CountryPicker from './src/'
 import { CountryCode, Country } from './src/types'
@@ -54,7 +53,7 @@ const Option = ({ value, onValueChange, title }: OptionProps) => (
 )
 
 export default function App() {
-  const [countryCode, setCountryCode] = useState<CountryCode>('FR')
+  const [countryCode, setCountryCode] = useState<CountryCode | undefined>()
   const [country, setCountry] = useState<Country>(null)
   const [withCountryNameButton, setWithCountryNameButton] = useState<boolean>(
     false,
