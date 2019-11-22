@@ -118,7 +118,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
   
   useEffect(() => {
     if (state.visible !== props.visible) {
-      setState({ ...state, visible: props.visible });
+      setState({ ...state, visible: !!(props.visible) });
     }
   }, [props.visible])
   
