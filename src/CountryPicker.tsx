@@ -167,7 +167,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     )
       .then(setCountries)
       .catch(console.warn)
-  }, [translation, withEmoji])
+  }, [translation, withEmoji, countryCodes])
 
   return (
     <>
